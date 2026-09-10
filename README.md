@@ -5,7 +5,7 @@
 
 **用参考图延续美术风格，为新主题探索三种场景布局。**
 
-1–3 张参考图 · 每主题 3 个候选 · 20 个内置主题 · 英文 Prompt 留档
+内置默认参考图 · 可选 1–3 张自带图 · 每主题 3 个候选 · 20 个内置主题 · 英文 Prompt 留档
 
 [查看案例](#showcase) · [开始使用](#quick-start) · [浏览主题](skills/theme-scene-studio/references/themes.md) · [生成规则](skills/theme-scene-studio/SKILL.md)
 
@@ -75,9 +75,9 @@ Stage 1 的交付是可供评审和后续使用的候选图及生成记录，不
 
 | 输入 | 生成 | 交付 |
 | --- | --- | --- |
-| 1–3 张参考图＋主题清单 | 每个主题独立生成 A / B / C | 原始图片＋实际英文 Prompt＋检查记录 |
+| 主题清单＋可选的 1–3 张参考图 | 每个主题独立生成 A / B / C | 原始图片＋实际英文 Prompt＋检查记录 |
 
-- **统一参考组**：默认第一张主导画风，其余补充细节；每张候选使用同一组参考图。
+- **统一参考组**：未提供图片时使用内置参考图；有用户图片时，默认第一张主导画风，其余补充细节，每张候选使用同一组参考图。
 - **主题重构**：允许背景、地形、道路与建筑布局随主题改变，保留可辨识的游戏美术语言。
 - **三个不同方案**：通过地块形状、建筑群位置和通路组织形成差异。
 - **完整留档**：保存每次实际输入、候选图片、修正历史与目视结论。
@@ -98,7 +98,19 @@ Stage 1 的交付是可供评审和后续使用的候选图及生成记录，不
 
 ## 开始使用
 
-在已安装插件的 Codex 任务中附上参考图，再描述主题：
+无需准备图片，安装后直接输入主题即可：
+
+```text
+使用 $theme-scene-studio，生成威尼斯水城主题。
+```
+
+自动使用下面这张内置参考图，为该主题生成三张候选；英文 prompt、最终 C 视觉优化与结果留档均默认执行。
+
+<p align="center"><a href="skills/theme-scene-studio/assets/default-reference.png"><img src="skills/theme-scene-studio/assets/default-reference.png" alt="随插件打包的默认河畔村落参考图" width="420"></a></p>
+
+默认图位于技能目录内，随 GitHub 源码和插件一起分发，运行时无需访问飞书。手动安装 Skill 时请复制整个 `skills/theme-scene-studio/` 文件夹，包含 `assets/`。
+
+如果要使用自己的画风，附上参考图再输入：
 
 ```text
 使用 $theme-scene-studio，参考这张图，
@@ -122,7 +134,7 @@ Stage 1 的交付是可供评审和后续使用的候选图及生成记录，不
 道具：藤桥、花盆、喷泉
 ```
 
-默认使用一张参考图，最多支持三张；缺少图片时会先请求补充。生成依赖 Codex 环境中可用的内置图像工具，不包含独立模型 API 客户端。
+未提供图片时自动使用内置默认图；提供1–3张图片时仅使用用户图片，不混入默认图。明确指定的文件不可读时会提示补充；超过3张时需选择最多3张。生成依赖 Codex 环境中可用的内置图像工具，不包含独立模型 API 客户端。
 
 ## 输出结构
 
@@ -148,6 +160,7 @@ output/theme-scene-studio/<run>/
 | [SKILL.md](skills/theme-scene-studio/SKILL.md) | 输入契约、生成流程与验收规则 |
 | [prompt-template.md](skills/theme-scene-studio/references/prompt-template.md) | 最终 C 英文基础模板 |
 | [candidates.md](skills/theme-scene-studio/references/candidates.md) | 三候选的布局设计与完成定义 |
+| [default-reference.png](skills/theme-scene-studio/assets/default-reference.png) | 无用户图片时的默认参考图（随技能分发） |
 | [themes.md](skills/theme-scene-studio/references/themes.md) | 20 个内置主题及元素清单 |
 
 <details>

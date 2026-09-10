@@ -1,6 +1,6 @@
 # 最终 C：英文基础模板
 
-先查看1–3张参考图，填入编号与角色，再填写主题。所有候选共享这个基础段，最后按 candidates.md 添加各自差异段。本文模板完整包含最终C方案，不依赖旧技能目录或实验图片。
+先选择用户提供的1–3张参考图；用户未提供图片时使用随技能打包的 assets/default-reference.png 一张。查看实际参考图后，填入编号与角色，再填写主题。所有候选共享这个基础段，最后按 candidates.md 添加各自差异段。本文模板完整包含最终C方案，不依赖旧技能目录或实验图片。
 
 ```text
 Create one complete casual-game scene in the requested theme.
@@ -35,3 +35,5 @@ Maintain coherent large color fields and consistent lighting across the canvas. 
 ```
 
 保持相同参考组；默认第一张主导，共性优先，不平均混合不兼容画风。输入只有一张时删除additional references等不适用句子。不要把占位符直接发给生成器。斑驳是后续事项，不视为已解决。
+
+默认图是实际图片输入，不是纯文本模式。使用默认图时 N=1，并在参考角色中说明它是内置河畔村落画风参考；不要继承其中人类角色，目标角色依主题定义。文件路径按 SKILL.md 所在目录解析，并通过图像工具的图片引用参数传入。
