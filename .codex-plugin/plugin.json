@@ -1,0 +1,21 @@
+{
+  "name": "theme-scene-studio",
+  "version": "0.1.0",
+  "description": "最终C方案：1–3张参考图，每主题3张不同候选，英文提示词与完整记录。",
+  "author": {
+    "name": "Local developer"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "主题场景工坊",
+    "shortDescription": "输入1–3张参考图，每个主题生成3张候选图",
+    "longDescription": "原图提供美术风格，主题决定背景、地形与布局。采用同色系描边、轻量配色和低反光材质；支持20个内置主题与自定义清单，每个主题输出三张不同布局候选，并保存实际英文prompt与检查记录。",
+    "developerName": "Local developer",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "参考这张图，生成威尼斯主题的三张候选。",
+      "参考这三张图，以第一张为主风格，生成主题2和5各三张候选。"
+    ]
+  }
+}
