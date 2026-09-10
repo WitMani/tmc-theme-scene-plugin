@@ -1,4 +1,4 @@
 interface:
-  display_name: "主题场景工坊"
-  short_description: "输入一至三张参考图，按最终C方案为每个主题生成三张不同候选图"
+  display_name: "主题场景工坊 · Stage 1"
+  short_description: "美术生成Stage 1：输入一至三张参考图，每个主题生成三张候选图"
   default_prompt: "使用 $theme-scene-studio，参考我提供的图片，按指定主题各生成三张不同候选图。"
