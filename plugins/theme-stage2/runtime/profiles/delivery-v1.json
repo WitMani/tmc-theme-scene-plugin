@@ -1,0 +1,25 @@
+{
+  "schema": "stage2.delivery-policy.v1",
+  "id": "images-only",
+  "version": "1.0.0",
+  "source": {
+    "kind": "user_feedback",
+    "snapshot": "../docs/feedback/images-only-delivery-20260910.json",
+    "snapshot_sha256": "9eeee0e3c9fcbd79f8b0c25acaf20bdd5fb9d888f272856aa25167864ba1a34a",
+    "quote": "直接就是默认流程，直接输出对应的背景图 和 对应的素材内容 不需要输出html 以及原图对照"
+  },
+  "mode": "images_only",
+  "deliver": [
+    "background_png",
+    "independent_asset_pngs"
+  ],
+  "html": false,
+  "source_comparison": false,
+  "extra_user_report": false,
+  "run_records_in_delivery": false,
+  "keep_internal_records": true,
+  "internal_records_location": "run/export-records/<export-id>/",
+  "zip_policy": "Optional packaging may contain only the same background and asset PNG files.",
+  "selection_policy": "representative-assets: default 14 assets, target 12–15, background counted separately",
+  "recomposition": false
+}

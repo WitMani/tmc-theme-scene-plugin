@@ -1,0 +1,21 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "background-richness-20260911",
+  "scope": [
+    "background"
+  ],
+  "source_kind": "explicit_user_message",
+  "quotes": [
+    "但是现在生成的底图，是不是过于简化了？主要是河流的细节",
+    "树木也不能去掉"
+  ],
+  "reference_folders": [
+    "NO_Wonderland_9",
+    "NO_Nidaros_3",
+    "NO_OrbitCity_1",
+    "NO_Sheffield_14",
+    "NO_Sheffield_17",
+    "NO_Vondelpark_13"
+  ],
+  "interpretation": "保留原有树木、自然植被、地形、河道、波纹、泡沫及柔和色差；只移除建筑人物载具与独立设施，不以全域无渐变要求抹掉环境细节。参考仅用于风格理解，不混入另一关卡几何。"
+}

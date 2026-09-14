@@ -1,0 +1,8 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "images-only-delivery-20260910",
+  "source_kind": "user_message",
+  "quote": "直接就是默认流程，直接输出对应的背景图 和 对应的素材内容 不需要输出html 以及原图对照",
+  "scope": "default delivery",
+  "interpretation": "默认交付只有独立背景PNG和选定素材PNG；不默认制作HTML、原图对照或面向用户的额外报告。内部生成、验收和溯源记录仍保留。"
+}

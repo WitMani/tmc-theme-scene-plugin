@@ -1,0 +1,27 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "representative-selection-confirmed-20260910",
+  "source_kind": "user_message",
+  "quote": "可以 就按照这个 那以后呢",
+  "recorded_at": "2026-09-10T12:11:50.107893+00:00",
+  "confirmed_default": {
+    "distinct_assets": 14,
+    "asset_target_range": [
+      12,
+      15
+    ],
+    "separate_backgrounds": 1,
+    "allocation": {
+      "building": 4,
+      "vehicle": 3,
+      "facility": 4,
+      "character": 3
+    }
+  },
+  "adjustment_policy": "按原图可见内容调整分类名额；重复、仅换色、镜像不增加种类；来源不足不补造。",
+  "previous_feedback": {
+    "file": "representative-selection-20260910.json",
+    "sha256": "5709dc385905f50e55b455542cea0c66251f87ae870eb23da8e77047bf21b81f"
+  },
+  "scope": "Confirmation of default selection and the proposed Venice list; not approval of existing art quality and not an instruction to start new generation or recomposition."
+}

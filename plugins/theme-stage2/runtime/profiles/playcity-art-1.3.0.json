@@ -1,0 +1,369 @@
+{
+  "schema": "stage2.art-profile.v1",
+  "id": "playcity-art",
+  "version": "1.3.0",
+  "source": {
+    "url": "https://playcity.feishu.cn/wiki/YA1zwxGJgiJeDHkaIj9cSOVAnLg",
+    "title": "二阶段-美术风格相关",
+    "document_id": "UGAMdcWFwoRrk2xmzsIcGmE9n2b",
+    "revision_id": 147,
+    "snapshot": "../docs/source/requirements.document.json",
+    "snapshot_sha256": "2f532428be7911f433f7cedfd2244c372e3b16ea4a8ab70b458f7503675a9410"
+  },
+  "priority": [
+    "explicit user changes incorporated into a versioned profile",
+    "this profile's written requirements",
+    "document example images as interpretation aids",
+    "Stage 1 object identity and theme; its style may be corrected"
+  ],
+  "input_contract": {
+    "external_scene_images": 1,
+    "allow_derived_crops": true,
+    "document_examples_are_generation_inputs": false,
+    "recomposition_enabled": false,
+    "feedback_examples_are_generation_inputs": false
+  },
+  "interpretations": [
+    {
+      "topic": "two_head_ratio",
+      "text": "仅应用于角色。文档未规定容差、头部测量点、是否计入帽饰；本版保留为视觉验收，不编造数值阈值。",
+      "source_kind": "scope_interpretation"
+    },
+    {
+      "topic": "45_degree",
+      "text": "原文未定义45度对应偏航还是俯仰，也未给具体镜头矩阵；保留原文表达，以正交等距一致性验收，不将俯仰角硬编码为45度。",
+      "source_kind": "unresolved_numeric_detail"
+    },
+    {
+      "topic": "material",
+      "text": "原文为“弱或质感表达（高光+反光）”，措辞疑似不完整。结合弱体积、弱光影、无渐变，暂按弱化高光反光实现；未改写原始引文。",
+      "source_kind": "provisional_interpretation"
+    },
+    {
+      "topic": "text_over_examples",
+      "text": "参考图中可见少量渐变、高光或纹理，与明确文字要求冲突时执行文字要求。",
+      "source_kind": "precedence_decision"
+    },
+    {
+      "topic": "unspecified_limits",
+      "text": "文档没有规定像素尺寸、描边像素宽度、饱和度百分比、颜色数量或交付数量；本版不将这些自定值称作文档硬标准。",
+      "source_kind": "not_specified"
+    },
+    {
+      "topic": "open_terrain_edges",
+      "source_kind": "user_feedback_interpretation",
+      "text": "仅作用于独立背景；默认尽量去除围栏、矮墙、护栏、凸起压边和装饰包边。它不是去掉正常描边、地形高度侧面或桥体；必要结构可以极简保留并在复核观察中说明。"
+    },
+    {
+      "topic": "asset_v2",
+      "source_kind": "explicit_user_feedback_interpretation",
+      "text": "素材V2的体积和夸张要求覆盖旧版过度扁平化解读；逐部件描边色审查新增独立规则。背景保留环境细节的要求只用于背景。"
+    },
+    {
+      "topic": "formal_background_volume",
+      "source_kind": "explicit_user_feedback_interpretation",
+      "text": "正式规则以素材V2（profile1.2.0）为基线，物件规则和生成逻辑保持原样。背景单独采用适中体积：地形、岸壁、岩石、桥体与植被的厚度可读，柔和低至中等对比，避免平涂或厚重雕塑感。文档V3背景复用V2，故不声称存在两张不同背景或可测量的中点；不设50%等数值阈值。此次仅更新插件，不重生成或替换文档图片。"
+    }
+  ],
+  "technical_contract": {
+    "source": "existing Stage 2 workflow, not numeric requirements from the Feishu art document",
+    "asset_format": "PNG",
+    "asset_mode": "RGBA",
+    "require_transparent_and_opaque_pixels": true,
+    "require_clear_canvas_border": true,
+    "background_format": "PNG",
+    "background_opaque": true,
+    "acceptance": "technical checks AND every applicable visual rule with image-bound evidence",
+    "generation_tool": "built-in imagegen via agent; this CLI does not call a generation API"
+  },
+  "rules": [
+    {
+      "id": "STYLE_JP_KR",
+      "name": "日韩卡通",
+      "source_block_id": "KGR9dRnZWoD2mixUMHlcSUb6nkf",
+      "source_quote": "日韩卡通",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use a clean Japanese/Korean cartoon game-art style.",
+      "review_criterion": "整体为日韩卡通语言；不能偏向写实、厚重 3D 或绘画质感。"
+    },
+    {
+      "id": "CAMERA_ISO_ORTHO",
+      "name": "正交45度等距透视",
+      "source_block_id": "Ob5JdnX5DodWA0xCEh0c1v2pnpe",
+      "source_quote": "透视：正交45度等距透视",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use an orthographic 45-degree isometric game view with parallel projected axes and no perspective convergence. Keep the view coherent across the asset family; do not assume the document specifies a numerical camera elevation.",
+      "review_criterion": "正交、等距、45度视图一致；不凭单图推断并硬编码俯仰角。"
+    },
+    {
+      "id": "CHAR_TWO_HEADS",
+      "name": "角色2头身",
+      "source_block_id": "CCdjdpajho3K35x5AZvc2MjFnbg",
+      "source_quote": "比例：2头身",
+      "applies_to": [
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Re-proportion the character to a two-head-tall chibi body: the full head-to-foot height is approximately two head heights. Preserve its species and costume identity. Do not inherit a taller body ratio from the Stage 1 scene.",
+      "review_criterion": "角色全身约2个头高，保留物种与服饰识别点；仅适用于角色。"
+    },
+    {
+      "id": "FORM_SIMPLE",
+      "name": "简化结构与造型",
+      "source_block_id": "Z3BUdUTIro5gzOxf97FcAE8Yncb",
+      "source_quote": "造型结构：简单概括（尽可能简化结构和造型）。",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Simplify structures and shapes as far as recognizability allows. Use clear large forms and a few identity-defining features; eliminate incidental ornaments and dense repeated tiny structures.",
+      "review_criterion": "用大形概括，保留必要识别点；删减碎装饰、密集细小结构。"
+    },
+    {
+      "id": "VOLUME_WEAK",
+      "name": "弱体积低对比",
+      "source_block_id": "UNdcdkg6goWLPZxtAxxcYUbknAh",
+      "source_quote": "体积感：较弱（对比度低）。",
+      "applies_to": [],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Keep volume weak and value contrast low. Use restrained flat plane colors, without sculpted rounded rendering or strong light-dark modeling.",
+      "review_criterion": "体积表达弱、明暗对比低；不能以柔和渐变代替弱体积。",
+      "superseded_by": [
+        "ASSET_VOLUME_READABLE",
+        "BG_ENVIRONMENT_RICHNESS"
+      ]
+    },
+    {
+      "id": "OUTLINE_UNIFORM",
+      "name": "均匀实线同色系描边",
+      "source_block_id": "SxQIdNxuLonBN5xKqBVcJZfOnqf",
+      "source_quote": "描边：有，实线（无肌理，无粗细深浅变化）取临近色块更深一些的颜色。",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Draw clean solid outlines with consistent stroke width and opacity, no tapering, textured strokes or light-dark variation along a line. Choose a moderately darker color from the neighboring fill's color family rather than universal black.",
+      "review_criterion": "有实线描边、线宽与深浅均匀、无肌理；颜色取邻近色块较深色。"
+    },
+    {
+      "id": "COLOR_BRIGHT",
+      "name": "中饱和高明度少重色",
+      "source_block_id": "SCNwdHplCotJYcxSAPtcLiPen5d",
+      "source_quote": "色彩：鲜明，有些鲜艳（饱和度中度），干净明亮（明度高），深色重色较少。",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use clear cheerful colors with moderate saturation and high value. Keep the palette bright and clean with limited dark/heavy areas. Rebalance dark source objects into lighter chromatic colors while retaining recognizable color identity.",
+      "review_criterion": "中等饱和度、高明度、干净鲜明；限制大面积深色重色，避免荧光高饱和。"
+    },
+    {
+      "id": "MATERIAL_WEAK",
+      "name": "弱化材质高光反光",
+      "source_block_id": "Fr9xditghoEpgRxPEnIcns8snac",
+      "source_quote": "材质：弱或质感表达（高光+反光）。",
+      "applies_to": [
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use matte, restrained material rendering. Suppress mirror-like highlights, glossy bright rim strips and dense microtexture. Preserve solid form through restrained plane shading and small contact shadows, not specular gloss.",
+      "review_criterion": "按原文及弱体积/弱光影上下文，弱化高光、反光和材质表现；保留原文歧义。"
+    },
+    {
+      "id": "DETAIL_FLAT",
+      "name": "少细节无笔触肌理渐变",
+      "source_block_id": "JLWhdA3V2oMkkgxvIIVcfcibnAc",
+      "source_quote": "细节：较少，无笔触，无肌理，无渐变。",
+      "applies_to": [
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use a few clean color regions and limited detail. NO gradients, brush marks, noisy grain, mottling or painterly texture on independent assets. Distinct low-contrast cel-shaded planes, simple thickness bands and small contact-shadow shapes ARE allowed and needed to communicate volume; clean color regions do not mean a single flat silhouette.",
+      "review_criterion": "独立素材色块干净，少细节、无笔触和嘈杂肌理；少量低对比明暗面、厚度带和接触阴影可用于体积，不能因出现明暗面就判失败。"
+    },
+    {
+      "id": "LIGHTING_WEAK",
+      "name": "弱光影",
+      "source_block_id": "DcEkdqDJ0oK52tx4wUvcBd2jnv1",
+      "source_quote": "光影：较弱。",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use weak restrained lighting and minimal shadow contrast. Avoid dramatic light, rim light, bright reflections and strong ambient-occlusion shading.",
+      "review_criterion": "整体光影弱；没有强投影、亮边或强环境遮蔽。"
+    },
+    {
+      "id": "DESIGN_READABLE",
+      "name": "保持设计感与识别",
+      "source_block_id": "NJtvdkXLVoDusaxay7lcohhVnyd",
+      "source_quote": "设计：有一定的设计感。",
+      "applies_to": [
+        "background",
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Retain recognizable theme, object function and distinctive silhouette while simplifying incidental detail. Clean cartoon color regions must still describe solid shapes.",
+      "review_criterion": "简化后仍有明确造型、主题识别点和设计区分。"
+    },
+    {
+      "id": "BG_OPEN_EDGES",
+      "name": "地形边缘开放，尽量无围栏包边",
+      "source_kind": "user_feedback",
+      "source_feedback_id": "background-open-edges-20260910",
+      "source_block_id": null,
+      "source_quote": "然后关于扣出的背景图，地形上尽量不要有围栏和包边。类似于截图这种最好不要有",
+      "applies_to": [
+        "background"
+      ],
+      "enforcement": "required_visual_review",
+      "strength": "default_preference",
+      "prompt_en": "Keep terrain surfaces open and unobstructed. By default, avoid or remove fences, railings, low perimeter walls, parapets, boundary posts, raised curbs, coping stones, thick raised edge bands and decorative border wrapping around land parcels, shorelines, roads and platforms. Do not inherit them just because they appear in the Stage 1 image. Prefer the ground surface meeting its boundary directly. Keep the existing land/water silhouette and connectivity, minimal necessary vertical terrain side faces, and normal thin color-aware outlines. Retain bridge decks, supporting arches and bank connections, but do not automatically preserve bridge railings or ornamental parapets. This is a strong default preference, not a demand to delete all structural boundaries: where a minimal edge structure is genuinely needed for the terrain form, simplify it and document its purpose during review. Do not create gaps, change water coverage or erase terrain depth to remove a border.",
+      "review_criterion": "检查地块、水岸、道路、平台及桥两侧：是否仍有无必要的围栏、矮墙、栏杆、立柱、凸起路缘、连续石质压边或装饰包边。默认应去除或极简化；不要用粗亮边替代。正常细描边、清楚的地形分界、必要简化的高度侧面和桥体不属于应删除的包边。必要结构可保留，复核观察中说明位置与作用；没有凭“尽量”自动跳过该项。"
+    },
+    {
+      "id": "ASSET_OUTLINE_LOCAL",
+      "name": "逐部件邻近色描边",
+      "source_kind": "user_feedback",
+      "source_feedback_id": "asset-art-v2-20260911",
+      "source_block_id": null,
+      "source_quote": "描边：部分取色非临近色块更深一些的颜色。",
+      "applies_to": [
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "For EACH colored part, derive its outline from that immediately adjacent fill: slightly darker within the SAME hue family. Blue parts have deeper blue outlines; green parts deeper green; wood warm brown; ivory warm gray/beige; red parts deeper red. Change outline hue at material/color boundaries while keeping stroke width and opacity consistent. No single global black, brown or purple outline around a multi-colored object. No overly dark border or bright highlight border.",
+      "review_criterion": "逐部件检查外轮廓及内部结构线：取紧邻色块略深同色相，不能整件套同一种黑/棕/紫线；色区边界允许换线色，线宽透明度仍均匀。"
+    },
+    {
+      "id": "ASSET_VOLUME_READABLE",
+      "name": "克制但清楚的体积",
+      "source_kind": "user_feedback",
+      "source_feedback_id": "asset-art-v2-20260911",
+      "source_block_id": null,
+      "source_quote": "体积：部分缺少体积，纯平面。",
+      "applies_to": [
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Give the object CLEAR, restrained cartoon volume. Show top/front/side planes where appropriate, readable roof/wall thickness, curved body mass and overlap. Use a small set of low-contrast light/base/shadow color shapes with consistent gentle lighting and a little local contact shading. It must read as a solid object, NOT a flat icon, paper sticker or cardboard cutout. Avoid heavy 3D modeling, deep black occlusion, glossy rims and ground cast shadows outside the object.",
+      "review_criterion": "有清楚厚度、转折面、前后遮挡或圆润体积；不能纯平面贴片。允许低对比明暗面与少量接触阴影，避免厚重3D、强黑影、亮边与大面积外部投影。"
+    },
+    {
+      "id": "ASSET_FORM_EXAGGERATION",
+      "name": "可识别的卡通夸张变形",
+      "source_kind": "user_feedback",
+      "source_feedback_id": "asset-art-v2-20260911",
+      "source_block_id": null,
+      "source_quote": "造型：增加一些夸张变形。",
+      "applies_to": [
+        "building",
+        "vehicle",
+        "facility",
+        "character"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Add deliberate, visible cartoon exaggeration while preserving identity and function. Select a few defining proportions: oversized curved roof or entrance, chunky compact architecture, slightly enlarged wheels or cabin, a fuller prop silhouette, or large expressive head with short chibi body. Use playful rounded or gently tapered forms. Do not merely trace the source or erase detail into a generic icon; do not break supports, wheel geometry, joints, anatomy or connections.",
+      "review_criterion": "有可辨的比例与轮廓夸张，如屋顶/门洞/轮子/头部放大、主体更紧凑或圆润；不是只改颜色或机械描摹，也不破坏支撑、关节及功能连接。"
+    },
+    {
+      "id": "BG_ENVIRONMENT_RICHNESS",
+      "name": "保留植被与环境细节",
+      "source_kind": "user_feedback",
+      "source_feedback_id": "background-richness-20260911",
+      "source_block_id": null,
+      "source_quote": "但是现在生成的底图，是不是过于简化了？主要是河流的细节；树木也不能去掉",
+      "applies_to": [
+        "background"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Keep original trees, canopy, roots, natural shrubs, reeds and integrated vegetation in their source locations. Preserve gentle water flow lines, irregular shoreline foam, waterfall spray and soft environmental tonal variation. Retain natural terrain depth and soft cloud volume. Do not make a bare flat-color map or replace removed buildings with invented forests. This background-specific user rule allows environmental gradients and water texture; the independent-asset flat-fill restrictions do not apply to backgrounds.",
+      "review_criterion": "原有树木与自然植被保留；河流水纹泡沫、瀑布及柔和环境层次可读。去建筑人物道具，不抹平环境，也不随意填入新森林或改河道。"
+    },
+    {
+      "id": "BG_VOLUME_BALANCED",
+      "name": "正式版背景适中体积",
+      "source_kind": "user_feedback",
+      "source_feedback_id": "formal-release-20260914",
+      "source_block_id": null,
+      "source_quote": "关于背景图的话，调整体积到v2和v3之间的版本",
+      "applies_to": [
+        "background"
+      ],
+      "enforcement": "required_visual_review",
+      "prompt_en": "Use balanced, moderate cartoon volume for the BACKGROUND. Make terrain rises, bank and cliff side faces, rocks, bridge decks and arches, tree trunks and canopy masses clearly readable through gentle plane transitions, soft low-to-moderate value contrast and small local contact shadows. Preserve the source terrain scale, silhouette, river connectivity and vegetation locations; adjust rendering depth rather than exaggerating terrain height or changing layout. Keep water flow lines, shoreline foam and waterfalls. Soft environmental gradients are allowed. Avoid both a bare flat-color map and heavy sculpted 3D relief, deep black occlusion, harsh cast shadows or glossy bright rims. Keep necessary structural thickness without adding perimeter walls or decorative edging.",
+      "review_criterion": "背景有清楚但适中的地形起伏、岸壁侧面、岩石、桥体和树木体积；明暗柔和，不扁平也不厚重。不通过抬高地形、改河道或增加围栏来强化体积；树木、水纹泡沫和自然层次保留。此项只适用于背景，不改变物件V2规则。"
+    }
+  ],
+  "feedback_sources": [
+    {
+      "id": "background-open-edges-20260910",
+      "title": "背景地形尽量不设围栏与包边",
+      "snapshot": "../docs/feedback/background-open-edges-20260910.json",
+      "snapshot_sha256": "ab2bbb5ede4c3fbcc01bd1e35297e1afbfe225347847671e671e731c42b10eef"
+    },
+    {
+      "id": "asset-art-v2-20260911",
+      "title": "asset-art-v2-20260911",
+      "snapshot": "../docs/feedback/asset-art-v2-20260911.json",
+      "snapshot_sha256": "0e65d91888cfc5e7c1e09a4f08925c933d321a3d409b1f1f73042d46de0b5bdd"
+    },
+    {
+      "id": "background-richness-20260911",
+      "title": "background-richness-20260911",
+      "snapshot": "../docs/feedback/background-richness-20260911.json",
+      "snapshot_sha256": "8be92e226b012905e6836c5097af59e88fba53ac15aaf9440f75ac3cb37cb7ef"
+    },
+    {
+      "id": "formal-release-20260914",
+      "title": "正式版：背景适中体积，物件沿用V2",
+      "snapshot": "../docs/feedback/formal-release-20260914.json",
+      "snapshot_sha256": "8172c1decb7c98c81572f169b6e6ad5da4856e2eff5e3ed9c796e357497ee1f1"
+    }
+  ]
+}

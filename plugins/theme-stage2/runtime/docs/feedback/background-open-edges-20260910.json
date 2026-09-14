@@ -1,0 +1,21 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "background-open-edges-20260910",
+  "recorded_at": "2026-09-10T08:36:17.426849+00:00",
+  "source_kind": "user_message",
+  "quote": "然后关于扣出的背景图，地形上尽量不要有围栏和包边。类似于截图这种最好不要有",
+  "scope": "background only",
+  "strength": "default preference; not an absolute zero-edge geometry constraint",
+  "interpretation": "地表尽量保持开放，不沿地块、水岸、道路或平台反复画围栏、矮墙、护栏、凸起路缘、厚石质压边或装饰包边。保留清楚的地形分界、必要且简化的高度侧面、桥面桥洞与接岸关系，以及正常细描边。",
+  "reference_image": {
+    "file": "background-open-edges-avoid.png",
+    "sha256": "44b6800b7cdf45424a8ee24235d7ab81a247868ee3e196c1175f16421d114d80",
+    "role": "negative_example_for_policy_review_only",
+    "generation_input": false
+  },
+  "observations": [
+    "地块与广场周边有连续凸起石质矮墙及压边。",
+    "部分地块内部也有分隔围挡。",
+    "桥两侧有连续栏杆与立柱，应默认尽量移除；桥体和连接关系需保留。"
+  ]
+}

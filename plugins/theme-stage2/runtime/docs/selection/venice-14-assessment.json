@@ -1,0 +1,33 @@
+{
+  "schema": "stage2.selection-assessment.v1",
+  "policy_id": "representative-assets",
+  "policy_version": "1.0.0",
+  "state": "within_target",
+  "selected_asset_entries": 14,
+  "distinct_asset_prototypes": 14,
+  "background_count": 1,
+  "background_in_asset_count": false,
+  "target": {
+    "minimum_target": 12,
+    "maximum_target": 15,
+    "recommended": 14,
+    "unit": "distinct reusable asset prototype",
+    "range_is_target_not_forced_minimum": true
+  },
+  "category_counts": {
+    "building": 4,
+    "vehicle": 3,
+    "facility": 4,
+    "character": 3
+  },
+  "recommended_allocation": {
+    "building": 4,
+    "vehicle": 3,
+    "facility": 4,
+    "character": 3
+  },
+  "duplicate_prototypes": {},
+  "blocking_issues": [],
+  "notes": [],
+  "scope": "Selection planning only; no automatic visual deduplication or image generation."
+}

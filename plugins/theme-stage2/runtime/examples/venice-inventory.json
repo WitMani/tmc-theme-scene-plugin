@@ -1,0 +1,107 @@
+{
+  "scope": "Existing Venice C pilot: eight representative asset prototypes and one background; not a complete scene inventory.",
+  "items": [
+    {
+      "id": "building-house",
+      "name": "粉色民居",
+      "category": "building",
+      "identity_brief": "A narrow salmon-pink Venetian house with a terra-cotta gable roof, arched green door, a few arched windows and simple attached flowerboxes.",
+      "source_bbox": [
+        350,
+        275,
+        559,
+        550
+      ]
+    },
+    {
+      "id": "building-belltower",
+      "name": "钟楼",
+      "category": "building",
+      "identity_brief": "A slender salmon-colored Venetian bell tower with a teal pyramidal spire, cream belfry framing, a bronze bell and a simple stone base.",
+      "source_bbox": [
+        1015,
+        177,
+        1159,
+        607
+      ]
+    },
+    {
+      "id": "vehicle-gondola",
+      "name": "空贡多拉",
+      "category": "vehicle",
+      "identity_brief": "One empty Venetian gondola with a curved blue hull, restrained gold-colored rim, red seat and wood interior. Remove its living rider and handheld oar.",
+      "source_bbox": [
+        373,
+        620,
+        520,
+        733
+      ]
+    },
+    {
+      "id": "vehicle-waterbus",
+      "name": "空水上巴士",
+      "category": "vehicle",
+      "identity_brief": "One empty Venetian waterbus with a rounded cream canopy, open-sided cabin, simple seats, cream sides and a blue hull with a red stripe. Remove passengers.",
+      "source_bbox": [
+        173,
+        433,
+        373,
+        585
+      ]
+    },
+    {
+      "id": "facility-fountain",
+      "name": "鹅雕像喷泉",
+      "category": "facility",
+      "identity_brief": "A circular cream stone fountain with contained turquoise water and a central goose sculpture on a pedestal; the sculpture belongs to the fountain. Exclude surrounding planters.",
+      "source_bbox": [
+        915,
+        650,
+        1062,
+        817
+      ]
+    },
+    {
+      "id": "facility-lamp",
+      "name": "单头路灯",
+      "category": "facility",
+      "identity_brief": "One upright slender teal-blue Venetian street lamp with a single warm yellow lantern and a complete simple base.",
+      "source_bbox": [
+        833,
+        600,
+        878,
+        749
+      ]
+    },
+    {
+      "id": "character-mask",
+      "name": "面具鹅",
+      "category": "character",
+      "identity_brief": "One cream-white goose in a red-and-gold Venetian carnival mask and costume, orange beak and webbed feet. Keep its mask identity while simplifying the outfit.",
+      "source_bbox": [
+        1128,
+        303,
+        1200,
+        408
+      ]
+    },
+    {
+      "id": "character-gondolier",
+      "name": "船夫鹅",
+      "category": "character",
+      "identity_brief": "One goose gondolier with a straw boater hat and red band, navy-and-white striped shirt, red neckerchief, orange beak and webbed feet. Complete the body hidden by its boat.",
+      "source_bbox": [
+        433,
+        613,
+        479,
+        681
+      ]
+    },
+    {
+      "id": "background",
+      "name": "空背景",
+      "category": "background",
+      "identity_brief": "The Venice canal network, pale stone paved quays, stone embankments and four fixed arch bridges. Remove all independent buildings, boats, characters, movable facilities and vegetation."
+    }
+  ]
+}

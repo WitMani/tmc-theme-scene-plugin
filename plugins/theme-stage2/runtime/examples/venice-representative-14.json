@@ -1,0 +1,280 @@
+{
+  "scope": "User-confirmed representative Venice selection: 14 distinct asset prototypes plus one separate background. Art remains subject to generation and visual acceptance.",
+  "selection_status": "user_confirmed_plan",
+  "background_counts_toward_asset_budget": false,
+  "items": [
+    {
+      "id": "building-house",
+      "name": "粉色民居",
+      "category": "building",
+      "identity_brief": "A narrow salmon-pink Venetian house with a terra-cotta gable roof, arched green door, a few arched windows and simple attached flowerboxes.",
+      "source_bbox": [
+        350,
+        275,
+        559,
+        550
+      ],
+      "prototype_key": "building_house",
+      "selection_reason": "代表普通临河民居；保留一款，不把其他墙色另算。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "building-awning-shop",
+      "name": "带棚店铺",
+      "category": "building",
+      "prototype_key": "awning_shop",
+      "identity_brief": "The yellow Venetian shop beside the central pink house, with a red pitched roof, green shutters and a blue ground-floor shop canopy. Exclude the neighboring pink house and foreground trees.",
+      "source_bbox": [
+        475,
+        265,
+        683,
+        540
+      ],
+      "selection_reason": "通过底层营业雨棚与店面结构区分普通民居，不按墙面颜色凑一种。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "building-arcade",
+      "name": "拱廊楼",
+      "category": "building",
+      "prototype_key": "arcade_building",
+      "identity_brief": "The tall pale pink Venetian building with a row of open stone arcades at ground level along the upper-right image edge. Keep the arcade building only, exclude the foreground bell tower and adjacent houses, and complete the part cropped by the frame.",
+      "source_bbox": [
+        1088,
+        0,
+        1254,
+        347
+      ],
+      "selection_reason": "以地面层柱廊和连续拱门提供不同建筑轮廓；原图有边缘裁切，后续只补全必要隐蔽部分。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "partly_cropped"
+      }
+    },
+    {
+      "id": "building-belltower",
+      "name": "钟楼",
+      "category": "building",
+      "identity_brief": "A slender salmon-colored Venetian bell tower with a teal pyramidal spire, cream belfry framing, a bronze bell and a simple stone base.",
+      "source_bbox": [
+        1015,
+        177,
+        1159,
+        607
+      ],
+      "prototype_key": "building_belltower",
+      "selection_reason": "地标建筑，竖向轮廓与普通房屋明显区分。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "vehicle-gondola",
+      "name": "空贡多拉",
+      "category": "vehicle",
+      "identity_brief": "One empty Venetian gondola with a curved blue hull, restrained gold-colored rim, red seat and wood interior. Remove its living rider and handheld oar.",
+      "source_bbox": [
+        373,
+        620,
+        520,
+        733
+      ],
+      "prototype_key": "vehicle_gondola",
+      "selection_reason": "威尼斯主题核心交通工具。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "vehicle-waterbus",
+      "name": "空水上巴士",
+      "category": "vehicle",
+      "identity_brief": "One empty Venetian waterbus with a rounded cream canopy, open-sided cabin, simple seats, cream sides and a blue hull with a red stripe. Remove passengers.",
+      "source_bbox": [
+        173,
+        433,
+        373,
+        585
+      ],
+      "prototype_key": "vehicle_waterbus",
+      "selection_reason": "有顶棚的公共水上交通，与小船区别明确。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "vehicle-sailboat",
+      "name": "小帆船",
+      "category": "vehicle",
+      "prototype_key": "small_sailboat",
+      "identity_brief": "The small warm-brown sailboat in the lower-right canal, with a tall cream triangular sail and a curved blue lower hull. Separate its goose occupant and remove water or wakes.",
+      "source_bbox": [
+        850,
+        852,
+        1003,
+        1087
+      ],
+      "selection_reason": "帆、桅杆和船身轮廓与贡多拉及水上巴士明显不同。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "facility-fountain",
+      "name": "鹅雕像喷泉",
+      "category": "facility",
+      "identity_brief": "A circular cream stone fountain with contained turquoise water and a central goose sculpture on a pedestal; the sculpture belongs to the fountain. Exclude surrounding planters.",
+      "source_bbox": [
+        915,
+        650,
+        1062,
+        817
+      ],
+      "prototype_key": "facility_fountain",
+      "selection_reason": "广场核心设施，雕像与水盆保持为一个完整功能资产。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "facility-lamp",
+      "name": "单头路灯",
+      "category": "facility",
+      "identity_brief": "One upright slender teal-blue Venetian street lamp with a single warm yellow lantern and a complete simple base.",
+      "source_bbox": [
+        833,
+        600,
+        878,
+        749
+      ],
+      "prototype_key": "facility_lamp",
+      "selection_reason": "公共照明设施，只选一款代表性路灯。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "facility-bench",
+      "name": "长椅",
+      "category": "facility",
+      "prototype_key": "public_bench",
+      "identity_brief": "One wooden park bench with a slatted warm-brown seat and backrest and curved teal metal legs, from the upper-right plaza. Exclude nearby birds and paving.",
+      "source_bbox": [
+        958,
+        124,
+        1035,
+        192
+      ],
+      "selection_reason": "补充可复用的休憩设施，采用一款完整长椅，不按重复实例计数。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "facility-mooring-pole",
+      "name": "系船柱",
+      "category": "facility",
+      "prototype_key": "striped_mooring_pole",
+      "identity_brief": "One freestanding red-and-cream striped Venetian mooring pole with a small ochre cap at the central-left quay. Include the complete pole and exclude the quay, water and nearby house.",
+      "source_bbox": [
+        390,
+        473,
+        430,
+        585
+      ],
+      "selection_reason": "水城主题识别度高的小型设施；从背景独立拆出，便于按需放置。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "character-gondolier",
+      "name": "船夫鹅",
+      "category": "character",
+      "identity_brief": "One goose gondolier with a straw boater hat and red band, navy-and-white striped shirt, red neckerchief, orange beak and webbed feet. Complete the body hidden by its boat.",
+      "source_bbox": [
+        433,
+        613,
+        479,
+        681
+      ],
+      "prototype_key": "character_gondolier",
+      "selection_reason": "船夫职业身份明确，与空贡多拉分别计为两个独立资产。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "character-mask",
+      "name": "面具鹅",
+      "category": "character",
+      "identity_brief": "One cream-white goose in a red-and-gold Venetian carnival mask and costume, orange beak and webbed feet. Keep its mask identity while simplifying the outfit.",
+      "source_bbox": [
+        1128,
+        303,
+        1200,
+        408
+      ],
+      "prototype_key": "character_mask",
+      "selection_reason": "面具和服装具有鲜明主题辨识度。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "character-painter",
+      "name": "画家鹅",
+      "category": "character",
+      "prototype_key": "painter_goose",
+      "identity_brief": "The goose painter near the easel in the right-center plaza, wearing a blue beret and holding a small paintbrush or palette. Keep the character and handheld tools only; exclude the separate easel, lamp and ground.",
+      "source_bbox": [
+        761,
+        672,
+        812,
+        750
+      ],
+      "selection_reason": "与船夫和面具鹅具有不同职业服饰及手持工具，角色差异明确。",
+      "source_evidence": {
+        "present": true,
+        "basis": "manual observation of the sole Venice Stage 1 image; approximate source crop",
+        "visibility": "visible_or_partly_occluded"
+      }
+    },
+    {
+      "id": "background",
+      "name": "空背景",
+      "category": "background",
+      "identity_brief": "The Venice canal network, pale stone paved quays, stone embankments and four fixed arch bridges. Remove all independent buildings, boats, characters, movable facilities and vegetation.",
+      "prototype_key": "background"
+    }
+  ]
+}

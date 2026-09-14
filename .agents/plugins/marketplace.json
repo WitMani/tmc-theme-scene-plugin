@@ -1,0 +1,32 @@
+{
+  "name": "tmc-theme-scene",
+  "interface": {
+    "displayName": "Tmc Theme Scene"
+  },
+  "plugins": [
+    {
+      "name": "theme-scene-studio",
+      "source": {
+        "source": "local",
+        "path": "./plugins/theme-scene-studio"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "theme-stage2",
+      "source": {
+        "source": "local",
+        "path": "./plugins/theme-stage2"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

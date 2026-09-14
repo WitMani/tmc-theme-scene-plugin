@@ -1,0 +1,21 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "formal-release-20260914",
+  "scope": [
+    "background",
+    "building",
+    "vehicle",
+    "facility",
+    "character"
+  ],
+  "source_kind": "explicit_user_message",
+  "quotes": [
+    "将v2的版本 微调一下 就整理成正式版",
+    "关于背景图的话，调整体积到v2和v3之间的版本",
+    "物件的话就使用v2的逻辑",
+    "先更新插件规则",
+    "我指的是背景的体积"
+  ],
+  "interpretation": "正式规则以素材V2（profile1.2.0）为基线，物件规则和生成逻辑保持原样。背景单独采用适中体积：地形、岸壁、岩石、桥体与植被的厚度可读，柔和低至中等对比，避免平涂或厚重雕塑感。文档V3背景复用V2，故不声称存在两张不同背景或可测量的中点；不设50%等数值阈值。此次仅更新插件，不重生成或替换文档图片。",
+  "precedence": "User-approved formal rules supersede background volume interpretation only; V3 per-run negative-reference prompts are not promoted into defaults."
+}

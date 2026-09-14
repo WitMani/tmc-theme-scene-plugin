@@ -1,0 +1,18 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "asset-art-v2-20260911",
+  "scope": [
+    "building",
+    "vehicle",
+    "facility",
+    "character"
+  ],
+  "source_kind": "explicit_user_message",
+  "quotes": [
+    "描边：部分取色非临近色块更深一些的颜色。",
+    "体积：部分缺少体积，纯平面。",
+    "造型：增加一些夸张变形。"
+  ],
+  "interpretation": "逐部件选临近填色略深同色相描边；体积须可读但克制，以少量明暗面、厚度和局部接触阴影表现，不能压平为贴纸；造型有可辨的卡通夸张，同时保持结构功能与主题身份。用户未新增数值阈值。",
+  "precedence": "Supersedes earlier interpretation that weak volume means no visible volume; no change to the original Feishu quotations."
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "stage2.selection-policy.v1",
+  "id": "representative-assets",
+  "version": "1.1.0",
+  "source": {
+    "kind": "user_feedback",
+    "snapshot": "../docs/feedback/representative-selection-confirmed-20260910.json",
+    "snapshot_sha256": "7097d404130dd8301c1f8d070517340be2615428ac9b971c4b825b6824a8ac09",
+    "quote": "可以 就按照这个 那以后呢"
+  },
+  "asset_count": {
+    "minimum_target": 12,
+    "maximum_target": 15,
+    "recommended": 14,
+    "unit": "distinct reusable asset prototype",
+    "range_is_target_not_forced_minimum": true
+  },
+  "background": {
+    "recommended_count": 1,
+    "counts_toward_asset_budget": false
+  },
+  "recommended_allocation": {
+    "building": 4,
+    "vehicle": 3,
+    "facility": 4,
+    "character": 3
+  },
+  "allocation_is_flexible": true,
+  "allocation_origin": "user_confirmed_default",
+  "priorities": [
+    "clear theme identity",
+    "distinct silhouette or function",
+    "readable evidence in the sole Stage 1 source",
+    "useful as a reusable independent object",
+    "reasonable completion effort"
+  ],
+  "deduplication": [
+    "Repeated instances of the same object use one prototype.",
+    "Color-only variants, mirrors and alternate placements do not fill new prototype slots.",
+    "Attached architectural details stay with their parent object unless independently needed."
+  ],
+  "exclusions": [
+    "incidental flowers, rubble and micro-decoration",
+    "redundant color-only house variants",
+    "fences and decorative terrain-edge bands by default",
+    "unidentifiable fragments requiring invented object identity"
+  ],
+  "shortfall_policy": "Prefer fewer source-supported prototypes and report the shortfall; never invent unseen assets to reach 12. Reallocate missing category slots to distinct observed prototypes when available.",
+  "semantic_deduplication": "Manual/vision-authored prototype_key; this checker does not infer duplicate shapes from pixels.",
+  "confirmation_status": "confirmed"
+}

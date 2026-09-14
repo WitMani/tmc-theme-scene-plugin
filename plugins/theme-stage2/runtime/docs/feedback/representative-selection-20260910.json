@@ -1,0 +1,8 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "representative-selection-20260910",
+  "source_kind": "user_message",
+  "quote": "我觉得不是每一个素材都要  我们可以制定一下种类 我觉得输出12-15个素材应该是差不多",
+  "scope": "inventory selection; not rendering style",
+  "interpretation": "选择代表性素材原型，目标12–15个；默认建议14个，背景另计1张。类别分配4/3/4/3为助手提出的可调整建议，不是用户固定配额。"
+}

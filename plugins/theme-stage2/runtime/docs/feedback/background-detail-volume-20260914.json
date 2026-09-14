@@ -1,0 +1,15 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "background-detail-volume-20260914",
+  "scope": [
+    "background"
+  ],
+  "source_kind": "explicit_user_message",
+  "quotes": [
+    "我需要改的是细节和体积感，也就是细节和体积感 应该是在v2和v3之间",
+    "那将你刚刚生成的背景 替换成 修改后的版本",
+    "同步修改"
+  ],
+  "interpretation": "同步已用于7张修改背景的双维度调整：背景细节密度与体积明暗同时收敛。合并叶簇、减少树皮草纹颗粒与重复砖木缝；保留树木位置、主要植被、水流泡沫瀑布、地形与桥体结构。体积以较少低对比宽色面呈现，减少深褶、多重分面和亮边，不变成裸地平涂。不编造V2/V3数值中点；物件沿用V2。",
+  "precedence": "Refines formal profile1.3.0 background volume and adds a required independent background-detail check; preserves asset V2 logic."
+}
