@@ -6,7 +6,7 @@
 Create one complete casual-game scene in the requested theme.
 
 REFERENCE AND PRIORITIES
-The supplied reference group contains [N: 1, 2 or 3] images. Reference 1 is the primary source for the art style, camera and proportions; additional references supplement compatible shape and structural details. Follow any explicit roles below. The reference group is the reference for the drawing language, camera, shape proportions, character-to-building scale, structural detail density, and stylized surface treatment. Preserve its coherent game-asset appearance. Apply the outline, palette, and material refinements below even where the references use black contours, heavy dark colors, or strong highlights.
+The supplied reference group contains [N: 1, 2 or 3] images. Reference 1 is the primary source for the art style, camera and proportions; additional references supplement compatible shape and structural details. Follow any explicit roles below. The reference group is the reference for the drawing language, camera, shape proportions, character-to-building scale, structural detail density, and stylized surface treatment. Preserve its coherent game-asset appearance. Apply the fixed orthographic camera rule and the outline, palette, and material refinements below even where the references show perspective convergence, black contours, heavy dark colors, or strong highlights.
 Reference roles and observed characteristics: [identify each input image in order, its role, common traits, and primary-image traits].
 
 THEME
@@ -17,7 +17,13 @@ Vehicles: [elements].
 Props and environment: [elements].
 World organization: [only the necessary theme-appropriate land, water, circulation and elevation design].
 
-The theme may reshape the background, terrain, roads, waterways, parcels and building arrangement. Preserve the reference camera type and requested framing, not its exact terrain topology. Keep a consistent family of recognizable assets, readable gaps, appropriate repetition, and small character proportions. Retain meaningful architectural features and moderate rounded volume while controlling incidental decoration.
+The theme may reshape the background, terrain, roads, waterways, parcels and building arrangement. Use the fixed elevated orthographic camera defined below and preserve the requested framing, not the exact reference terrain topology. Keep a consistent family of recognizable assets, readable gaps, appropriate repetition, and small character proportions. Retain meaningful architectural features and moderate rounded volume while controlling incidental decoration.
+
+FIXED CAMERA
+Use a fixed elevated oblique orthographic projection that shows both the tops and sides of objects. Parallel edges must not converge toward vanishing points, and comparable objects must remain approximately the same size regardless of distance. Keep exactly the same camera orientation and elevation angle across candidates A, B and C. Change layouts, not the viewing direction, camera tilt or perspective. Shared camera description: [one consistent orientation and elevation description, reused verbatim across all three candidates].
+
+GOOSE CHARACTER DESIGN — WHEN APPLICABLE
+If the requested characters are geese, favor a chubby, big-round-headed goose design: a large rounded head, a plump compact feathered body, a short but recognizable goose neck, a simple readable goose beak, and small webbed feet. Use restrained costume and prop changes for different roles. Keep the same goose proportions across candidates. Avoid slender realistic geese or human-bodied characters. The enlarged head is an internal character proportion; keep the overall character small relative to buildings. Do not apply goose anatomy to themes that explicitly request other species.
 
 COLOR-AWARE OUTLINES
 Use clean, consistent outlines whose hues are derived from the neighboring fill colors. Prefer a moderately darker, chromatic shade of the local color family over uniform black contours. Choose a boundary color with enough contrast to separate adjacent objects. Keep outer contours readable and interior structural lines restrained. Do not remove outlines.
@@ -37,3 +43,5 @@ Maintain coherent large color fields and consistent lighting across the canvas. 
 保持相同参考组；默认第一张主导，共性优先，不平均混合不兼容画风。输入只有一张时删除additional references等不适用句子。不要把占位符直接发给生成器。斑驳是后续事项，不视为已解决。
 
 默认图是实际图片输入，不是纯文本模式。使用默认图时 N=1，并在参考角色中说明它是内置河畔村落画风参考；不要继承其中人类角色，目标角色依主题定义。文件路径按 SKILL.md 所在目录解析，并通过图像工具的图片引用参数传入。
+
+三个候选必须复用同一段具体镜头描述；不要给A/B/C分别设置不同的朝向或俯角。胖头鹅约束只在主题角色是鹅时适用，优先于参考图中的细长鹅或人类比例。

@@ -1,6 +1,6 @@
 # 三候选设计
 
-同一主题的三张都使用同一参考组、最终C三项优化、同一主题清单、同一画幅和可比角色尺度。候选变化主要发生在空间布局和建筑群组织。候选方案是可按主题调整的设计建议，不硬编码河流或某种地形。
+同一主题的三张都使用同一参考组、最终C三项优化、同一主题清单、同一画幅、同一斜俯视正交镜头朝向与俯角和可比角色尺度；鹅角色保持同一胖头鹅比例。候选变化主要发生在空间布局和建筑群组织。候选方案是可按主题调整的设计建议，不硬编码河流或某种地形。
 
 - **A — 均衡分布**：多个规模相近的建筑群与清晰的连接通路；均匀分配主题元素。
 - **B — 局部聚集**：一个适度聚集的活动区与周边建筑群，留出通路；不让地标变为巨大主体。
@@ -12,7 +12,7 @@
 
 ```text
 CANDIDATE [A / B / C]
-Keep the same theme vocabulary, reference-derived art style, color-aware outlines, light chromatic palette, restrained material response, framing and relative object scale as the other candidates.
+Keep the same theme vocabulary, reference-derived art style, color-aware outlines, light chromatic palette, restrained material response, framing, fixed elevated orthographic camera orientation and elevation angle, and relative object scale as the other candidates. If characters are geese, reuse the same chubby big-round-headed goose proportions. Do not rotate or tilt the camera to create a variant.
 For this candidate, organize the world as follows: [specific spatial design].
 Make the arrangement meaningfully different through parcel shapes, cluster positions and circulation, while keeping a comparable detail budget and no oversized centerpiece.
 Produce one standalone finished scene, not a contact sheet or a multi-panel image.
