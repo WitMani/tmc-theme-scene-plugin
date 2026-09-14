@@ -1,0 +1,123 @@
+{
+  "theme": "东方水墨仙境",
+  "profile_version": "1.4.0",
+  "asset_logic": "V2",
+  "recorded_date": "2026-09-14",
+  "generation": "Codex built-in image tool, independent calls per object; existing run, no new generation for documentation",
+  "image_processing": "Selected real-alpha PNGs copied without re-encoding",
+  "input": {
+    "file": "input.png",
+    "sha256": "a10caed0dcd748497cb78a89989eb14be321ce870e50fe034cff0eb8d63fba23"
+  },
+  "background": {
+    "file": "background.png",
+    "sha256": "ba0605f097f1c2f476ea42a417f5edf2201b2d0cd79d1e26024e584ed8158c41",
+    "review_failed_rules": []
+  },
+  "assets": [
+    {
+      "id": "building-01",
+      "name": "竹屋",
+      "file": "assets/building-01.png",
+      "sha256": "757c1157f7e567770d7328eca4d17ced63a0c7fae3b1b9bfc33ca491b1e41424",
+      "review_failed_rules": []
+    },
+    {
+      "id": "building-02",
+      "name": "山间凉亭",
+      "file": "assets/building-02.png",
+      "sha256": "d8b7bd2bbaa95b37917f8b3df02dc698335080eafafdea43fdde92bb4014644b",
+      "review_failed_rules": []
+    },
+    {
+      "id": "building-03",
+      "name": "双层寺庙",
+      "file": "assets/building-03.png",
+      "sha256": "b6ca1618f484582434554ae164feb37d814f1ebb93d4fa88635a5249e3f4f45c",
+      "review_failed_rules": [
+        "MATERIAL_WEAK"
+      ]
+    },
+    {
+      "id": "building-04",
+      "name": "山村集市棚",
+      "file": "assets/building-04.png",
+      "sha256": "1e6129ed1fa21f8ffeca2b4c8bb422580f708254e3ae70ee5efd0cd0539bb5bc",
+      "review_failed_rules": [
+        "MATERIAL_WEAK"
+      ]
+    },
+    {
+      "id": "vehicle-01",
+      "name": "竹筏",
+      "file": "assets/vehicle-01.png",
+      "sha256": "667ab9fb3d4bcd6b64132fc6331840ca9c3f2ca0f602e6bfe216c71710bf6346",
+      "review_failed_rules": []
+    },
+    {
+      "id": "vehicle-02",
+      "name": "篷船",
+      "file": "assets/vehicle-02.png",
+      "sha256": "42671ffb84bee47e1c1561d8ccfdd203a55474d1f4115c6ebfee263bb066ed2a",
+      "review_failed_rules": []
+    },
+    {
+      "id": "vehicle-03",
+      "name": "仙鹤坐骑",
+      "file": "assets/vehicle-03.png",
+      "sha256": "763ddaf4172cdaeaba81f6bec82dda521cea4d3d828e34927e6987103d1c36e5",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-01",
+      "name": "石灯笼",
+      "file": "assets/facility-01.png",
+      "sha256": "72758fcf5476ea99c189f0bce20335ba97ec8e7e7310dee89d86656b5be649d1",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-02",
+      "name": "石狮",
+      "file": "assets/facility-02.png",
+      "sha256": "9432555ce03ca9c11f99f9db4a97296320a7dda9a3d35c02f52ac5e6bd7c7c1c",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-03",
+      "name": "石茶桌",
+      "file": "assets/facility-03.png",
+      "sha256": "3904835bb5268b39235b7bd6192df74b10e4a4e89586e79a5f1a78ebc5f0da8e",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-04",
+      "name": "竹长椅",
+      "file": "assets/facility-04.png",
+      "sha256": "5c1f7423d3ab4c04290c14d1286e4f71706c1e81d5a8d0cf31aeb80e02061719",
+      "review_failed_rules": []
+    },
+    {
+      "id": "character-01",
+      "name": "斗笠船夫鹅",
+      "file": "assets/character-01.png",
+      "sha256": "eb11bd4d443a40328e10ac2ceeabdeb2f669e1ba86a29cfc78b66e28f7cbe748",
+      "review_failed_rules": []
+    },
+    {
+      "id": "character-02",
+      "name": "僧侣鹅",
+      "file": "assets/character-02.png",
+      "sha256": "011d895bee370fe84ee4a4f613ed3b10f63d9ac42e9ff167b1815322e4e6686c",
+      "review_failed_rules": [
+        "CHAR_TWO_HEADS"
+      ]
+    },
+    {
+      "id": "character-03",
+      "name": "琴师鹅",
+      "file": "assets/character-03.png",
+      "sha256": "98b99f9ba39eb6bec19af78be8b372777a28db5569ae660a2af3d4b761e529f1",
+      "review_failed_rules": []
+    }
+  ]
+}

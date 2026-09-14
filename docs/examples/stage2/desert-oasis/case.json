@@ -1,0 +1,126 @@
+{
+  "theme": "沙漠绿洲集市",
+  "profile_version": "1.4.0",
+  "asset_logic": "V2",
+  "recorded_date": "2026-09-14",
+  "generation": "Codex built-in image tool, independent calls per object; existing run, no new generation for documentation",
+  "image_processing": "Selected real-alpha PNGs copied without re-encoding",
+  "input": {
+    "file": "input.png",
+    "sha256": "4295048c41736983a41a0806ea8149f36f60a95381b0fb0285b8470b1bf5f1f1"
+  },
+  "background": {
+    "file": "background.png",
+    "sha256": "3ec315b162f4c77549391fae977605da492d229e19b1eba6fded64131f5126a1",
+    "review_failed_rules": []
+  },
+  "assets": [
+    {
+      "id": "building-01",
+      "name": "平顶土屋",
+      "file": "assets/building-01.png",
+      "sha256": "c0604df4d3bd64f4910cb43e667f84ee3e7d80a4c663e51008c15bd75fa61916",
+      "review_failed_rules": []
+    },
+    {
+      "id": "building-02",
+      "name": "穹顶塔楼",
+      "file": "assets/building-02.png",
+      "sha256": "b709da120540d522d9256a15a2575615103e48b1f655a4e658ab2858a9b90b54",
+      "review_failed_rules": []
+    },
+    {
+      "id": "building-03",
+      "name": "集市帐篷",
+      "file": "assets/building-03.png",
+      "sha256": "9b567c2b2dc493f8dcb1d97362efb5501b5a67cd19bda55b3ba92e383e71927e",
+      "review_failed_rules": [
+        "ASSET_OUTLINE_LOCAL"
+      ]
+    },
+    {
+      "id": "building-04",
+      "name": "橙篷商铺",
+      "file": "assets/building-04.png",
+      "sha256": "8c7f500de235d83b1ab2299c7071a3917ad11561bcb63f841c8d8486408688c5",
+      "review_failed_rules": []
+    },
+    {
+      "id": "vehicle-01",
+      "name": "绿洲帆船",
+      "file": "assets/vehicle-01.png",
+      "sha256": "ec038e09facfce25ea36b9622317b8504b4e4f29f0811820ab149f4e50f2bab8",
+      "review_failed_rules": []
+    },
+    {
+      "id": "vehicle-02",
+      "name": "载货骆驼",
+      "file": "assets/vehicle-02.png",
+      "sha256": "773bb44b69732925815ff9780e1b7ac68a5af35d6c4c7b0e7476d6b0a0ac250e",
+      "review_failed_rules": []
+    },
+    {
+      "id": "vehicle-03",
+      "name": "驴拉货车",
+      "file": "assets/vehicle-03.png",
+      "sha256": "52a87fe1620dff6cd2956eccce57c35eb848663fd130f155cbfba678344eafe9",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-01",
+      "name": "绿洲水井",
+      "file": "assets/facility-01.png",
+      "sha256": "d029d36c2ca3550bf1377a5658ef4460faf46385d77f7a184d8419234a8b8fc8",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-02",
+      "name": "棕榈树",
+      "file": "assets/facility-02.png",
+      "sha256": "76e5ecf46a84e14c6e006e139512cfffb249d4b069d4893115fadc3e88d56664",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-03",
+      "name": "悬挂路灯",
+      "file": "assets/facility-03.png",
+      "sha256": "aa2a785d6d92e311532729cb493e21fcc7f08866476998ad90337b6e463e78fb",
+      "review_failed_rules": []
+    },
+    {
+      "id": "facility-04",
+      "name": "陶罐",
+      "file": "assets/facility-04.png",
+      "sha256": "fb3378141a893cd39ae9bb136fce049a284a6430be3770ffac4b767b8791c353",
+      "review_failed_rules": [
+        "DETAIL_FLAT"
+      ]
+    },
+    {
+      "id": "character-01",
+      "name": "头巾商人鹅",
+      "file": "assets/character-01.png",
+      "sha256": "94eab7158083b82055907e15e2e1a9d03f38666e875ff334ae18ac9ad1071de3",
+      "review_failed_rules": []
+    },
+    {
+      "id": "character-02",
+      "name": "乐师鹅",
+      "file": "assets/character-02.png",
+      "sha256": "1e074a7d20bfad38cb923f2d75c827134904b439e2d5b3c14c91d52dd4479af2",
+      "review_failed_rules": [
+        "CHAR_TWO_HEADS",
+        "MATERIAL_WEAK"
+      ]
+    },
+    {
+      "id": "character-03",
+      "name": "红帽船夫鹅",
+      "file": "assets/character-03.png",
+      "sha256": "80ca78c3a535ab10526aab4c8ec90de2ef532f7ec76bc5d77e64d7fa02cc779e",
+      "review_failed_rules": [
+        "MATERIAL_WEAK"
+      ]
+    }
+  ]
+}
