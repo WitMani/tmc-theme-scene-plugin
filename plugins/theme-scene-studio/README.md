@@ -71,6 +71,14 @@ Stage 1 的交付是可供评审和后续使用的候选图及生成记录，不
 
 > 图片选自实际生成记录，点击可查看原图。展示结果仍有水面亮纹、花箱偏多等问题；候选 B 的主建筑偏大，个别角色位置也需复核。它们用于美术方向选择，尚非经过玩法验证的关卡。详见[案例来源与观察](docs/examples/venice/README.md)。
 
+## 出图前先设计布局草图
+
+布局设计 subagent 先绘制 A/B/C 三张草图，标明点击区、非点击区、主要物件群及道路/水路连接。点击区占主体并保留宽裕摆放空间，岩壁、山体等非点击环境只占少量。主 agent 或独立审核者查看草图，通过后再生成成品；无 subagent 工具时由主 agent 完成同样步骤并如实记录。
+
+每张成品使用完整干净参考组、共用镜头辅助线和对应布局草图：原图负责画风，辅助线负责投影，草图负责空间安排。草图用 SVG 绘制并渲染为 PNG，连同布局 JSON、审核记录一起交付。默认内部审核后继续；用户明确要求确认草图时暂停。
+
+草图与辅助线均为软约束，成品仍需对照检查。本页历史案例不代表新草图流程已实测验证。详见[布局草图流程](skills/theme-scene-studio/references/layout-sketch.md)。
+
 ## 从输入到候选
 
 | 输入 | 生成 | 交付 |
@@ -146,6 +154,9 @@ output/theme-scene-studio/<run>/
 ├── manifest.json
 ├── references/  # 主图辅助线版及实际英文编辑 prompt
 └── theme-01/
+    ├── layout-A.svg / layout-A.png / layout-A.json
+    ├── layout-B.svg / layout-B.png / layout-B.json
+    ├── layout-C.svg / layout-C.png / layout-C.json
     ├── candidate-A.png
     ├── candidate-A.prompt.txt
     ├── candidate-B.png
