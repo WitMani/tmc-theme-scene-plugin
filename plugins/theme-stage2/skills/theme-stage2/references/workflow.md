@@ -4,6 +4,8 @@
 
 ## 准备运行
 
+先读取并执行[素材相对尺度规则](../../../runtime/docs/ASSET-SCALE.md)。生成前在运行目录保存独立 scale-plan.json；它不由 prepare 自动生成。
+
 查看本次场景图及相关局部，选材默认14个原型，背景另计1张。4/3/4/3是可调整分配。
 
 清单保存到运行目录外，例如 `output/theme-stage2/<run-id>.inventory.json`；`prepare` 要求目标运行目录尚不存在。格式：
@@ -80,6 +82,10 @@ python3 "$PLUGIN_ROOT/scripts/run.py" cutout \
 
 脚本拒绝不可靠底色。复杂背景应先改进生成，不强行删色。透明化只处理 alpha 与抗锯齿边缘，不重绘内部填色，也不会自动消除物体的渐变与纹理。检查浅深底或实际PNG以确认残色、漏抠和断线。
 
+## 尺度校准
+
+透明化后按尺度计划测量主体包围盒，等比缩放并保存新候选和 scale-review.json；按尺度规则完成同倍率视觉复核。使用 register 登记校准后的 PNG，然后重新生成美术复核表。原生成与透明化记录保留。现有 cutout/register 不会自动校准尺度；不要省略这一执行步骤。
+
 ## 复核与修正
 
 ```bash
@@ -94,6 +100,8 @@ python3 "$PLUGIN_ROOT/scripts/run.py" review-template \
 只对失败对象做定向修正，登记新候选并更新对应复核；旧图的通过不能套给新图。默认一次主生成及至多一次定向重试；用户给出继续迭代或其他预算时遵从。不要无限重抽或用“更接近”代替“通过”。
 
 ## 只导出图片
+
+先确认 scale-review.json 对应最终登记文件的哈希且尺度复核通过。CLI不会自动验证这份记录；执行者必须检查，不能仅靠下列命令判定尺度合格。
 
 ```bash
 python3 "$PLUGIN_ROOT/scripts/run.py" validate --run "$RUN" --review "$REVIEW_FILE"

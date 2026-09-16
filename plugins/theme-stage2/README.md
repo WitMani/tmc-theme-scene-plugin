@@ -62,3 +62,7 @@ python3 -m unittest discover -s runtime/tests -v
 ```
 
 测试使用合成图像，不调用付费生成。历史艺术样本或合成测试的通过记录不用于批准新素材。
+
+## 素材尺度
+
+Stage 2 使用[官方案例相对尺度基准](runtime/docs/ASSET-SCALE.md)，以人物1H选定逐件尺寸，并在生成后按主体包围盒等比校准。样本范围按主题使用；内部保留尺度复核，交付仍只有PNG。

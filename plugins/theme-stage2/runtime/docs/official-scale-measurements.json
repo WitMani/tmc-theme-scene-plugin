@@ -1,0 +1,857 @@
+[
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_building_viking_hay.png",
+    "category": "building",
+    "canvas_w": 366,
+    "canvas_h": 411,
+    "visible_w": 366,
+    "visible_h": 411
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_building_viking_september.png",
+    "category": "building",
+    "canvas_w": 639,
+    "canvas_h": 606,
+    "visible_w": 638,
+    "visible_h": 605
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_human_viking_axe_man_v3_CO.png",
+    "category": "human",
+    "canvas_w": 124,
+    "canvas_h": 133,
+    "visible_w": 116,
+    "visible_h": 125
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_human_viking_bigfighter_CO.png",
+    "category": "human",
+    "canvas_w": 96,
+    "canvas_h": 137,
+    "visible_w": 88,
+    "visible_h": 129
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_human_viking_longbeard_CO.png",
+    "category": "human",
+    "canvas_w": 71,
+    "canvas_h": 125,
+    "visible_w": 63,
+    "visible_h": 117
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_human_viking_warrior_woman_CO.png",
+    "category": "human",
+    "canvas_w": 99,
+    "canvas_h": 163,
+    "visible_w": 91,
+    "visible_h": 155
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_prop_viking_anvil.png",
+    "category": "prop",
+    "canvas_w": 113,
+    "canvas_h": 148,
+    "visible_w": 113,
+    "visible_h": 148
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_prop_viking_chest1.png",
+    "category": "prop",
+    "canvas_w": 131,
+    "canvas_h": 131,
+    "visible_w": 131,
+    "visible_h": 131
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_prop_viking_dryingrack.png",
+    "category": "prop",
+    "canvas_w": 173,
+    "canvas_h": 228,
+    "visible_w": 173,
+    "visible_h": 228
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_prop_viking_stackedbarrels.png",
+    "category": "prop",
+    "canvas_w": 154,
+    "canvas_h": 164,
+    "visible_w": 154,
+    "visible_h": 164
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_prop_viking_weaponbarrel.png",
+    "category": "prop",
+    "canvas_w": 116,
+    "canvas_h": 175,
+    "visible_w": 116,
+    "visible_h": 175
+  },
+  {
+    "level": "NO_Nidaros_3",
+    "file": "Nidaros_prop_viking_woodchoper.png",
+    "category": "prop",
+    "canvas_w": 207,
+    "canvas_h": 188,
+    "visible_w": 207,
+    "visible_h": 188
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_Antena_E.png",
+    "category": "building",
+    "canvas_w": 175,
+    "canvas_h": 499,
+    "visible_w": 175,
+    "visible_h": 499
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_AsimaCircle_C.png",
+    "category": "building",
+    "canvas_w": 254,
+    "canvas_h": 295,
+    "visible_w": 254,
+    "visible_h": 295
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_Asima_B.png",
+    "category": "building",
+    "canvas_w": 260,
+    "canvas_h": 348,
+    "visible_w": 259,
+    "visible_h": 348
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_Basic_E.png",
+    "category": "building",
+    "canvas_w": 265,
+    "canvas_h": 214,
+    "visible_w": 253,
+    "visible_h": 204
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_CircleDoor_E.png",
+    "category": "building",
+    "canvas_w": 252,
+    "canvas_h": 210,
+    "visible_w": 252,
+    "visible_h": 210
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_CircleMix_D.png",
+    "category": "building",
+    "canvas_w": 310,
+    "canvas_h": 348,
+    "visible_w": 310,
+    "visible_h": 348
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_CrossDelik_A.png",
+    "category": "building",
+    "canvas_w": 309,
+    "canvas_h": 299,
+    "visible_w": 309,
+    "visible_h": 299
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_building_robot_VasoDouble_B.png",
+    "category": "building",
+    "canvas_w": 400,
+    "canvas_h": 407,
+    "visible_w": 400,
+    "visible_h": 407
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_backpack_E_CO.png",
+    "category": "human",
+    "canvas_w": 73,
+    "canvas_h": 150,
+    "visible_w": 65,
+    "visible_h": 142
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_bubbledressgirl_B_CO.png",
+    "category": "human",
+    "canvas_w": 97,
+    "canvas_h": 127,
+    "visible_w": 89,
+    "visible_h": 119
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_bubbleheadgirl_C_CO.png",
+    "category": "human",
+    "canvas_w": 83,
+    "canvas_h": 90,
+    "visible_w": 75,
+    "visible_h": 82
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_egg_A_CO.png",
+    "category": "human",
+    "canvas_w": 107,
+    "canvas_h": 71,
+    "visible_w": 99,
+    "visible_h": 63
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_egg_B_CO.png",
+    "category": "human",
+    "canvas_w": 108,
+    "canvas_h": 71,
+    "visible_w": 100,
+    "visible_h": 63
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_eve_B_CO.png",
+    "category": "human",
+    "canvas_w": 105,
+    "canvas_h": 156,
+    "visible_w": 97,
+    "visible_h": 148
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_flyingglove_A_CO.png",
+    "category": "human",
+    "canvas_w": 88,
+    "canvas_h": 143,
+    "visible_w": 80,
+    "visible_h": 134
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_flyingglove_C_CO.png",
+    "category": "human",
+    "canvas_w": 88,
+    "canvas_h": 143,
+    "visible_w": 80,
+    "visible_h": 134
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_flyingsuitcase_A_CO.png",
+    "category": "human",
+    "canvas_w": 81,
+    "canvas_h": 128,
+    "visible_w": 73,
+    "visible_h": 120
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_grandpa_C_CO.png",
+    "category": "human",
+    "canvas_w": 116,
+    "canvas_h": 179,
+    "visible_w": 107,
+    "visible_h": 171
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_human_robot_palettemechanic_E_CO.png",
+    "category": "human",
+    "canvas_w": 96,
+    "canvas_h": 92,
+    "visible_w": 88,
+    "visible_h": 84
+  },
+  {
+    "level": "NO_OrbitCity_1",
+    "file": "OrbitCity_prop_hexegon_cream.png",
+    "category": "prop",
+    "canvas_w": 541,
+    "canvas_h": 702,
+    "visible_w": 540,
+    "visible_h": 702
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_building_viking_sword.png",
+    "category": "building",
+    "canvas_w": 531,
+    "canvas_h": 631,
+    "visible_w": 531,
+    "visible_h": 631
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_building_viking_unicorn.png",
+    "category": "building",
+    "canvas_w": 395,
+    "canvas_h": 587,
+    "visible_w": 395,
+    "visible_h": 586
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_building_viking_wc_V2.png",
+    "category": "building",
+    "canvas_w": 374,
+    "canvas_h": 474,
+    "visible_w": 373,
+    "visible_h": 470
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_building_viking_yellow.png",
+    "category": "building",
+    "canvas_w": 656,
+    "canvas_h": 633,
+    "visible_w": 654,
+    "visible_h": 632
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_human_viking_bigpirate_v3_CO.png",
+    "category": "human",
+    "canvas_w": 104,
+    "canvas_h": 121,
+    "visible_w": 96,
+    "visible_h": 113
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_human_viking_green_v2_CO.png",
+    "category": "human",
+    "canvas_w": 104,
+    "canvas_h": 136,
+    "visible_w": 96,
+    "visible_h": 128
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_human_viking_hero_v3_CO.png",
+    "category": "human",
+    "canvas_w": 86,
+    "canvas_h": 149,
+    "visible_w": 78,
+    "visible_h": 141
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_human_viking_longaxe_v2_CO.png",
+    "category": "human",
+    "canvas_w": 89,
+    "canvas_h": 131,
+    "visible_w": 80,
+    "visible_h": 123
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_prop_viking_chest1.png",
+    "category": "prop",
+    "canvas_w": 131,
+    "canvas_h": 131,
+    "visible_w": 131,
+    "visible_h": 131
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_prop_viking_littlefence.png",
+    "category": "prop",
+    "canvas_w": 465,
+    "canvas_h": 432,
+    "visible_w": 369,
+    "visible_h": 260
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_prop_viking_meatonfire.png",
+    "category": "prop",
+    "canvas_w": 142,
+    "canvas_h": 190,
+    "visible_w": 142,
+    "visible_h": 190
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_prop_viking_meatstand.png",
+    "category": "prop",
+    "canvas_w": 212,
+    "canvas_h": 293,
+    "visible_w": 211,
+    "visible_h": 293
+  },
+  {
+    "level": "NO_Sheffield_14",
+    "file": "Sheffield_prop_viking_minirock.png",
+    "category": "prop",
+    "canvas_w": 338,
+    "canvas_h": 205,
+    "visible_w": 335,
+    "visible_h": 204
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_building_viking_hay_V3.png",
+    "category": "building",
+    "canvas_w": 366,
+    "canvas_h": 411,
+    "visible_w": 366,
+    "visible_h": 411
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_building_viking_horn_V2.png",
+    "category": "building",
+    "canvas_w": 500,
+    "canvas_h": 681,
+    "visible_w": 500,
+    "visible_h": 681
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_building_viking_horn_V3.png",
+    "category": "building",
+    "canvas_w": 500,
+    "canvas_h": 681,
+    "visible_w": 500,
+    "visible_h": 681
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_building_viking_reservoir_V2.png",
+    "category": "building",
+    "canvas_w": 309,
+    "canvas_h": 517,
+    "visible_w": 309,
+    "visible_h": 517
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_building_viking_unicorn.png",
+    "category": "building",
+    "canvas_w": 395,
+    "canvas_h": 587,
+    "visible_w": 395,
+    "visible_h": 586
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_building_viking_wc_V2.png",
+    "category": "building",
+    "canvas_w": 374,
+    "canvas_h": 474,
+    "visible_w": 373,
+    "visible_h": 470
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_human_viking_bigpirate_CO.png",
+    "category": "human",
+    "canvas_w": 104,
+    "canvas_h": 121,
+    "visible_w": 96,
+    "visible_h": 113
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_human_viking_clumsy_v3_CO.png",
+    "category": "human",
+    "canvas_w": 86,
+    "canvas_h": 163,
+    "visible_w": 78,
+    "visible_h": 155
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_human_viking_hero_v2_CO.png",
+    "category": "human",
+    "canvas_w": 86,
+    "canvas_h": 148,
+    "visible_w": 78,
+    "visible_h": 140
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_human_viking_purplewoman_CO.png",
+    "category": "human",
+    "canvas_w": 83,
+    "canvas_h": 111,
+    "visible_w": 75,
+    "visible_h": 103
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_human_viking_redfighter_v2_CO.png",
+    "category": "human",
+    "canvas_w": 87,
+    "canvas_h": 132,
+    "visible_w": 79,
+    "visible_h": 124
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_prop_viking_anvil.png",
+    "category": "prop",
+    "canvas_w": 113,
+    "canvas_h": 148,
+    "visible_w": 113,
+    "visible_h": 148
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_prop_viking_bigcask.png",
+    "category": "prop",
+    "canvas_w": 185,
+    "canvas_h": 260,
+    "visible_w": 185,
+    "visible_h": 260
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_prop_viking_dryingrack.png",
+    "category": "prop",
+    "canvas_w": 173,
+    "canvas_h": 228,
+    "visible_w": 173,
+    "visible_h": 228
+  },
+  {
+    "level": "NO_Sheffield_17",
+    "file": "Sheffield_prop_viking_forge.png",
+    "category": "prop",
+    "canvas_w": 233,
+    "canvas_h": 319,
+    "visible_w": 233,
+    "visible_h": 319
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_buildings_alice_clockhousev2.png",
+    "category": "building",
+    "canvas_w": 525,
+    "canvas_h": 466,
+    "visible_w": 524,
+    "visible_h": 466
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_buildings_alice_reversecup.png",
+    "category": "building",
+    "canvas_w": 444,
+    "canvas_h": 395,
+    "visible_w": 444,
+    "visible_h": 395
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_buildings_alice_treehouse.png",
+    "category": "building",
+    "canvas_w": 519,
+    "canvas_h": 544,
+    "visible_w": 519,
+    "visible_h": 544
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_human_alice_alice_CO.png",
+    "category": "human",
+    "canvas_w": 118,
+    "canvas_h": 189,
+    "visible_w": 110,
+    "visible_h": 181
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_human_alice_alice_v3_CO.png",
+    "category": "human",
+    "canvas_w": 118,
+    "canvas_h": 184,
+    "visible_w": 110,
+    "visible_h": 176
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_human_alice_angrymom_v2_CO.png",
+    "category": "human",
+    "canvas_w": 118,
+    "canvas_h": 129,
+    "visible_w": 110,
+    "visible_h": 121
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_human_alice_diamond_v3_CO.png",
+    "category": "human",
+    "canvas_w": 99,
+    "canvas_h": 135,
+    "visible_w": 91,
+    "visible_h": 127
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_human_alice_heart_v3_CO.png",
+    "category": "human",
+    "canvas_w": 103,
+    "canvas_h": 123,
+    "visible_w": 95,
+    "visible_h": 115
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_airballoon_banana.png",
+    "category": "prop",
+    "canvas_w": 180,
+    "canvas_h": 236,
+    "visible_w": 180,
+    "visible_h": 236
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_airballoon_blueberry.png",
+    "category": "prop",
+    "canvas_w": 190,
+    "canvas_h": 202,
+    "visible_w": 190,
+    "visible_h": 202
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_airballoon_kiwi.png",
+    "category": "prop",
+    "canvas_w": 167,
+    "canvas_h": 169,
+    "visible_w": 167,
+    "visible_h": 169
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_airballoon_strawberry.png",
+    "category": "prop",
+    "canvas_w": 184,
+    "canvas_h": 252,
+    "visible_w": 184,
+    "visible_h": 252
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_airballoon_watermelon.png",
+    "category": "prop",
+    "canvas_w": 150,
+    "canvas_h": 168,
+    "visible_w": 148,
+    "visible_h": 168
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_mushroom.png",
+    "category": "prop",
+    "canvas_w": 271,
+    "canvas_h": 302,
+    "visible_w": 271,
+    "visible_h": 302
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_mushroomV2.png",
+    "category": "prop",
+    "canvas_w": 271,
+    "canvas_h": 302,
+    "visible_w": 271,
+    "visible_h": 302
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_prop_alice_mushroomV3.png",
+    "category": "prop",
+    "canvas_w": 271,
+    "canvas_h": 302,
+    "visible_w": 271,
+    "visible_h": 302
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_vehicle_alice_airballoonV3_CO.png",
+    "category": "vehicle",
+    "canvas_w": 260,
+    "canvas_h": 370,
+    "visible_w": 259,
+    "visible_h": 370
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_vehicle_alice_airballoon_kiwi_CO.png",
+    "category": "vehicle",
+    "canvas_w": 270,
+    "canvas_h": 390,
+    "visible_w": 270,
+    "visible_h": 385
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_vehicle_alice_beancar_CO.png",
+    "category": "vehicle",
+    "canvas_w": 167,
+    "canvas_h": 222,
+    "visible_w": 167,
+    "visible_h": 222
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_vehicle_alice_paper_sh_v3_CO.png",
+    "category": "vehicle",
+    "canvas_w": 658,
+    "canvas_h": 453,
+    "visible_w": 650,
+    "visible_h": 445
+  },
+  {
+    "level": "NO_Vondelpark_13",
+    "file": "Vondelpark_vehicle_alice_pea_CO.png",
+    "category": "vehicle",
+    "canvas_w": 396,
+    "canvas_h": 280,
+    "visible_w": 388,
+    "visible_h": 272
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_buildings_alice_strangehousev2.png",
+    "category": "building",
+    "canvas_w": 493,
+    "canvas_h": 493,
+    "visible_w": 493,
+    "visible_h": 493
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_buildings_alice_teahouse.png",
+    "category": "building",
+    "canvas_w": 565,
+    "canvas_h": 479,
+    "visible_w": 565,
+    "visible_h": 478
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_human_alice_alice_v3_CO.png",
+    "category": "human",
+    "canvas_w": 118,
+    "canvas_h": 184,
+    "visible_w": 110,
+    "visible_h": 176
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_human_alice_angrymom_v3_CO.png",
+    "category": "human",
+    "canvas_w": 118,
+    "canvas_h": 128,
+    "visible_w": 110,
+    "visible_h": 120
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_human_alice_club_v5_CO.png",
+    "category": "human",
+    "canvas_w": 113,
+    "canvas_h": 131,
+    "visible_w": 105,
+    "visible_h": 123
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_human_alice_diamondman_v3_CO.png",
+    "category": "human",
+    "canvas_w": 90,
+    "canvas_h": 148,
+    "visible_w": 82,
+    "visible_h": 140
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_fencev3.png",
+    "category": "prop",
+    "canvas_w": 1635,
+    "canvas_h": 512,
+    "visible_w": 1634,
+    "visible_h": 512
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_hills.png",
+    "category": "prop",
+    "canvas_w": 1600,
+    "canvas_h": 1321,
+    "visible_w": 1600,
+    "visible_h": 1313
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_homemushroom.png",
+    "category": "prop",
+    "canvas_w": 205,
+    "canvas_h": 171,
+    "visible_w": 205,
+    "visible_h": 170
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_homemushroomV2.png",
+    "category": "prop",
+    "canvas_w": 205,
+    "canvas_h": 171,
+    "visible_w": 205,
+    "visible_h": 170
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_lamb.png",
+    "category": "prop",
+    "canvas_w": 152,
+    "canvas_h": 223,
+    "visible_w": 152,
+    "visible_h": 223
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_miniisland.png",
+    "category": "prop",
+    "canvas_w": 1338,
+    "canvas_h": 1052,
+    "visible_w": 1338,
+    "visible_h": 1052
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_prop_alice_mushroomV2.png",
+    "category": "prop",
+    "canvas_w": 271,
+    "canvas_h": 302,
+    "visible_w": 271,
+    "visible_h": 302
+  },
+  {
+    "level": "NO_Wonderland_9",
+    "file": "Wonderland_vehicle_alice_paper_sh_CO.png",
+    "category": "vehicle",
+    "canvas_w": 658,
+    "canvas_h": 453,
+    "visible_w": 650,
+    "visible_h": 445
+  }
+]
