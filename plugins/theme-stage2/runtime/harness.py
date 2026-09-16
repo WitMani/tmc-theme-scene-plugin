@@ -167,6 +167,7 @@ def compile_prompt(item, profile):
     return '\n\n'.join(head) + '\n'
 
 def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
+    from scene_size import CONTRACT
     out, source = Path(out).resolve(), Path(source).resolve()
     profile_path = Path(profile_path).resolve()
     profile = load_profile(profile_path)
@@ -230,6 +231,8 @@ def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
     manifest = {
         'schema': 'stage2.run.v1', 'run_id': uuid.uuid4().hex, 'created_at': now(),
         'stage': 'independent_separation', 'recomposition_enabled': False,
+        'scene_size_contract': dict(CONTRACT),
+        'scene_plan_contract': {'schema': 'scene-plan.v1', 'file': 'scene-plan.json', 'sha256': None},
         'inventory_scope': inventory.get('scope', 'explicit inventory; completeness not inferred'),
         'delivery': {'mode': delivery_policy['mode'], 'policy_snapshot': 'policy/delivery-profile.json',
                      'html': False, 'source_comparison': False, 'run_records_in_delivery': False},
@@ -248,7 +251,7 @@ def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
         item = dict(row)
         item['prompt_file'] = 'prompts/' + item['id'] + '.txt'
         (out / 'prompts').mkdir(exist_ok=True)
-        (out / item['prompt_file']).write_text(compile_prompt(item, profile), encoding='utf-8')
+        (out / item['prompt_file']).write_text(compile_prompt(item, profile) + '\nSCENE PLAN REQUIRED: Bind an authored scene-plan.v1 before generation; preserve all dependent rail, road and water infrastructure.\nSCENE SIZE CONTRACT: Square 4096 x 4096 background delivery; ordinary character scale H=128 visible pixels (3.125% of canvas height). Independent asset canvas sizes vary; obey the per-item target_H scale plan. Preserve square scene framing.\n', encoding='utf-8')
         item['prompt_status'] = 'planned_not_executed'
         item['prompt_sha256'] = file_hash(out / item['prompt_file'])
         item['generation_inputs'] = [{'file': source_name, 'role': 'sole_scene_source', 'sha256': source_sha}]
@@ -263,6 +266,11 @@ def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
         item['artifact_history'] = []
         manifest['items'].append(item)
     write_json(out / 'manifest.json', manifest)
+    from scene_handoff import pending_plan, bind_plan
+    write_json(out / 'scene-plan.draft.json', pending_plan(manifest))
+    if inventory.get('scene_plan') is not None:
+        bind_plan(out, inventory['scene_plan'])
+        manifest = read_json(out / 'manifest.json')
     write_json(out / 'review-template.json', review_template(out))
     return manifest
 
@@ -333,7 +341,10 @@ def validate(run, review=None, profile_path=None):
     current_path = Path(profile_path or m['profile']['reference_path']).resolve()
     current = load_profile(current_path)
     ph = policy_hash(current)
-    errors = []
+    from scene_size import check_run
+    errors = check_run(run, m)
+    from scene_handoff import check_run as check_scene_handoff
+    errors += check_scene_handoff(run, m)
     item_ids = [i['id'] for i in m['items']]
     if not item_ids or len(set(item_ids)) != len(item_ids):
         errors.append('Empty or duplicate run inventory')
@@ -494,6 +505,12 @@ def export(run, review, out, profile_path=None):
             'items': exported, 'recomposition_performed': False, 'destination': str(out),
             'delivery_mode': delivery_policy['mode'], 'state': 'validated_for_export'})
         write_json(record_dir / 'delivery-policy.json', delivery_policy)
+        if m.get('scene_plan_contract'):
+            from scene_handoff import export_handoff
+            handoff = export_handoff(run, review_data, record_dir / 'layout-handoff', profile_path)
+            if handoff.get('state') != 'accepted':
+                raise ValueError('Handoff validation changed during PNG export')
+            result['layout_handoff'] = handoff['handoff']
         temporary.rename(out)
     except Exception:
         if temporary.exists():
@@ -528,6 +545,10 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--source', required=True); p.add_argument('--inventory', required=True); p.add_argument('--out', required=True); p.add_argument('--profile', default=str(DEFAULT_PROFILE))
+    p.add_argument('--scene-plan', help='Authored scene-plan.v1 for this source image')
+    p = sub.add_parser('bind-scene-plan'); p.add_argument('--run', required=True); p.add_argument('--plan', required=True)
+    p = sub.add_parser('infrastructure-template'); p.add_argument('--run', required=True); p.add_argument('--out', required=True)
+    p = sub.add_parser('handoff'); p.add_argument('--run', required=True); p.add_argument('--review', required=True); p.add_argument('--out', required=True); p.add_argument('--profile', default=str(DEFAULT_PROFILE))
     p = sub.add_parser('import-case'); p.add_argument('--case', required=True); p.add_argument('--out', required=True); p.add_argument('--inventory'); p.add_argument('--profile', default=str(DEFAULT_PROFILE))
     p = sub.add_parser('register'); p.add_argument('--run', required=True); p.add_argument('--id', required=True); p.add_argument('--image', required=True)
     p = sub.add_parser('review-template'); p.add_argument('--run', required=True); p.add_argument('--out', required=True)
@@ -539,9 +560,24 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command == 'prepare':
-            m = prepare(args.source, read_json(args.inventory), args.out, args.profile)
+            inventory = read_json(args.inventory)
+            if args.scene_plan:
+                inventory['scene_plan'] = read_json(args.scene_plan)
+            m = prepare(args.source, inventory, args.out, args.profile)
             result = {'run': str(Path(args.out).resolve()), 'planned_items': len(m['items']),
                       'selection': m['selection'], 'generation_calls': 0}
+        elif args.command == 'bind-scene-plan':
+            from scene_handoff import bind_plan
+            result = bind_plan(args.run, read_json(args.plan))
+        elif args.command == 'infrastructure-template':
+            from scene_handoff import infrastructure_template
+            if Path(args.out).exists():
+                raise ValueError('Review exists; use a new output path')
+            write_json(args.out, infrastructure_template(args.run))
+            result = {'template': args.out}
+        elif args.command == 'handoff':
+            from scene_handoff import export_handoff
+            result = export_handoff(args.run, args.review, args.out, args.profile)
         elif args.command == 'import-case':
             m = import_case(args.case, args.out, args.profile, args.inventory)
             result = {'run': str(Path(args.out).resolve()), 'imported_candidates': len(m['items']), 'generation_calls': 0, 'new_style_approval': False}

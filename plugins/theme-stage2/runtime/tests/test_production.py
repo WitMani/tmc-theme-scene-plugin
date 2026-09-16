@@ -20,6 +20,11 @@ class ProductionTests(unittest.TestCase):
         inventory={'items':[{'id':'sample','name':'Synthetic sample','category':'building',
                             'identity_brief':'Synthetic fixture, not real art.','source_bbox':[5,5,85,85]}]}
         h.prepare(self.source,inventory,self.run)
+        # Preserve legacy tiny-image fixture semantics; new size contract has dedicated tests.
+        legacy = h.read_json(self.run/'manifest.json')
+        legacy.pop('scene_size_contract', None)
+        legacy.pop('scene_plan_contract', None)
+        h.write_json(self.run/'manifest.json', legacy)
         self.prompt=self.run/'prompts/sample.txt'
         self.raw=self.root/'synthetic-generated.png'
         im=Image.new('RGB',(96,96),'#ff00ff')

@@ -1,26 +1,27 @@
-# 主图叠加正交辅助线
+# 脚本叠加正交辅助线
 
-默认在本次主参考图上制作辅助线版，随后把干净原图组与辅助线版一起交给候选生成器。它是投影方向的软约束，不是3D相机、深度控制或可证明的几何锁定。一次试验不能证明相对无线方案有提升。
+默认使用本地 `scripts/camera_guides.py` 在主参考图副本上添加稀疏辅助线，不调用 imagegen。这是用户授权的确定性标注操作，不重绘参考图。辅助线是生成时的软提示，不保证成品严格遵循投影。
 
-## 准备和复用
+## 生成与复用
 
-1. 先读 [orthographic-geometry.md](orthographic-geometry.md) 并确定本轮相机：默认方位45°、俯角45°，对应地面轴屏幕斜率±0.707107，竖直方向向上；这是设计目标，不是参考实测。用户明确镜头覆盖优先。只匹配统一相机，不逐栋描线；不要将屏幕斜线也画成45°。
-2. 按当前 imagegen 技能及工具协议，对主图做一次编辑：保持画幅、内容、构图和画风，叠加稀疏细线。地面X/Y轴各3–4条平行线，分别青色/品红；高度方向用约3条短黄色竖线。线跨越不同区域，不汇聚到消失点，不加文字、立方体或密集网格。只同方向的世界边应平行；不追踪坡屋顶斜边。
-3. 实际查看输出，检查每组线近似平行、两组方向符合共同镜头且不遮挡大量细节。记录编辑是否改变原图，不能声称像素保持。明显方向错误或严重重绘最多额外修正一次；仍不可用则报告辅助线准备失败，不默默降级或宣称启用成功。
-4. 保存 `references/camera-guides.png` 与 `references/camera-guides.prompt.txt`（实际英文 prompt）。不同参考组分目录保存；修正加版本号保留历史。仅当主图、方位、俯角与本轮camera规格均未改变时，不为每候选重复生成辅助线。
-5. 候选输入顺序为原始1–3张干净图，随后附加辅助线图，再附当前候选布局草图，共3–5张；原图不删减。若用户已经提供明确配对且可用的辅助线版，查看并复用，不重复派生。完整输入无法通过当前工具传入时说明缺失项并请求补齐，不拼图、不漏图。若用户明确禁用辅助线，记录 disabled 并沿用原有流程。
+1. 读取 orthographic-geometry.md，确定与 A/B/C 草图相同的相机。脚本直接复用 `orthographic_layout.Camera` 的投影矩阵；默认方位45°、俯角45°，屏幕地面轴斜率为±0.707107，Z轴竖直。非默认镜头从布局JSON传入，并保留用户覆盖依据。
+2. 执行：
 
-## 英文辅助线编辑模板
-
-```text
-Edit the supplied primary reference to create an orthographic camera-guide overlay.
-Preserve the original framing, scene content, object arrangement, colors and drawing style as closely as possible. Add only sparse thin construction lines.
-Target shared projection: [actual shared camera specification; default azimuth 45 degrees, elevation 45 degrees, projected ground-axis slopes +0.707107 and -0.707107, upright verticals; these are design parameters, not measured reference angles].
-Add 3–4 cyan parallel lines for one ground-plane axis, 3–4 magenta parallel lines for the other, and about 3 short yellow vertical segments distributed across the scene for upright height. Keep each line family straight and parallel, without convergence or vanishing points. Use one coherent basis across the entire image, not separate guides tracing each existing building. Lines must remain visible without obscuring the underlying art. No labels, cubes, borders, or additional objects. Return one image in the original aspect ratio.
+```bash
+python3 "$SKILL_DIR/scripts/camera_guides.py" \
+  --source "$PRIMARY_REFERENCE" \
+  --scene "$LAYOUT_SCENE_JSON" \
+  --out "$RUN/references/camera-guides.png"
 ```
 
-填写目标方向后才调用；候选生成使用 prompt-template.md 中的参考分工段，明确相机规格与已校验草图控制几何，辅助线必须与它们一致、干净图负责画风，且最终画面完全移除标记。辅助线不要求复制原图地形或限制三候选的布局变化。
+`--scene`可传scene.json或已校验布局JSON；省略时用默认相机。脚本依赖Pillow，输出PNG及同名JSON，不覆盖源图或已有结果，修订使用新文件名。保持原图像素尺寸，不拉伸参考图；非正方形参考的线方向仍由像素空间投影决定。
+3. 自动检查每条线与投影轴同向、源文件未改动、线条以外像素不变。JSON记录源图/输出哈希、相机矩阵和端点。实际查看PNG，确认线条稀疏、可见且没有大量遮挡。自动通过只代表叠加几何正确，不能代替目视审核或成品检查。
+4. A/B/C共用同一参考组、同一镜头的一张辅助图。参考或相机改变后重新生成。输入顺序仍为完整干净参考组 → 辅助线图 → 当前已审核草图。
 
-## 结果检查与报告
+## 失败处理与记录
 
-逐张查看上中下区域中同朝向建筑的墙基、水平檐口和桥面；检查竖向线与同尺寸重复物体的尺度。不要把屋顶坡度、物体真实尺寸差异或地面旋转误判为镜头漂移。记录具体可见偏差及辅助线残留；遵从主流程的每槽位最多一次修正上限。只有目视判断时明确写“目视”，不报告未测量角度或透视合格率，也不自动宣称比旧流程更好。
+脚本错误先修正输入、依赖或参数，不转回AI绘线，不消耗成品生图重试预算。若仍不可用，记录 `camera_guides.status=disabled_due_to_error` 及错误，使用完整干净参考组＋已审核草图＋文字相机约束继续；调整prompt编号并删除辅助图专属描述。用户明确要求辅助线必须成功时才暂停。
+
+manifest记录 `method=deterministic_script`、源图、输出PNG/JSON路径、实际命令、相机参数、自动检查与目视结论；不再虚构辅助线生图调用或英文编辑prompt。旧AI辅助线失败记录保留，新脚本结果另存。
+
+成品检查建筑墙基、水平檐口和桥面是否共享投影；坡屋顶斜边与旋转物体不要求沿辅助轴。成品不得残留线条、网格或标记。成品明显镜头漂移仍按原有单槽位修正预算处理。

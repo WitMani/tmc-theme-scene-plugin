@@ -10,6 +10,10 @@ import harness as h
 def record_call(run, item_id, image, prompt, inputs, tool='image_gen.imagegen'):
     run, image, prompt = Path(run).resolve(), Path(image).resolve(), Path(prompt).resolve()
     m = h.read_json(run/'manifest.json')
+    if 'scene_plan_contract' in m:
+        pin = m['scene_plan_contract']
+        if not pin.get('sha256') or h.file_hash(run/'scene-plan.json') != pin['sha256']:
+            raise ValueError('Bind a valid scene plan before recording generation')
     item = next((i for i in m['items'] if i['id'] == item_id), None)
     if item is None or not inputs:
         raise ValueError('A known item and at least one traceable image input are required')

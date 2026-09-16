@@ -167,3 +167,9 @@ python3 -m unittest discover -s plugins/theme-stage2/runtime/tests -v
 ```
 
 测试使用合成图像验证处理流程，不生成新美术素材，也不把测试通过当作美术通过。除明确选入 `docs/examples/` 的展示案例外，运行输出、个人缓存、凭证和批量任务记录不随仓库发布。
+
+## 端到端游玩交付（2026-09-17）
+
+`theme-scene-studio`现随包提供`theme-level-pipeline`技能。安装本仓库Stage1/Stage2，以及[关卡插件仓库](https://github.com/WitMani/tmc-level-designer-plugin)的Layout/Vehicle Motion后，调用`$theme-level-pipeline`即可连续执行场景候选、素材拆分、排布和游玩验收。默认216实例（未明确覆盖时大于200），4096画布、H128、scale1.0；端到端三消每类数量为3的倍数。六个真实案例的统计和来源哈希随配置提供。
+
+最终主交付为带“开始游玩”入口的index.html及通过测试的playable.html，默认静态收集、7格托盘、180秒。用户明确要求运动时另外通过运动验收；失败不能悄悄降级。历史运行及用户显式数量不追溯改变。独立Stage1和Stage2仍只做各自阶段。

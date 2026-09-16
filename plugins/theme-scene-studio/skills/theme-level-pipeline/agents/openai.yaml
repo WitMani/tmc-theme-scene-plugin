@@ -1,0 +1,4 @@
+interface:
+  display_name: "主题关卡流水线"
+  short_description: "只需主题和元素清单，串联场景生成、素材拆分、关卡排布与验收返工"
+  default_prompt: "使用 $theme-level-pipeline，制作巨木森林（精灵树屋）主题。"

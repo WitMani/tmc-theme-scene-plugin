@@ -32,6 +32,11 @@ class HarnessTests(unittest.TestCase):
             {'id':'background','name':'test background','category':'background','identity_brief':'The terrain.'}]}
         self.run = self.root/'run'
         h.prepare(self.source, self.inventory, self.run, self.profile_path)
+        # Preserve legacy tiny-image fixture semantics; new size contract has dedicated tests.
+        legacy = h.read_json(self.run/'manifest.json')
+        legacy.pop('scene_size_contract', None)
+        legacy.pop('scene_plan_contract', None)
+        h.write_json(self.run/'manifest.json', legacy)
         self.asset = self.root/'asset.png'
         im=Image.new('RGBA',(40,50));ImageDraw.Draw(im).rectangle((6,7,33,42),fill='#f3ab54');im.save(self.asset)
         for iid in ('goose','house'):h.register(self.run,iid,self.asset)

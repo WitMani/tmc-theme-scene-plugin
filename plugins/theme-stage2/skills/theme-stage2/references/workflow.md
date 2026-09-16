@@ -4,6 +4,9 @@
 
 ## 准备运行
 
+首先读[三阶段交接契约](scene-handoff.md)。准备与当前源图绑定的scene-plan.json，并给下面prepare命令传`--scene-plan "$SCENE_PLAN"`（也可在inventory.scene_plan嵌入对象）。若尚未准备，prepare会输出scene-plan.draft.json；补完后用`bind-scene-plan --run "$RUN" --plan "$SCENE_PLAN"`绑定。**必须绑定后再实际生成**；绑定后重编译的Prompt包含基础设施与数量目标。已有生成记录时不得就地换计划，另建修订运行。
+
+
 先读取并执行[素材相对尺度规则](../../../runtime/docs/ASSET-SCALE.md)。生成前在运行目录保存独立 scale-plan.json；它不由 prepare 自动生成。
 
 先读取[可排布空间规则](../../../runtime/docs/BACKGROUND-PLACEMENT-SPACE.md)，在内部运行记录中标明放置区、外围装饰区及必要结构例外；不另设用户确认步骤。查看本次场景图及相关局部，选材默认14个原型，背景另计1张。4/3/4/3是可调整分配。
@@ -34,7 +37,7 @@
 python3 "$PLUGIN_ROOT/scripts/run.py" doctor
 python3 "$PLUGIN_ROOT/scripts/run.py" selection-check --inventory "$INVENTORY"
 python3 "$PLUGIN_ROOT/scripts/run.py" prepare \
-  --source "$SOURCE" --inventory "$INVENTORY" --out "$RUN"
+  --source "$SOURCE" --inventory "$INVENTORY" --scene-plan "$SCENE_PLAN" --out "$RUN"
 ```
 
 默认路径为工作区 `output/theme-stage2/<unique-run>/`。Python需3.10+；本地透明化需要 Pillow、NumPy、SciPy。优先用已有运行时；依赖缺失时按环境权限规则在隔离环境安装插件根目录 `requirements.txt`，无需图像API key。
@@ -74,11 +77,15 @@ python3 "$PLUGIN_ROOT/scripts/run.py" record-call \
 
 ## 透明化与登记
 
-背景保持不透明，直接登记：
+背景保持不透明，先固定交付尺寸再登记（原始图保留）：
+
+```bash
+python3 "$PLUGIN_ROOT/runtime/scene_size.py" --source "$RAW_BACKGROUND" --out "$RUN/normalized/background.png"
+```
 
 ```bash
 python3 "$PLUGIN_ROOT/scripts/run.py" register \
-  --run "$RUN" --id background --image "$RAW_BACKGROUND"
+  --run "$RUN" --id background --image "$RUN/normalized/background.png"
 ```
 
 资产必须有真实 alpha。RGB 棋盘格不能当透明图。若工具未产出真实透明背景，修正 Prompt 使用与主体颜色不同的纯色底；不要盲目对白色鹅用白底抠图。
@@ -111,9 +118,27 @@ python3 "$PLUGIN_ROOT/scripts/run.py" review-template \
 
 只对失败对象做定向修正，登记新候选并更新对应复核；旧图的通过不能套给新图。默认一次主生成及至多一次定向重试；用户给出继续迭代或其他预算时遵从。不要无限重抽或用“更接近”代替“通过”。
 
+## 基础设施复核与交接
+
+最终背景登记后：
+
+```bash
+python3 "$PLUGIN_ROOT/scripts/run.py" infrastructure-template --run "$RUN" --out "$RUN/infrastructure-review.json"
+```
+
+查看背景、原图及计划，逐项填写reviewer和checks中的pass/fail/unreviewed与具体observation。所有计划中的rail/water/road/bridge/platform都要审核。模板绑定背景和计划SHA-256；背景变更后生成新模板并重新核对，保留旧记录。没有此类基础设施时checks为空，但仍需执行者核对并署名。不因Prompt提到了铁轨就填pass。
+
+正式export成功时返回内部`layout_handoff`路径，下游使用该路径；不让Layout重新从文件夹猜数量。也可独立创建交接包：
+
+```bash
+python3 "$PLUGIN_ROOT/scripts/run.py" handoff --run "$RUN" --review "$REVIEW_FILE" --out "$RUN/handoff-v1"
+```
+
+候选状态、过期图片、缺基础设施或缺尺度复核都不能生成正式交接包。repair-request的路由按scene-handoff.md执行；计划或图片修订后生成新的交接包和新的Layout批次。
+
 ## 只导出图片
 
-先确认 scale-review.json 对应最终登记文件的哈希且尺度复核通过。CLI不会自动验证这份记录；执行者必须检查，不能仅靠下列命令判定尺度合格。
+先确认 scale-review.json 对应最终登记文件的哈希且尺度复核通过。新运行CLI会验证固定4096背景、H_px=128、alpha_threshold=16及计划/复核的图片绑定。scale-plan.json的items必须恰好覆盖所有非背景素材，逐项提供id、primary_axis（width或height）、target_H。scale-review.json须包含plan_sha256（scale-plan.json文件字节的SHA-256）、status=pass、实际目视observation，以及items中每件id、最终登记PNG的sha256、status=pass。主轴尺寸允许1 px取整误差；不能把自动测量冒充视觉审核。其他既有校准前后记录照常保留。
 
 ```bash
 python3 "$PLUGIN_ROOT/scripts/run.py" validate --run "$RUN" --review "$REVIEW_FILE"

@@ -1,0 +1,14 @@
+{
+  "source": "user_instruction",
+  "date": "2026-09-16",
+  "quote": "可以固定stage1和2的尺寸 和真实数据一致",
+  "contract": {
+    "canvas": [
+      4096,
+      4096
+    ],
+    "H_px": 128,
+    "alpha_threshold": 16
+  },
+  "interpretation": "Fixed delivery coordinates based on six validation cases; not native generation resolution or uniform height for every character."
+}

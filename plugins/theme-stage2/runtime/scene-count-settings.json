@@ -1,0 +1,631 @@
+{
+  "schema": "scene-count-settings.v1",
+  "id": "scene-count-200plus-v1",
+  "scope": "new authored theme scene plans; old plans and explicit user counts retain their own contracts",
+  "default_target": 216,
+  "minimum_exclusive": 200,
+  "minimum_total": 201,
+  "match3_minimum": 201,
+  "default_count_multiple": 1,
+  "match3_count_multiple": 3,
+  "reference_case": "NO_Sheffield_17",
+  "reference_summary": {
+    "min": 165,
+    "max": 261,
+    "median": 186.0,
+    "mean": 198
+  },
+  "source": "2026-09-17 user: 默认摆放的数量至少是200以上，可以根据真实case制定",
+  "selection_reason": "Smallest observed case above200 is216; chosen default, not an assertion all real cases exceed200.",
+  "fixed_scale_policy": "4096 canvas H128; layout calibrated scale1.0; never shrink to reach count",
+  "capacity_policy": "exact authored target; no silent reduction, placeholders, tolerance increase or road widening unsupported by background",
+  "category_policy": "Select a thematically/functionally relevant case; map its categories to visible prototypes, then author counts for actual asset footprints and required terrain. Prefix categories below are rough summaries, not semantic ground truth.",
+  "cases": [
+    {
+      "case": "NO_Nidaros_3",
+      "instances": 186,
+      "csv_rows": 186,
+      "prototype_count": 12,
+      "categories_by_name_prefix": {
+        "characters": 54,
+        "buildings": 42,
+        "props": 90
+      },
+      "cast": [
+        {
+          "name": "human_viking_longbeard_CO",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "human_viking_warrior_woman_CO",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "human_viking_axe_man_v3_CO",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "human_viking_bigfighter_CO",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "building_viking_hay",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "building_viking_september",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "prop_viking_dryingrack",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "prop_viking_stackedbarrels",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "prop_viking_woodchoper",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "prop_viking_anvil",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "prop_viking_chest1",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "prop_viking_weaponbarrel",
+          "role": "target",
+          "count": 9
+        }
+      ],
+      "level_sha256": "97d15cec2d05e4b8db8b03ad8ff76b6875fed3e20017fd5c89fc95fad8ce82f8",
+      "csv_sha256": "1b09a9891b175e42d3fce6e6c46880da75023ce9ec470bc13cf43baabda24ab4",
+      "legacy_uniform_scale_metadata": 0.64
+    },
+    {
+      "case": "NO_OrbitCity_1",
+      "instances": 261,
+      "csv_rows": 261,
+      "prototype_count": 20,
+      "categories_by_name_prefix": {
+        "characters": 69,
+        "buildings": 177,
+        "props": 15
+      },
+      "cast": [
+        {
+          "name": "human_robot_bubbleheadgirl_C_CO",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "human_robot_palettemechanic_E_CO",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "human_robot_backpack_E_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_bubbledressgirl_B_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_egg_B_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_eve_B_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_flyingglove_A_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_flyingglove_C_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_flyingsuitcase_A_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_grandpa_C_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "human_robot_egg_A_CO",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "building_robot_AsimaCircle_C",
+          "role": "distractor",
+          "count": 33
+        },
+        {
+          "name": "building_robot_Antena_E",
+          "role": "distractor",
+          "count": 30
+        },
+        {
+          "name": "building_robot_Asima_B",
+          "role": "distractor",
+          "count": 30
+        },
+        {
+          "name": "building_robot_CircleDoor_E",
+          "role": "target",
+          "count": 21
+        },
+        {
+          "name": "building_robot_CrossDelik_A",
+          "role": "target",
+          "count": 21
+        },
+        {
+          "name": "building_robot_VasoDouble_B",
+          "role": "target",
+          "count": 21
+        },
+        {
+          "name": "building_robot_CircleMix_D",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "building_robot_Basic_E",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "prop_hexegon_cream",
+          "role": "distractor",
+          "count": 15
+        }
+      ],
+      "level_sha256": "b6b95f695cabe88e7c53b80179232e2468e17762e99b5365c97c430f58944d32",
+      "csv_sha256": "79055b6c3f94a671003fda2a3674929b5163e89ad05b54e9d4b6d5f73e01c565",
+      "legacy_uniform_scale_metadata": 0.64
+    },
+    {
+      "case": "NO_Sheffield_14",
+      "instances": 174,
+      "csv_rows": 174,
+      "prototype_count": 14,
+      "categories_by_name_prefix": {
+        "characters": 54,
+        "buildings": 54,
+        "animals": 18,
+        "props": 48
+      },
+      "cast": [
+        {
+          "name": "human_viking_hero_v3_CO",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "building_viking_wc_V2",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "human_viking_bigpirate_v3_CO",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "human_viking_green_v2_CO",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "human_viking_longaxe_v2_CO",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "animal_chicken",
+          "role": "distractor",
+          "count": 18
+        },
+        {
+          "name": "prop_viking_minirock",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "building_viking_sword",
+          "role": "distractor",
+          "count": 18
+        },
+        {
+          "name": "building_viking_unicorn",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "building_viking_yellow",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "prop_viking_chest1",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "prop_viking_littlefence",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_viking_meatonfire",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "prop_viking_meatstand",
+          "role": "distractor",
+          "count": 15
+        }
+      ],
+      "level_sha256": "d776904e16f4554ced7a5dcdfb2137defaf1ccd55a938aa6e1b3ad60bcbd5ec4",
+      "csv_sha256": "408d58a3ac4d89feb3e50f8a1d945b75545c17606c517c4c7f4532cdd0ff479f",
+      "legacy_uniform_scale_metadata": 0.64
+    },
+    {
+      "case": "NO_Sheffield_17",
+      "instances": 216,
+      "csv_rows": 216,
+      "prototype_count": 15,
+      "categories_by_name_prefix": {
+        "characters": 75,
+        "buildings": 96,
+        "props": 45
+      },
+      "cast": [
+        {
+          "name": "human_viking_bigpirate_CO",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "human_viking_clumsy_v3_CO",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "human_viking_hero_v2_CO",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "human_viking_purplewoman_CO",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "human_viking_redfighter_v2_CO",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "building_viking_hay_V3",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "building_viking_horn_V2",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "building_viking_horn_V3",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "building_viking_unicorn",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "building_viking_reservoir_V2",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "building_viking_wc_V2",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "prop_viking_dryingrack",
+          "role": "distractor",
+          "count": 21
+        },
+        {
+          "name": "prop_viking_anvil",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "prop_viking_bigcask",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "prop_viking_forge",
+          "role": "target",
+          "count": 6
+        }
+      ],
+      "level_sha256": "f93c184714a8a59e0987a04f45563de99d2e4afe916cad613178865779a10350",
+      "csv_sha256": "79ddf696e05b5c3f12a3d185137d8340fe718ca095cacd338d3d4616d8983294",
+      "legacy_uniform_scale_metadata": 0.64
+    },
+    {
+      "case": "NO_Vondelpark_13",
+      "instances": 186,
+      "csv_rows": 186,
+      "prototype_count": 24,
+      "categories_by_name_prefix": {
+        "characters": 51,
+        "vehicles": 30,
+        "props": 36,
+        "animals": 12,
+        "buildings": 57
+      },
+      "cast": [
+        {
+          "name": "human_alice_alice_v3_CO",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "human_alice_heart_v3_CO",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "vehicle_alice_beancar_CO",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "prop_alice_mushroomV3",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "human_alice_alice_CO",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "human_alice_angrymom_v2_CO",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "human_alice_diamond_v3_CO",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "animal_alice_cat_V2_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "animal_alice_hedgehog_v2_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "buildings_alice_clockhousev2",
+          "role": "distractor",
+          "count": 12
+        },
+        {
+          "name": "buildings_alice_minihousev2",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "buildings_alice_reversecup",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "buildings_alice_treehouse",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "vehicle_alice_airballoon_kiwi_CO",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "vehicle_alice_airballoonV3_CO",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "vehicle_alice_paper_sh_v3_CO",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "vehicle_alice_pea_CO",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_airballoon_banana",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_airballoon_blueberry",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_airballoon_kiwi",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_airballoon_strawberry",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_airballoon_watermelon",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_mushroom",
+          "role": "distractor",
+          "count": 6
+        },
+        {
+          "name": "prop_alice_mushroomV2",
+          "role": "distractor",
+          "count": 9
+        }
+      ],
+      "level_sha256": "e42422fc11504a2fc614e7ec7dbb23d927c6b10305ba32d9b986e76a0cb9c0d3",
+      "csv_sha256": "fcc30b27f28a25e612c0804c7825513bb5524420820e010bee2e8e1db282dbb9",
+      "legacy_uniform_scale_metadata": 0.64
+    },
+    {
+      "case": "NO_Wonderland_9",
+      "instances": 165,
+      "csv_rows": 165,
+      "prototype_count": 16,
+      "categories_by_name_prefix": {
+        "characters": 54,
+        "props": 54,
+        "animals": 9,
+        "buildings": 45,
+        "vehicles": 3
+      },
+      "cast": [
+        {
+          "name": "human_alice_diamondman_v3_CO",
+          "role": "target",
+          "count": 9
+        },
+        {
+          "name": "prop_alice_homemushroom",
+          "role": "target",
+          "count": 6
+        },
+        {
+          "name": "human_alice_alice_v3_CO",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "human_alice_angrymom_v3_CO",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "human_alice_club_v5_CO",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "animal_alice_frog_CO",
+          "role": "distractor",
+          "count": 9
+        },
+        {
+          "name": "buildings_alice_minihousev2",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "buildings_alice_strangehousev2",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "buildings_alice_teahouse",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "vehicle_alice_paper_sh_CO",
+          "role": "distractor",
+          "count": 3
+        },
+        {
+          "name": "prop_alice_fencev3",
+          "role": "distractor",
+          "count": 1
+        },
+        {
+          "name": "prop_alice_hills",
+          "role": "distractor",
+          "count": 1
+        },
+        {
+          "name": "prop_alice_homemushroomV2",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "prop_alice_lamb",
+          "role": "distractor",
+          "count": 15
+        },
+        {
+          "name": "prop_alice_miniisland",
+          "role": "distractor",
+          "count": 1
+        },
+        {
+          "name": "prop_alice_mushroomV2",
+          "role": "distractor",
+          "count": 15
+        }
+      ],
+      "level_sha256": "d4f685c9a778570566598331762e7b4cb9fe275735a8439eb0d92fa305c2cffe",
+      "csv_sha256": "9efab8ac070e973607e3978df9989cc30573719ca996337f188fea6e08131c8d",
+      "legacy_uniform_scale_metadata": 0.64
+    }
+  ]
+}
