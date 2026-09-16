@@ -6,7 +6,7 @@
 Create one complete casual-game scene in the requested theme.
 
 REFERENCE AND PRIORITIES
-The supplied reference group contains [N: 1, 2 or 3] images. Reference 1 is the primary source for the art style, camera and proportions; additional references supplement compatible shape and structural details. Follow any explicit roles below. The reference group is the reference for the drawing language, camera, shape proportions, character-to-building scale, structural detail density, and stylized surface treatment. Preserve its coherent game-asset appearance. Apply the fixed orthographic camera rule and the outline, palette, and material refinements below even where the references show perspective convergence, black contours, heavy dark colors, or strong highlights.
+The clean reference group contains [N: 1, 2 or 3] images, followed by one derived camera-guide overlay of Reference 1 (image [N+1]). Reference 1 is the primary source for art style and proportions; other clean references supplement compatible shapes and structural details. The last image supplies geometry guidance only; its annotations override inconsistent projection directions in the clean references. Follow any explicit roles below. The reference group is the reference for the drawing language, camera, shape proportions, character-to-building scale, structural detail density, and stylized surface treatment. Preserve its coherent game-asset appearance. Apply the fixed orthographic camera rule and the outline, palette, and material refinements below even where the references show perspective convergence, black contours, heavy dark colors, or strong highlights.
 Reference roles and observed characteristics: [identify each input image in order, its role, common traits, and primary-image traits].
 
 THEME
@@ -21,6 +21,8 @@ The theme may reshape the background, terrain, roads, waterways, parcels and bui
 
 FIXED CAMERA
 Use a fixed elevated oblique orthographic projection that shows both the tops and sides of objects. Parallel edges must not converge toward vanishing points, and comparable objects must remain approximately the same size regardless of distance. Keep exactly the same camera orientation and elevation angle across candidates A, B and C. Change layouts, not the viewing direction, camera tilt or perspective. Shared camera description: [one consistent orientation and elevation description, reused verbatim across all three candidates].
+CAMERA GUIDE ROLE
+Use the last input image's cyan and magenta parallel lines as the shared ground-plane axis directions and yellow segments as the upright direction. Apply this camera consistently to wall bases, horizontal eaves, foundations, bridge decks and platforms. Pitched roof slopes are not ground-plane edges; naturally rotated objects need not align to the two guide axes but must share the same projection. The overlay does not lock terrain or layout. Preserve the clean original's art, not incidental changes introduced while making the overlay. The lines are annotations only: remove ALL guide lines, grids, markers and labels from the finished scene.
 
 GOOSE CHARACTER DESIGN — WHEN APPLICABLE
 If the requested characters are geese, favor a chubby, big-round-headed goose design: a large rounded head, a plump compact feathered body, a short but recognizable goose neck, a simple readable goose beak, and small webbed feet. Use restrained costume and prop changes for different roles. Keep the same goose proportions across candidates. Avoid slender realistic geese or human-bodied characters. The enlarged head is an internal character proportion; keep the overall character small relative to buildings. Do not apply goose anatomy to themes that explicitly request other species.
@@ -40,8 +42,8 @@ Use theme-appropriate infrastructure. Boats belong in navigable water; land vehi
 Maintain coherent large color fields and consistent lighting across the canvas. Follow the requested output framing and UI treatment; for scene-only output, include no UI, text, timers, buttons, borders or watermarks.
 ```
 
-保持相同参考组；默认第一张主导，共性优先，不平均混合不兼容画风。输入只有一张时删除additional references等不适用句子。不要把占位符直接发给生成器。斑驳是后续事项，不视为已解决。
+保持相同参考组；默认第一张主导，共性优先，不平均混合不兼容画风。干净原图只有一张时删除其他干净参考图的描述，但保留额外辅助线图及其用途。N表示干净原图数量，实际输入为N+1；填入真实编号。用户明确关闭辅助线时删除派生图与CAMERA GUIDE ROLE相关句子，并以主图选择镜头。不要把占位符直接发给生成器。斑驳是后续事项，不视为已解决。
 
-默认图是实际图片输入，不是纯文本模式。使用默认图时 N=1，并在参考角色中说明它是内置河畔村落画风参考；不要继承其中人类角色，目标角色依主题定义。文件路径按 SKILL.md 所在目录解析，并通过图像工具的图片引用参数传入。
+辅助线准备步骤与英文编辑模板见 [camera-guides.md](camera-guides.md)。默认图是实际图片输入，不是纯文本模式。使用默认图时 N=1，并在参考角色中说明它是内置河畔村落画风参考；不要继承其中人类角色，目标角色依主题定义。文件路径按 SKILL.md 所在目录解析，并通过图像工具的图片引用参数传入。
 
 三个候选必须复用同一段具体镜头描述；不要给A/B/C分别设置不同的朝向或俯角。胖头鹅约束只在主题角色是鹅时适用，优先于参考图中的细长鹅或人类比例。
