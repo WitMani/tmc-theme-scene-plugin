@@ -1,0 +1,36 @@
+{
+  "schema": "stage2.user-feedback.v1",
+  "id": "background-b-large-forms-20260915",
+  "scope": [
+    "background"
+  ],
+  "source_kind": "explicit_user_message",
+  "quotes": [
+    "关于这一套方法的bg生成，现在处于图中的E，最开始的版本处于A，希望刻画到B或者C的程度，做一个对比。",
+    "感觉还是过于细节了？",
+    "可以做一个E和B对比的",
+    "将这个背景的生成约束 更新到插件中，并且更新文档中的背景图生成，并且将这个对比也记录在改进中"
+  ],
+  "quote_note": "首末条为原消息任务相关摘录，省略技能名称和链接；中间两条为原话。",
+  "reference_image": {
+    "file": "background-b-style-scale.jpg",
+    "sha256": "a0ea2069ec4503146578278ff3f2a981cf23707b2724afdeb1ea843cb37d4b11",
+    "generation_input": false
+  },
+  "interpretation": "采用本轮B实验的按大形体分面约束：主色加一个主要暗面，同一结构面内部不再加细碎明暗；同时合并叶团、草簇、芦苇、碎石、砖木缝和水纹。B为默认目标，C仅在用户要求时允许宽阔亮面。色阶是每个连贯形体的概括方法，不是全图限色或禁止环境色差。保留原有树木位置、植被组、地形河道及桥体连接。",
+  "evidence_status": "E/B已实际生成并由用户查看；用户反馈仍偏细，随后要求将该背景生成约束更新插件。此次授权不是对B所有美术项的通过确认。",
+  "known_limitations": [
+    "原B的部分石块仍有额外分面",
+    "草丛芦苇和叶团仍需大形概括",
+    "原B描边一致性未完全满足",
+    "原B水色略更鲜艳"
+  ],
+  "comparison": {
+    "case": "非洲稀树草原",
+    "baseline_sha256": "a7ab726c310620f15dbede858bc19fc8ebb1d38a1b87edb9aedfb7e50aaf2cf1",
+    "B_sha256": "473a7521332462bb987739e37683f8ca9aa9be537aaf2741450448515d5ad861",
+    "generation_tool": "built-in image_gen.imagegen",
+    "actual_prompt_sha256": "10db58c07b88e37b8818ecaa441b4689780d36927d677c4a0304a4d5562e5b07"
+  },
+  "precedence": "Supersedes intermediate background wording in profile1.4.0. Independent assets remain V2. Reference diagram is interpretation evidence, not a default scene input."
+}

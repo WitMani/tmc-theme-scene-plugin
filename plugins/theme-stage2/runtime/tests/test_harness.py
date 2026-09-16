@@ -178,7 +178,8 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual({f['id'] for f in m['profile']['feedback_sources']},
                          {'background-open-edges-20260910', 'asset-art-v2-20260911',
                           'background-richness-20260911', 'formal-release-20260914',
-                          'background-detail-volume-20260914'})
+                          'background-detail-volume-20260914', 'background-b-large-forms-20260915',
+                      'background-placement-space-20260916'})
         self.assertFalse(m['profile']['feedback_sources'][0]['reference_image']['generation_input'])
         rule=next(c for c in h.review_template(self.run)['items'][-1]['checks'] if c['rule_id']=='BG_OPEN_EDGES')
         self.assertEqual(rule['source']['kind'],'user_feedback')
@@ -215,7 +216,8 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn('[DETAIL_FLAT]',bg)
         self.assertNotIn('[VOLUME_WEAK]',asset)
         self.assertNotIn('NO gradients',bg)
-        self.assertIn('KEEP original trees',bg)
+        self.assertIn('KEEP water flow, foam and soft terrain shading',bg)
+        self.assertNotIn('KEEP original trees',bg)
         self.assertIn('NOT a flat icon',asset)
 
     def test_each_new_asset_review_is_required_for_export(self):
@@ -245,9 +247,12 @@ class HarnessTests(unittest.TestCase):
     def test_background_detail_and_volume_are_independent_required_checks(self):
         bg=(self.run/'prompts/background.txt').read_text()
         self.assertIn('[BG_DETAIL_BALANCED]',bg)
-        self.assertIn('Simplify internal marks rather than deleting vegetation',bg)
+        self.assertIn('[BG_PLACEMENT_SPACE]',bg)
+        self.assertNotIn('Keep tree count and positions',bg)
+        self.assertNotIn('[BG_PLACEMENT_SPACE]',(self.run/'prompts/house.txt').read_text())
         self.assertNotIn('[BG_DETAIL_BALANCED]',(self.run/'prompts/house.txt').read_text())
-        for rule in ('BG_DETAIL_BALANCED','BG_VOLUME_BALANCED'):
+        self.assertNotIn('[BG_FORM_GRANULARITY]', (self.run/'prompts/house.txt').read_text())
+        for rule in ('BG_DETAIL_BALANCED','BG_VOLUME_BALANCED','BG_FORM_GRANULARITY','BG_PLACEMENT_SPACE'):
             with self.subTest(rule=rule):
                 review=self.passing_review()
                 check=next(x for x in review['items'][-1]['checks'] if x['rule_id']==rule)

@@ -1,0 +1,9 @@
+{
+  "id": "background-placement-space-20260916",
+  "date": "2026-09-16",
+  "source": "user conversation",
+  "quote": "我觉得非点击类物件需要靠近 画布边缘",
+  "interpretation": "内部地块有连续可放置空间，无散布的非交互立体装饰及侵入投影；外围少量疏密有变化的主题装饰，不形成围墙，不沿内部地块/道路包边；道路、岔口、桥头净空；地形、河道和桥体连接保留。结构性岩石例外需说明位置及用途。仅降低装饰对比或将全部物件堆到外围仍不通过。",
+  "supersedes": "Earlier decoration count/location preservation only; terrain and bridge connectivity remain protected.",
+  "schema": "stage2.user-feedback.v1"
+}

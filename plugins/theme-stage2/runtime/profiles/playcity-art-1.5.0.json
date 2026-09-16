@@ -1,7 +1,7 @@
 {
   "schema": "stage2.art-profile.v1",
   "id": "playcity-art",
-  "version": "1.6.0",
+  "version": "1.5.0",
   "source": {
     "url": "https://playcity.feishu.cn/wiki/YA1zwxGJgiJeDHkaIj9cSOVAnLg",
     "title": "二阶段-美术风格相关",
@@ -67,12 +67,12 @@
     {
       "topic": "background_detail_and_volume",
       "source_kind": "explicit_user_feedback_interpretation",
-      "text": "同步已用于7张修改背景的双维度调整：背景细节密度与体积明暗同时收敛。合并叶簇、减少树皮草纹颗粒与重复砖木缝；按BG_PLACEMENT_SPACE调整装饰数量位置，保留水流泡沫瀑布、地形与桥体结构。体积以较少低对比宽色面呈现，减少深褶、多重分面和亮边，不变成裸地平涂。不编造V2/V3数值中点；物件沿用V2。"
+      "text": "同步已用于7张修改背景的双维度调整：背景细节密度与体积明暗同时收敛。合并叶簇、减少树皮草纹颗粒与重复砖木缝；保留树木位置、主要植被、水流泡沫瀑布、地形与桥体结构。体积以较少低对比宽色面呈现，减少深褶、多重分面和亮边，不变成裸地平涂。不编造V2/V3数值中点；物件沿用V2。"
     },
     {
       "topic": "background_b_large_forms",
       "source_kind": "explicit_user_feedback_interpretation",
-      "text": "采用本轮B实验的按大形体分面约束：主色加一个主要暗面，同一结构面内部不再加细碎明暗；同时合并叶团、草簇、芦苇、碎石、砖木缝和水纹。B为默认目标，C仅在用户要求时允许宽阔亮面。色阶是每个连贯形体的概括方法，不是全图限色或禁止环境色差。植被数量位置服从BG_PLACEMENT_SPACE；保留地形河道及桥体连接。 E/B字母是本次刻画尺度，不等同于历史V1/V2/V3版本。候选图片不自动转为合格样板。"
+      "text": "采用本轮B实验的按大形体分面约束：主色加一个主要暗面，同一结构面内部不再加细碎明暗；同时合并叶团、草簇、芦苇、碎石、砖木缝和水纹。B为默认目标，C仅在用户要求时允许宽阔亮面。色阶是每个连贯形体的概括方法，不是全图限色或禁止环境色差。保留原有树木位置、植被组、地形河道及桥体连接。 E/B字母是本次刻画尺度，不等同于历史V1/V2/V3版本。候选图片不自动转为合格样板。"
     }
   ],
   "technical_contract": {
@@ -332,8 +332,8 @@
         "background"
       ],
       "enforcement": "required_visual_review",
-      "prompt_en": "Preserve thematic environmental identity while allowing non-interactive trees, shrubs, reeds and rocks to be reduced, grouped or relocated toward the outer canvas perimeter under BG_PLACEMENT_SPACE. Preserve river connectivity, a few broad water-flow marks, delicate irregular shoreline foam, waterfalls and spray. Retain broad terrain color regions, natural depth and soft distant atmosphere. Simplify internal foliage and water marks, not the environment away. Do not make a bare flat map or replace removed buildings with invented forests. Background environmental color variation is allowed, but does not justify nested shading patches, glossy gradients or dense texture inside individual forms.",
-      "review_criterion": "主题自然特征保留，非交互植被按BG_PLACEMENT_SPACE减量外移；河流水纹泡沫、瀑布及柔和环境层次可读。去建筑人物道具，不抹平环境，也不随意填入新森林或改河道。"
+      "prompt_en": "Keep original trees, natural shrub and reed groups, and integrated vegetation in their source locations. Preserve river connectivity, a few broad water-flow marks, delicate irregular shoreline foam, waterfalls and spray. Retain broad terrain color regions, natural depth and soft distant atmosphere. Simplify internal foliage and water marks, not the environment away. Do not make a bare flat map or replace removed buildings with invented forests. Background environmental color variation is allowed, but does not justify nested shading patches, glossy gradients or dense texture inside individual forms.",
+      "review_criterion": "原有树木与自然植被保留；河流水纹泡沫、瀑布及柔和环境层次可读。去建筑人物道具，不抹平环境，也不随意填入新森林或改河道。"
     },
     {
       "id": "BG_VOLUME_BALANCED",
@@ -346,7 +346,7 @@
         "background"
       ],
       "enforcement": "required_visual_review",
-      "prompt_en": "BACKGROUND DEFAULT TARGET B: express each coherent form using its base fill plus ONE broad darker orientation or underside region. A trunk has one clean main face and one broad darker side; a canopy has broad green crown masses and one darker underside; a rock or bridge distinguishes its main top from its side. Each structural surface stays internally uniform. Do not split one surface into intermediate stripes, microfacets, bark patches or highlights. Preserve readable orientation, roundness, occlusion, bank and bridge thickness with modest clear value separation; do not make every face identical as in flat target A. Only when the user explicitly requests target C, allow one additional broad light-facing region on a form; never nested light patches. These are per-form shading targets, not a global image color-count limit. Broad terrain color regions, water flow and distant atmosphere remain. Avoid airbrushed 3D modeling, glossy highlights, rim lights, dark creases and deep ambient shadows. Preserve terrain heights and silhouettes, rivers and bridge count, location and connections.",
+      "prompt_en": "BACKGROUND DEFAULT TARGET B: express each coherent form using its base fill plus ONE broad darker orientation or underside region. A trunk has one clean main face and one broad darker side; a canopy has broad green crown masses and one darker underside; a rock or bridge distinguishes its main top from its side. Each structural surface stays internally uniform. Do not split one surface into intermediate stripes, microfacets, bark patches or highlights. Preserve readable orientation, roundness, occlusion, bank and bridge thickness with modest clear value separation; do not make every face identical as in flat target A. Only when the user explicitly requests target C, allow one additional broad light-facing region on a form; never nested light patches. These are per-form shading targets, not a global image color-count limit. Broad terrain color regions, water flow and distant atmosphere remain. Avoid airbrushed 3D modeling, glossy highlights, rim lights, dark creases and deep ambient shadows. Preserve terrain heights and silhouettes, rivers, tree positions and bridge count, location and connections.",
       "review_criterion": "默认B：主色加一个主要暗面；同一结构面内部无额外条带、小分面或斑纹。树冠、树干、岸壁、石块和桥体均需检查，不能只观察树。保留明面/侧面/遮挡和必要厚度，不全部同值压平。仅用户要求C时增加一个宽亮面。全图环境色差不计作单体分面，不能据此放过局部碎色块。"
     },
     {
@@ -360,8 +360,8 @@
         "background"
       ],
       "enforcement": "required_visual_review",
-      "prompt_en": "BACKGROUND DETAIL: simplify internal shape complexity as well as shading. Merge tiny leaf scallops and nested canopy clusters into a few large coherent lobes with smooth broad contours. Remove bark scratches and mottled bark patches. Draw bushes and grass as readable whole clumps; merge excessive individually rendered blades and reeds into grouped silhouettes where retained under BG_PLACEMENT_SPACE. Rocks keep only principal structural planes; omit tiny decorative facets. Ground uses broad clean color areas, without speckles, scribbles, repeated pebbles or crack networks. Bridges keep their decks, arches, supports and connections, while omitting dense wood grain, brick grids and redundant plank seams. Water uses a few broad calm current marks and a delicate shoreline foam edge; preserve waterfalls and spray with fewer repeated streaks. Keep terrain and bridge layout. Reduce and relocate non-interactive decoration under BG_PLACEMENT_SPACE; simplify internal marks on retained forms while preserving thematic environmental identity. Do not replace removed microdetail with new props or stronger saturation.",
-      "review_criterion": "分开检查轮廓、内部形状数量、纹理密度：树冠无层层小叶团，树干无皮纹，草丛芦苇以整簇概括，石块无碎分面，桥面无密集砖木缝，水纹少而宽。主题特征保留，装饰数量和位置服从可排布空间；低对比但密集的小形状仍不通过。"
+      "prompt_en": "BACKGROUND DETAIL: simplify internal shape complexity as well as shading. Merge tiny leaf scallops and nested canopy clusters into a few large coherent lobes with smooth broad contours. Remove bark scratches and mottled bark patches. Draw bushes and grass as readable whole clumps; merge excessive individually rendered blades and reeds into grouped silhouettes while preserving their locations. Rocks keep only principal structural planes; omit tiny decorative facets. Ground uses broad clean color areas, without speckles, scribbles, repeated pebbles or crack networks. Bridges keep their decks, arches, supports and connections, while omitting dense wood grain, brick grids and redundant plank seams. Water uses a few broad calm current marks and a delicate shoreline foam edge; preserve waterfalls and spray with fewer repeated streaks. Keep tree count and positions, major vegetation groups, terrain and bridge layout; achieve simplification by merging internal marks, not by deleting the environment. Do not replace removed microdetail with new props or stronger saturation.",
+      "review_criterion": "分开检查轮廓、内部形状数量、纹理密度：树冠无层层小叶团，树干无皮纹，草丛芦苇以整簇概括，石块无碎分面，桥面无密集砖木缝，水纹少而宽。树木和主要植被组的位置与主题保留；低对比但密集的小形状仍不通过。"
     },
     {
       "id": "BG_FORM_GRANULARITY",
@@ -376,20 +376,6 @@
       "enforcement": "required_visual_review",
       "prompt_en": "Check shape granularity independently of tone contrast: reducing saturation or contrast is not sufficient if numerous tiny leaves, layered lobes, individual blades, rock facets or repeated surface marks remain. Simplify at whole-form and whole-clump scale; keep silhouettes readable at the scene viewing scale.",
       "review_criterion": "全图及局部都检查形状粒度；明暗减少但叶团、草叶、石头分面和重复水纹仍密集时，单独标记此项失败。不得用体积项通过代替本项，也不得把已展示的B候选自动当全部合格样板。"
-    },
-    {
-      "id": "BG_PLACEMENT_SPACE",
-      "name": "内部可排布空间优先，非交互装饰减量外移",
-      "source_kind": "user_feedback",
-      "source_feedback_id": "background-placement-space-20260916",
-      "source_block_id": null,
-      "source_quote": "我觉得非点击类物件需要靠近 画布边缘",
-      "applies_to": [
-        "background"
-      ],
-      "enforcement": "required_visual_review",
-      "prompt_en": "BACKGROUND PLACEMENT SPACE: first identify connected interior land areas for later asset placement and keep them clear of non-interactive volumetric decoration and its cast shadows. Remove most scattered decorative rocks, cacti, trees and shrubs from these areas; reconstruct natural ground with broad soft color variation and low-contrast surface texture. Retain a limited number of thematic decoration groups near the OUTER CANVAS PERIMETER, with irregular spacing and open gaps. Delete surplus decoration rather than moving every object outward. Do not preserve original decoration counts or positions. The perimeter means the outside of the canvas, NOT the edges of every internal parcel, road or river. Never make a continuous decorative wall or line roads with props. Keep roads, junctions, bridge approaches and their placement clearance unobstructed. Preserve terrain heights, land/water boundaries, river connectivity, bridge count, locations and bank connections; structural cliff or riverbed rocks may remain where necessary. Do not relocate structural terrain to satisfy decoration placement. Preserve environmental identity through restrained perimeter groups, water detail and soft ground color variation, not scattered interior props. This rule supersedes older instructions to retain every tree or vegetation location.",
-      "review_criterion": "内部地块有连续可放置空间，无散布的非交互立体装饰及侵入投影；外围少量疏密有变化的主题装饰，不形成围墙，不沿内部地块/道路包边；道路、岔口、桥头净空；地形、河道和桥体连接保留。结构性岩石例外需说明位置及用途。仅降低装饰对比或将全部物件堆到外围仍不通过。"
     }
   ],
   "feedback_sources": [
@@ -428,12 +414,6 @@
       "title": "背景B档：大形体分面与内部形状合并",
       "snapshot": "../docs/feedback/background-b-large-forms-20260915.json",
       "snapshot_sha256": "31323014ef40f4150bf98f9d57fba77b4f977c7b02c54a7fc80dffb63bff607c"
-    },
-    {
-      "id": "background-placement-space-20260916",
-      "kind": "user_feedback",
-      "snapshot": "../docs/feedback/background-placement-space-20260916.json",
-      "snapshot_sha256": "18f33d757f889d1829058d8f332257103ca7001b170caa11022cb7673013b1ad"
     }
   ]
 }

@@ -123,7 +123,7 @@ def compile_prompt(item, profile):
         'rendering in the Stage 1 image. Use the scene for theme and object identity. '
         'Apply the category-specific rules: independent assets need locally colored '
         'outlines, restrained readable volume and deliberate cartoon exaggeration; '
-        'backgrounds retain original vegetation and environmental surface detail. '
+        'backgrounds preserve environmental identity and prioritize clear interior placement space. '
         'Do not inherit incompatible glossy rendering, variable line weight or tall character proportions.',
         'Normative document: ' + profile['source']['title'] +
         ' / revision ' + str(profile['source']['revision_id']) + '.',
@@ -137,7 +137,7 @@ def compile_prompt(item, profile):
         head += [
             'OUTPUT: One independent opaque PNG background plate, at the requested '
             'source framing. Remove buildings, living characters, vehicles, movable '
-            'facilities and their shadows/reflections. KEEP original trees, natural vegetation, '
+            'facilities and their shadows/reflections. Reduce or relocate non-interactive decoration under the background placement rules. KEEP '
             'water flow, foam and soft terrain shading. Preserve fixed terrain and '
             'explicitly retained bridge decks, supporting arches and bank connections. '
             'Railings and decorative edge structures are not automatically protected '
