@@ -9,7 +9,7 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 
 ## 默认场景实例数量（216）
 
-新主题的数量规划先读取[真实案例数量规则](references/scene-count-policy.md)；配置见[references/scene-count-settings.json](references/scene-count-settings.json)。默认216个摆放实例，未明确覆盖时必须大于200；这不改变独立素材种类数。按相近真实case及本次素材占地、地形容量制定逐原型数量，不把原案例的0.64倍率搬入新场景。新scene-plan必须绑定count_policy，逐项合计与target_total一致。用户明确数量和历史运行保留各自契约；普通独立PNG输入的显式一次摆放不自动扩成主题关卡。
+新主题的数量规划先读取[真实案例数量规则](references/scene-count-policy.md)；配置见[references/scene-count-settings.json](references/scene-count-settings.json)。默认目标216个摆放实例（未明确覆盖时目标不低于201）；这是目标而非硬约束：Layout 容量预检放不下时按比例缩减该类别的数量并在报告中逐项列出（2026-09-17 用户决定），不再阻断流程；这不改变独立素材种类数。按相近真实case及本次素材占地、地形容量制定逐原型数量，不把原案例的0.64倍率搬入新场景。新scene-plan必须绑定count_policy，逐项合计与target_total一致。用户明确数量和历史运行保留各自契约；普通独立PNG输入的显式一次摆放不自动扩成主题关卡。
 
 ## 输入与执行范围
 
@@ -28,8 +28,8 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 | 素材标尺 | 普通人物有效高度基准H=128 px；其他对象按真实同类素材相对尺度校准 |
 | 镜头与美术 | 遵守当前Stage 1与Stage 2技能的镜头和美术规则 |
 | 素材种类 | 默认22种：建筑8、道具6、载具3、角色5；明确用户覆盖优先；只约束种类 |
-| 摆放数量 | 默认216实例，下限201；先读真实case数量规则，按类别/占地/道路容量编制逐ID数量；显式用户数量优先 |
-| 排布 | seed 11、25、42，共3个候选；使用校准交付素材的scale=1.0 |
+| 摆放数量 | 目标216实例（下限201）；先读真实case数量规则，按类别/占地/道路容量编制逐ID数量；Layout 容量不足时按比例缩减并逐项报告；显式用户数量优先 |
+| 排布 | seed 11、25、42，共3个候选，由 Layout 的 `solve` 在一个进程内顺序生成；使用校准交付素材的scale=1.0；不开子 agent |
 | 返工 | 最多2轮定向返工，且继承各阶段、各图片槽位已有重试预算 |
 | 游玩默认 | 7格托盘、同类三消、180秒、静态可收集载具；每原型计数为3的倍数；用户明确覆盖优先 |
 | 交付 | 游玩首页index.html、通过测试的候选playable.html及推荐，另附效果图、独立PNG、布局JSON与对比入口 |
@@ -69,10 +69,12 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 
 ### 3. 排布与最终验收
 
-- 读取并执行Layout技能，用其`init --handoff`导入交接包，不重新扫描PNG后猜数量。
-- 完成地形mask与实际背景核对、语义规则、可行叠放及容量预检，再生成三个seed。各seed共享相同背景、素材、数量、尺度与完成目标。
-- 通过已有Harness完成草稿审查、finalize、post、render以及几何验收；在最终渲染后生成并填写scene-review，检查密度和全部场景目标，再validate。
-- `countTolerance`不能覆盖交接计划缺项。只有当前图片、计划、布局、mask和渲染来源对应的验收均通过，才称排布阶段完成，随后必须进入游玩交付。几何合法不等于核心内容、密度或完整场景成立。
+- 读取并执行Layout技能（0.9.0 起），用其`init --handoff`导入交接包，不重新扫描PNG后猜数量。
+- 按 Layout SKILL 的默认顺序执行：`mask-prompt` → 生成一张 mask → `mask-import`（查看 overlay 与风险裁图，必要时 `mask-fix`）→ **`feasibility`** → `scene-analyze` → `rules-propose`/编写 rules-manifest → `rules-apply` → `rules-doctor` →（可选）`stack-propose` → `doctor` → **`solve --project <project> --batch-dir <batch> --title <主题名>`**。
+- `feasibility` 在 mask 导入后立即判定载具走廊是否能承载计划中的车、船、火车。它报 `fail` 时**不要进入排布**：查看 `feasibility/feasibility.png`，把 `feasibility/repair-prompt.md` 作为 Stage 2 背景定向修正的 prompt 重画对应路段（只换背景，沿用其余素材、计划与哈希流程），重新 mask 与 feasibility 后再继续。报 `warn` 可以继续，报告中说明部分路网不会有车流。
+- `solve` 在一个进程内顺序完成全部 seed 的摆放、finalize、post、render、validate、review-bundle 与 gallery。不再逐批 `draft-propose`/`draft-accept`，不再派发子 agent，不再在阶段之间询问用户。容量不足时它按比例缩减该类别数量并写 `count-plan.json`；`solve-summary.json` 的 `countLines` 列出每一项变化，最终报告必须逐项转述。
+- `solve` 结束后，每个 seed 只看一次 1400 px 的 `render.jpg`（不要打开 4096 原图做审核），填写 `scene-review.json`（reviewer、density、每个 goal 的 observation），运行 `validate`。只有可见底部站在禁行地形、两栋建筑地基重叠、精灵站在桥墩/台面侧壁、乘员超出槽位这四类才是硬问题，写入 `findings.json` 后最多一轮 `repair`；密度、相邻、寻物式遮挡、边缘裁切都是软问题，不进入 repair。
+- 只有当前图片、计划、布局、mask 和渲染来源对应的验收均通过（`validation.json.ok`、`sceneCompletion.ok`），或数量偏差已全部列出，才称排布阶段完成，随后必须进入游玩交付。几何合法不等于核心内容、密度或完整场景成立。
 
 ### 4. 正式游玩交付（默认必做）
 
@@ -89,12 +91,21 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 | mask与背景不符或规则误判 | 在Layout修正，重新预检 |
 | 尺度或背景尺寸错误 | 回Stage 2校准，不以“缩到能塞下”为目标 |
 | 真实背景缺轨道、水域、通路或地块被装饰挤占 | 回Stage 2定向修正背景 |
+| `feasibility` 报 fail（走廊太窄、桥头断开、死路无法掉头） | 用 `feasibility/repair-prompt.md` 回 Stage 2 只重画对应路段；其它素材、计划不重做；修好后重新 mask-import、feasibility 再 solve |
 | 核心原型未生成、候选主题或构图根本不符 | 回Stage 1定向修正，再更新下游 |
-| 数量不足但尺度、mask与规则都正确 | 检查地块分配及背景容量；明确数量或核心内容的改变需用户决定 |
+| 数量不足但尺度、mask与规则都正确 | Layout 默认按比例缩减该类别并写 count-plan.json，报告逐项列出；只有用户明确指定过数量时才停下来问 |
 | 点击、三消、叠放、胜负、重开或界面测试失败 | 修复游玩导出/运行时或测试选点；重新测试并更新绑定，不能套用布局验收 |
 | 密度或核心组合不成立 | 优先调整Layout；确实需换背景/原型时回对应阶段 |
 
 必要例行修正属于本次完整流程授权，不反复问是否继续。每轮只修失败对象，保留旧产物、返工原因和实际尝试次数；另建修订运行，记录supersedes关系。图片或计划变化后旧审核失效，重新验收并生成交接包，重开排布批次。两轮或槽位预算耗尽仍失败，说明已完成部分、未解决原因及需要用户决定的事项；不无限生图、不伪造通过、不用提高容差或删核心对象掩盖问题。
+
+## 效率约束（2026-09-17 起）
+
+- 不派发子 agent、不做父子消息协调；排布由 `solve` 单进程完成。
+- 模型只在四处决策：主题计划、Stage 1 选图、语义规则（rules-manifest / stacks）、最终 scene-review。其余全部由脚本判定，不要用看图代替脚本已经计算的合法性。
+- 看图前缩图：Stage 1/2 的 4096 图片先用脚本生成 1024 或 1536 边长的缩略图再查看；排布只看 1400 px 的 render.jpg 和 feasibility.png。
+- 失败只修失败的那一段：背景局部重画只重跑 mask、feasibility 与 solve；不重建 Stage 2 的其余素材、不重开新的 project 目录树。
+- 一次流水线的目标：模型调用 10 次以内，单主题 30 分钟以内（生图工具是主要耗时）。
 
 ## 运行记录与交付
 

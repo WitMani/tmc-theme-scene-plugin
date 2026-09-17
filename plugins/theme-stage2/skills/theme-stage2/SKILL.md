@@ -9,7 +9,7 @@ description: "美术生成 Stage 2：从一张 Stage 1 成品场景图提取并�
 
 ## 默认场景实例数量（216）
 
-新主题的数量规划先读取[真实案例数量规则](references/scene-count-policy.md)；配置见[../../runtime/scene-count-settings.json](../../runtime/scene-count-settings.json)。默认216个摆放实例，未明确覆盖时必须大于200；这不改变独立素材种类数。按相近真实case及本次素材占地、地形容量制定逐原型数量，不把原案例的0.64倍率搬入新场景。新scene-plan必须绑定count_policy，逐项合计与target_total一致。用户明确数量和历史运行保留各自契约；普通独立PNG输入的显式一次摆放不自动扩成主题关卡。
+新主题的数量规划先读取[真实案例数量规则](references/scene-count-policy.md)；配置见[../../runtime/scene-count-settings.json](../../runtime/scene-count-settings.json)。默认目标216个摆放实例（未明确覆盖时目标不低于201）；这是目标而非硬约束：Layout 容量预检放不下时按比例缩减该类别的数量并在报告中逐项列出（2026-09-17 用户决定），不再阻断流程；这不改变独立素材种类数。按相近真实case及本次素材占地、地形容量制定逐原型数量，不把原案例的0.64倍率搬入新场景。新scene-plan必须绑定count_policy，逐项合计与target_total一致。用户明确数量和历史运行保留各自契约；普通独立PNG输入的显式一次摆放不自动扩成主题关卡。
 
 ## 固定场景尺寸与标尺
 
