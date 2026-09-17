@@ -1,4 +1,4 @@
 interface:
   display_name: "主题素材工坊 · Stage 2"
-  short_description: "单张Stage1图拆出独立背景与约14个素材，只交付PNG"
-  default_prompt: "使用 $theme-stage2，处理这张 Stage 1 成品图，只输出独立背景和默认14个素材 PNG。"
+  short_description: "单张Stage1图拆出独立背景与22种素材，只交付PNG"
+  default_prompt: "使用 $theme-stage2，处理这张 Stage 1 成品图，只输出独立背景和默认22种素材（建筑8、道具6、载具3、角色5） PNG。"

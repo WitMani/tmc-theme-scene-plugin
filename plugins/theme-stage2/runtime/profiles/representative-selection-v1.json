@@ -1,17 +1,17 @@
 {
   "schema": "stage2.selection-policy.v1",
   "id": "representative-assets",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "source": {
     "kind": "user_feedback",
-    "snapshot": "../docs/feedback/representative-selection-confirmed-20260910.json",
-    "snapshot_sha256": "7097d404130dd8301c1f8d070517340be2615428ac9b971c4b825b6824a8ac09",
-    "quote": "可以 就按照这个 那以后呢"
+    "snapshot": "../docs/feedback/prototype-species-20260917.json",
+    "snapshot_sha256": "83ae9a5a11e9bbb5ad502f5919695833f247a00be03ea45941b830b88699301c",
+    "quote": "我觉得这个需求 加到stage2 能分出来这么多种就好了，数量可以不用管，但是种类的要求 可以加到stage1和stage2的默认规则中"
   },
   "asset_count": {
-    "minimum_target": 12,
-    "maximum_target": 15,
-    "recommended": 14,
+    "minimum_target": 22,
+    "maximum_target": 22,
+    "recommended": 22,
     "unit": "distinct reusable asset prototype",
     "range_is_target_not_forced_minimum": true
   },
@@ -20,12 +20,12 @@
     "counts_toward_asset_budget": false
   },
   "recommended_allocation": {
-    "building": 4,
+    "building": 8,
+    "facility": 6,
     "vehicle": 3,
-    "facility": 4,
-    "character": 3
+    "character": 5
   },
-  "allocation_is_flexible": true,
+  "allocation_is_flexible": false,
   "allocation_origin": "user_confirmed_default",
   "priorities": [
     "clear theme identity",
@@ -45,7 +45,7 @@
     "fences and decorative terrain-edge bands by default",
     "unidentifiable fragments requiring invented object identity"
   ],
-  "shortfall_policy": "Prefer fewer source-supported prototypes and report the shortfall; never invent unseen assets to reach 12. Reallocate missing category slots to distinct observed prototypes when available.",
+  "shortfall_policy": "Report per-category shortfalls; never invent unseen assets or reallocate categories. In the full pipeline repair Stage 1; standalone Stage 2 reports missing source prototypes. Explicit user overrides use a recorded run policy.",
   "semantic_deduplication": "Manual/vision-authored prototype_key; this checker does not infer duplicate shapes from pixels.",
   "confirmation_status": "confirmed"
 }

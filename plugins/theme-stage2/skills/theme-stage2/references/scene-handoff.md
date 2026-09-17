@@ -17,7 +17,7 @@
 
 原型ID使用英文字母数字、点、横线或下划线。class用Layout真实类别，如building/person/land_animal/vehicle/rail_vehicle/boat/prop。火车class=rail_vehicle、requires含rail；船class=boat、requires含water；陆车class=vehicle、requires含road。requires可为空但必须显式填写。zones使用Harness地形词汇，只能在其底层合法规则内收窄。背景的道路、水域及铁路必须能容纳计划资产，不能只画一个象征性小色块。
 
-Stage 2选择12–15个代表性原型时，沿用对应稳定ID。候选计划与选材不一致须形成可追溯修订，说明合并/剔除原因；核心物件不能悄悄删除。交接包中的计划必须恰好覆盖所有实际非背景原型。
+Stage 2默认选择22种原型（建筑8、道具6、载具3、角色5；用户明确覆盖优先）时，沿用对应稳定ID。候选计划与选材不一致须形成可追溯修订，说明合并/剔除原因；核心物件不能悄悄删除。交接包中的计划必须恰好覆盖所有实际非背景原型。
 
 ## 只验证有证据的结论
 

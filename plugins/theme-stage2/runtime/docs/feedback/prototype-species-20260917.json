@@ -1,0 +1,11 @@
+{
+  "kind": "user_feedback",
+  "quote": "我觉得这个需求 加到stage2 能分出来这么多种就好了，数量可以不用管，但是种类的要求 可以加到stage1和stage2的默认规则中",
+  "allocation": {
+    "building": 8,
+    "facility": 6,
+    "vehicle": 3,
+    "character": 5
+  },
+  "scope": "独立原型种类；不修改实例数量与目标款数量"
+}

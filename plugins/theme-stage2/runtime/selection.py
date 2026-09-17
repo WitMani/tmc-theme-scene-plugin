@@ -68,7 +68,9 @@ def assess_selection(inventory, policy=None):
         notes.append('The normal delivery has one separate background; the background does not count as an asset prototype.')
     for category,recommended in p['recommended_allocation'].items():
         if counts[category]!=recommended:
-            notes.append(f'{category}: {counts[category]} selected, {recommended} recommended; adapt to observed source content.')
+            notes.append(f'{category}: {counts[category]} selected, {recommended} required by the current selection policy.')
+            if not p.get('allocation_is_flexible', True):
+                state='needs_revision'
     if missing_annotations:
         notes.append('Source-evidence annotations still needed for: '+', '.join(str(x) for x in missing_annotations))
     return {'schema':'stage2.selection-assessment.v1','policy_id':p['id'],'policy_version':p['version'],

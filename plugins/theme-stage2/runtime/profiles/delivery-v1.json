@@ -20,6 +20,6 @@
   "keep_internal_records": true,
   "internal_records_location": "run/export-records/<export-id>/",
   "zip_policy": "Optional packaging may contain only the same background and asset PNG files.",
-  "selection_policy": "representative-assets: default 14 assets, target 12–15, background counted separately",
+  "selection_policy": "representative-assets: default 22 distinct prototypes, building 8 / facility (props) 6 / vehicle 3 / character 5; background separate; explicit user overrides take priority",
   "recomposition": false
 }
