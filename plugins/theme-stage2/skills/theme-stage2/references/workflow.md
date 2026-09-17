@@ -103,7 +103,15 @@ python3 "$PLUGIN_ROOT/scripts/run.py" cutout \
 
 ## 尺度校准
 
-透明化后按尺度计划测量主体包围盒，等比缩放并保存新候选和 scale-review.json；按尺度规则完成同倍率视觉复核。使用 register 登记校准后的 PNG，然后重新生成美术复核表。原生成与透明化记录保留。现有 cutout/register 不会自动校准尺度；不要省略这一执行步骤。
+透明化后用打包命令按 scale-plan.json 校准，不再现场写缩放脚本：
+
+```bash
+python3 "$PLUGIN_ROOT/scripts/run.py" calibrate --run "$RUN" --id "$ITEM_ID"
+python3 "$PLUGIN_ROOT/scripts/run.py" calibrate --run "$RUN" --all
+python3 "$PLUGIN_ROOT/scripts/run.py" scale-contact --run "$RUN" --out "$RUN/scale-contact.png"
+```
+
+`calibrate` 读取当前已登记候选（或 `--image` 指定的透明 PNG），按 alpha>16 测主体包围盒，把主轴等比缩放到 `target_H×128`，加 8 px 透明留白（`--margin` 可改），保存到 `calibrated/<id>/<签名>/` 并自动 `register`；同一来源与同一计划重复执行复用同一输出。命令同时把测量值和最终 PNG 哈希写入 `scale-review.json`，但每个被触及的条目和总状态都置为 `unreviewed`；计划变化时所有旧条目一并失效。`scale-contact` 生成同倍率并排对照图（附 1H 标尺条），供执行者目视复核后再把 `status`、`reviewer`、`observation` 填为实际结论。校准后重新生成美术复核表；原生成与透明化记录保留。缺 alpha、缺计划条目或结果偏离目标超过 1 px 时命令直接报错，不产生候选。
 
 ## 复核与修正
 

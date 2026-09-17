@@ -555,6 +555,8 @@ def main(argv=None):
     p = sub.add_parser('selection-check'); p.add_argument('--inventory', required=True); p.add_argument('--out')
     p = sub.add_parser('record-call'); p.add_argument('--run', required=True); p.add_argument('--id', required=True); p.add_argument('--image', required=True); p.add_argument('--prompt', required=True); p.add_argument('--input', action='append', required=True); p.add_argument('--tool', default='image_gen.imagegen')
     p = sub.add_parser('cutout'); p.add_argument('--run', required=True); p.add_argument('--id', required=True); p.add_argument('--image', required=True); p.add_argument('--matte', default='auto'); p.add_argument('--shadowed-matte', action='store_true')
+    p = sub.add_parser('calibrate', help='uniformly scale the alpha body of an asset to its scale-plan target, register it and bind scale-review.json'); p.add_argument('--run', required=True); p.add_argument('--id'); p.add_argument('--all', action='store_true'); p.add_argument('--image', help='defaults to the currently registered candidate'); p.add_argument('--margin', type=int, default=8)
+    p = sub.add_parser('scale-contact', help='same-scale side-by-side sheet of the registered assets for the visual scale review'); p.add_argument('--run', required=True); p.add_argument('--out', required=True)
     for cmd in ('validate', 'export'):
         p = sub.add_parser(cmd); p.add_argument('--run', required=True); p.add_argument('--review', required=cmd == 'export'); p.add_argument('--out', required=cmd == 'export'); p.add_argument('--profile', default=str(DEFAULT_PROFILE))
     args = parser.parse_args(argv)
@@ -597,6 +599,16 @@ def main(argv=None):
         elif args.command == 'cutout':
             from production import cutout_candidate
             result = cutout_candidate(args.run, args.id, args.image, args.matte, args.shadowed_matte)
+        elif args.command == 'calibrate':
+            from scale_calibrate import calibrate_asset, calibrate_all
+            if bool(args.id) == bool(args.all):
+                raise ValueError('Pass exactly one of --id or --all')
+            if args.all and args.image:
+                raise ValueError('--image applies to a single --id')
+            result = calibrate_all(args.run, args.margin) if args.all else calibrate_asset(args.run, args.id, args.image, args.margin)
+        elif args.command == 'scale-contact':
+            from scale_calibrate import contact_sheet
+            result = contact_sheet(args.run, args.out)
         elif args.command == 'validate':
             result = validate(args.run, args.review, args.profile)
             write_json(args.out or Path(args.run) / 'validation.json', result)
