@@ -15,7 +15,7 @@ import sys
 import tempfile
 import uuid
 from PIL import Image
-from selection import load_selection_policy, assess_selection
+from selection import load_selection_policy, assess_selection, resolve_selection_policy
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_PROFILE = ROOT / 'profiles/playcity-art-v1.json'
@@ -194,7 +194,7 @@ def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
                 any(type(x) is not int for x in box) or
                 not (0 <= box[0] < box[2] <= im.width and 0 <= box[1] < box[3] <= im.height)):
                 raise ValueError('Invalid source_bbox for ' + iid)
-    selection_policy = load_selection_policy()
+    selection_policy = resolve_selection_policy(inventory)
     selection = assess_selection(inventory, selection_policy)
     if selection['blocking_issues']:
         raise ValueError('; '.join(selection['blocking_issues']))

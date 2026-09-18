@@ -47,5 +47,6 @@
   ],
   "shortfall_policy": "Report per-category shortfalls; never invent unseen assets or reallocate categories. In the full pipeline repair Stage 1; standalone Stage 2 reports missing source prototypes. Explicit user overrides use a recorded run policy.",
   "semantic_deduplication": "Manual/vision-authored prototype_key; this checker does not infer duplicate shapes from pixels.",
-  "confirmation_status": "confirmed"
+  "confirmation_status": "confirmed",
+  "override_precedence": "未指定数量、类别或素材清单时，默认22种素材（建筑8、道具6、载具3、角色5）＋1张背景。用户明确指定时，按用户指定规则执行，覆盖对应默认约束；仅指定总数时不强套8/6/3/5配额，指定完整清单时不额外补足22种。未涉及的要求继续沿用默认。"
 }

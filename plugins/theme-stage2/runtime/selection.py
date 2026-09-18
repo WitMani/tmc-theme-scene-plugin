@@ -1,6 +1,7 @@
 """Check an explicitly curated selection; do not invent or auto-detect assets."""
 from pathlib import Path
 from collections import Counter, defaultdict
+import copy
 import hashlib
 import json
 
@@ -22,8 +23,45 @@ def load_selection_policy(path=DEFAULT_POLICY):
         raise ValueError('Selection-policy source changed or is missing')
     return p
 
+def resolve_selection_policy(inventory, policy=None):
+    p = copy.deepcopy(policy if policy is not None else load_selection_policy())
+    override = inventory.get('selection_override')
+    if override is None:
+        return p
+    if not isinstance(override, dict) or not str(override.get('user_instruction', '')).strip():
+        raise ValueError('selection_override requires user_instruction')
+    unknown = set(override) - {'user_instruction', 'asset_count', 'allocation', 'background_count'}
+    if unknown:
+        raise ValueError('Unknown selection override fields: ' + ', '.join(sorted(unknown)))
+    allocation = override.get('allocation')
+    if allocation is not None:
+        if not isinstance(allocation, dict) or not allocation or set(allocation) - set(ASSET_CATEGORIES):
+            raise ValueError('Invalid selection override allocation')
+        if any(type(v) is not int or v < 0 for v in allocation.values()):
+            raise ValueError('Allocation counts must be nonnegative integers')
+        p['recommended_allocation'] = {c: allocation.get(c, 0) for c in ASSET_CATEGORIES}
+        p['allocation_is_flexible'] = False
+    count = override.get('asset_count', sum(allocation.values()) if allocation is not None else None)
+    if count is not None:
+        if type(count) is not int or count <= 0:
+            raise ValueError('Asset count must be a positive integer')
+        if allocation is not None and sum(allocation.values()) != count:
+            raise ValueError('Asset count and allocation disagree')
+        for key in ('minimum_target', 'maximum_target', 'recommended'):
+            p['asset_count'][key] = count
+        if allocation is None:
+            p['recommended_allocation'] = {}
+            p['allocation_is_flexible'] = True
+    if 'background_count' in override:
+        count = override['background_count']
+        if type(count) is not int or count < 0:
+            raise ValueError('Background count must be a nonnegative integer')
+        p['background']['recommended_count'] = count
+    p['user_override'] = copy.deepcopy(override)
+    return p
+
 def assess_selection(inventory, policy=None):
-    p=policy or load_selection_policy()
+    p=resolve_selection_policy(inventory, policy)
     rows=inventory.get('items',[])
     if not isinstance(rows,list):
         raise ValueError('Inventory items must be a list')

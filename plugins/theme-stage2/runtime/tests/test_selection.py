@@ -79,4 +79,28 @@ class DefaultSpeciesTests(unittest.TestCase):
         self.assertEqual(assess_selection(inventory)['state'],'needs_revision')
         self.assertEqual(inventory,original)
 
+
+class UserOverrideTests(unittest.TestCase):
+    def test_explicit_total_replaces_default_without_mutating_it(self):
+        inventory=json.loads((Path(__file__).resolve().parents[1]/'examples/venice-representative-14.json').read_text())
+        self.assertNotEqual(assess_selection(inventory)['state'], 'within_target')
+        inventory['selection_override']={'user_instruction':'只要14种素材', 'asset_count':14}
+        self.assertEqual(assess_selection(inventory)['state'], 'within_target')
+        self.assertEqual(load_selection_policy()['asset_count']['recommended'],22)
+
+    def test_explicit_allocation_replaces_default(self):
+        inventory={'items':[{'id':'house','category':'building'}, {'id':'bg','category':'background'}],
+                   'selection_override':{'user_instruction':'只要一种建筑和背景','allocation':{'building':1}}}
+        self.assertEqual(assess_selection(inventory)['state'],'within_target')
+        inventory['items'][0]['category']='vehicle'
+        self.assertEqual(assess_selection(inventory)['state'],'needs_revision')
+
+    def test_conflicting_override_is_rejected(self):
+        with self.assertRaises(ValueError):
+            assess_selection({'items':[], 'selection_override':{'user_instruction':'test','asset_count':3,'allocation':{'building':1}}})
+
+    def test_override_requires_user_instruction(self):
+        with self.assertRaises(ValueError):
+            assess_selection({'items':[], 'selection_override':{'asset_count':14}})
+
 if __name__=='__main__':unittest.main()
