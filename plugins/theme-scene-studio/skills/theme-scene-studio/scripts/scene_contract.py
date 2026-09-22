@@ -17,6 +17,9 @@ CLASSES = {'person', 'shore_person', 'land_animal', 'aquatic', 'flying_animal',
 INFRA = {'rail', 'water', 'road', 'bridge', 'platform'}
 CLASS_DEPENDENCIES = {'rail_vehicle': {'rail'}, 'boat': {'water'},
                       'submarine': {'water'}, 'vehicle': {'road'}}
+# Same vehicle classes and modes as tmc-level-layout resolve_delivery_policy.
+VEHICLE_CLASSES = {'boat', 'vehicle', 'rail_vehicle', 'submarine', 'aircraft'}
+DELIVERY_REQUESTS = {'auto', 'motion', 'static'}
 
 def read(path):
     return json.loads(Path(path).read_text())
@@ -80,6 +83,38 @@ def validate_count_policy(plan, require=False):
     if any(a['count'] % multiple for a in plan['assets']):
         raise ValueError('Prototype count violates the selected gameplay multiple')
 
+def validate_delivery_policy(plan, require=False):
+    """Whether vehicles move, resolved once like Layout --delivery-mode."""
+    policy = plan.get('delivery_policy')
+    if policy is None:
+        if require:
+            raise ValueError('New theme plan requires delivery_policy (auto/motion/static vehicle motion)')
+        return
+    requested, mode = policy.get('requested'), policy.get('mode')
+    if requested not in DELIVERY_REQUESTS or mode not in {'motion', 'static'}:
+        raise ValueError('delivery_policy needs requested auto|motion|static and mode motion|static')
+    vehicles = {a['id'] for a in plan['assets'] if a.get('class') in VEHICLE_CLASSES}
+    if requested == 'auto':
+        if mode != ('motion' if vehicles else 'static'):
+            raise ValueError('auto delivery resolves to motion exactly when the cast has vehicle-class assets')
+    elif mode != requested:
+        raise ValueError('Explicit delivery request must be kept as the mode')
+    elif not text(policy.get('user_instruction')):
+        raise ValueError('Explicit motion/static choice requires the actual user instruction')
+    if not text(policy.get('basis')):
+        raise ValueError('delivery_policy requires a basis')
+    moving = policy.get('moving_vehicle_ids')
+    if not isinstance(moving, list) or len(set(moving)) != len(moving):
+        raise ValueError('delivery_policy.moving_vehicle_ids must be an explicit list')
+    if mode == 'static':
+        if moving:
+            raise ValueError('Static delivery has no moving vehicles')
+        return
+    if not moving or set(moving) - vehicles:
+        raise ValueError('Motion delivery needs moving vehicle-class asset IDs')
+    if not text(policy.get('route_plan')):
+        raise ValueError('Motion delivery requires route_plan: edge exits, junctions/loops and occluder portals')
+
 def validate_plan(plan, asset_ids=None, source_sha=None):
     if not isinstance(plan, dict) or plan.get('schema') != SCHEMA:
         raise ValueError('scene-plan.v1 is required')
@@ -136,6 +171,7 @@ def validate_plan(plan, asset_ids=None, source_sha=None):
     if needed - kinds:
         raise ValueError('Infrastructure plan missing: ' + ', '.join(sorted(needed - kinds)))
     validate_count_policy(plan)
+    validate_delivery_policy(plan)
     from size_policy import validate_scene_sizes
     validate_scene_sizes(plan)
     return plan
@@ -214,9 +250,11 @@ if __name__ == '__main__':
     p.add_argument('--plan', required=True)
     p.add_argument('--source', required=True)
     p.add_argument('--require-count-policy', action='store_true', help='Require current count settings for new theme plans')
+    p.add_argument('--require-delivery-policy', action='store_true', help='Require the vehicle motion choice for new theme plans')
     args = p.parse_args()
     validate_plan(read(args.plan), source_sha=sha(args.source))
     if args.require_count_policy and read(args.plan).get('H_px') != 130:
         raise ValueError('New theme plans require H_px=130')
     validate_count_policy(read(args.plan), require=args.require_count_policy)
+    validate_delivery_policy(read(args.plan), require=args.require_delivery_policy)
     print('Scene plan valid; image semantics and capacity still require review.')

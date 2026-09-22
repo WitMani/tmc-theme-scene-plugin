@@ -1,6 +1,6 @@
 # 正式游玩交付契约
 
-来源：2026-09-17用户要求“最后产出要和现在一样是有正式游玩界面的，端到端”。流水线默认保留当前7格托盘/同类三消/180秒/静态载具可收集；默认216实例、每种3的倍数。独立Stage1/Stage2调用仍保持原范围。
+来源：2026-09-17用户要求“最后产出要和现在一样是有正式游玩界面的，端到端”。流水线默认保留当前7格托盘/同类三消/180秒；载具是否运动按Stage 1 scene-plan的`delivery_policy`（2026-09-23起与Layout `--delivery-mode auto`对齐：未说明时有载具即运动）；默认216实例、每种3的倍数。独立Stage1/Stage2调用仍保持原范围。
 
 ## 开工前
 
@@ -9,7 +9,7 @@
 ## 完成顺序
 
 1. 每seed完成布局post/render/scene-review/validate，必须精确计划数量与sceneCompletion.ok=true。
-2. `scripts/tmc-motion playable-deliver --run-dir <run> --title <主题名称> --mode static`。此命令读取已审核静态layout，不使用残留motion文件，验证每类可收集实例为3的倍数，生成单文件playable.html、item_placements.csv，执行实际浏览器功能测试，保存绑定文件哈希的playable-delivery.json。输入、HTML或测试变化使交付状态失效。
+2. static时`scripts/tmc-motion playable-deliver --run-dir <run> --title <主题名称> --mode static`；motion时先完成下文运动验收，再用`--mode motion`。static命令读取已审核静态layout，不使用残留motion文件，验证每类可收集实例为3的倍数，生成单文件playable.html、item_placements.csv，执行实际浏览器功能测试，保存绑定文件哈希的playable-delivery.json。输入、HTML或测试变化使交付状态失效。
 3. 实际查看playable-test.png（测试会重开后截图）；可用且未受策略阻止时在当前浏览器检查页面尺寸、点击与入口。浏览器策略阻止时如实报告，不绕过；已运行的独立自动测试与视觉截图可作为已完成的验证，但不得声称已在受阻浏览器中检查。
 4. `scripts/tmc-motion playable-gallery --batch-dir <batch> --title <主题名称> --recommended <seed>`。生成index.html，只给当前验证有效的候选显示开始游玩。失败候选明确未完成；部分完成不能报告全部完成。
 5. 最终主链接为推荐游玩页和index.html。背景PNG、素材、layout.json、效果图仍保留；seed-gallery只做附加效果比较。
@@ -20,4 +20,4 @@
 
 静态模式是明确的游戏呈现选择，不等于车辆运动通过；页面显示静态可收集。不为静态界面擅改已审核布局或缩小资产。
 
-用户明确要求车辆运动：先motion-plan、查看路线、motion-validate零硬问题，再playable-deliver --mode motion；无合格路线时保留失败证据，预算内按原流程修复，不自动降级静态、不放宽轨道/道路、不要自写动画绕过运动模型。
+`deliveryPolicy.mode=motion`（用户要求运动，或未说明且清单含载具）：先motion-plan、查看路线、motion-validate零硬问题，再playable-deliver --mode motion；无合格路线时保留失败证据，预算内按原流程修复，不自动降级静态、不放宽轨道/道路、不要自写动画绕过运动模型。

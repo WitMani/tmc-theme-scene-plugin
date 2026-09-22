@@ -16,6 +16,8 @@
 - `infrastructure:[{kind,description}]`：保留的`rail/water/road/bridge/platform`及可见位置、宽度和连通意图。铁路是功能地形，不能按railings、围栏或装饰压边删除。
 - `assets:[{id,count,count_basis,critical,class,role,zones,requires}]`：稳定原型ID、**实例数量**、数量依据、核心物件标记、Layout类别、target/distractor、合法地形和基础设施依赖。至少一个critical。`count_basis`为`{mode:user|observed|authored,reason:具体依据}`；authored代表执行者明确设计，不冒充用户指定或原图实测。
 
+- `delivery_policy`：载具是否运动，按[载具运动规则](vehicle-motion.md)填写`{requested:auto|motion|static, mode:motion|static, basis, user_instruction?, moving_vehicle_ids, route_plan?}`。auto时mode由清单是否含载具类原型决定；显式motion/static需保存用户原话；motion时moving_vehicle_ids非空且都是载具类原型，route_plan写明出入口、路口/环线与遮挡出入口。Layout对同一计划使用`--delivery-mode <mode>`，不另行改判。
+
 原型种类与实例数量分开。用户明确数量优先；否则先观察重复密度、按可用地形编制明确的数量方案并告知假设，不静默每种一次、不机械照搬测试集数量。纯素材请求也可形成供下游采用的authored建议计划，但不启动Layout。三消等整组数量仅在明确玩法时使用；不从主题自动猜玩法。
 
 原型ID使用英文字母数字、点、横线或下划线。class用Layout真实类别，如building/person/land_animal/vehicle/rail_vehicle/boat/prop。火车class=rail_vehicle、requires含rail；船class=boat、requires含water；陆车class=vehicle、requires含road。requires可为空但必须显式填写。zones使用Harness地形词汇，只能在其底层合法规则内收窄。背景的道路、水域及铁路必须能容纳计划资产，不能只画一个象征性小色块。

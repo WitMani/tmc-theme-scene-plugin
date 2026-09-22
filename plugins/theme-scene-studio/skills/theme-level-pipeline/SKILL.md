@@ -35,7 +35,8 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 | 摆放数量 | 默认216实例，下限201；先读真实case数量规则，按类别/占地/道路容量编制逐ID数量；显式用户数量优先 |
 | 排布 | seed 11、25、42，共3个候选；使用校准交付素材的scale=1.0 |
 | 返工 | 最多2轮定向返工，且继承各阶段、各图片槽位已有重试预算 |
-| 游玩默认 | 7格托盘、同类三消、180秒、静态可收集载具；每原型计数为3的倍数；用户明确覆盖优先 |
+| 载具运动 | 用户说运动/静止时照办；未说明时与Layout `--delivery-mode auto`一致：清单含载具即运动。Stage 1写入scene-plan `delivery_policy`，全链沿用 |
+| 游玩默认 | 7格托盘、同类三消、180秒；载具按`delivery_policy`运动或静态可收集；每原型计数为3的倍数；用户明确覆盖优先 |
 | 交付 | 游玩首页index.html、通过测试的候选playable.html及推荐，另附效果图、独立PNG、布局JSON与对比入口 |
 
 本流水线自2026-09-17起按用户要求默认交付上述三消游玩模式；不额外推断点击难度、商业平衡或生产发布。用户不必填写实例数量；执行者可制定有依据的authored计划，不能冒称是用户指定或原图精确实测。容量冲突时也不能擅改用户明确数量或核心要求。
@@ -59,7 +60,7 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 
 - 保存原始主题要求。在内部`theme-coverage`中将每个明确元素映射到独立素材原型或背景必要结构；有证据才合并同款。桥、地形树根等可保留为背景结构，但不能悄悄消失。默认按建筑8、道具6、载具3、角色5核对22种。明确用户清单覆盖默认种类时，记录覆盖依据，不静默截断或要求用户替默认值让步。
 - 读取Stage 1技能及其`references/scene-handoff.md`，按它执行参考图、脚本辅助线、布局草图、三候选生成和检查。辅助线复用草图相机，不再调用AI绘线；脚本失败按Stage 1规则记录降级，使用干净参考图＋已审核草图＋文字镜头继续，不因旧辅助线生图预算耗尽阻断。遵守其中的工具、并发及必要委派规则。
-- 为每个候选保留`scene-plan.v1`：稳定原型ID、实例数量与依据、核心物件、基础设施、密度意图、最终场景目标；绑定标准化后的实际图片哈希。
+- 为每个候选保留`scene-plan.v1`：稳定原型ID、实例数量与依据、核心物件、基础设施、密度意图、最终场景目标、载具运动选择`delivery_policy`；绑定标准化后的实际图片哈希。运动时Stage 1按其`references/vehicle-motion.md`设计路网，择优时把路网是否满足不掉头、路端出画布/接路一并考虑。
 - 根据主题覆盖、核心物件、比例、可用空间、所需地形和美术质量，自主选择最适合拆分及排布的合格候选。保存选中ID和理由，简短告知后继续；不等待常规选图确认。不把三个候选全部展开成三组Stage 2，除非用户要求。
 - 三候选都不合格时，仅在原预算内修正；仍失败则报告阻碍，不能任选一张标为通过。
 
@@ -73,7 +74,7 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 
 ### 3. 排布与最终验收
 
-- 读取并执行Layout技能，用其`init --handoff`导入交接包，不重新扫描PNG后猜数量。
+- 读取并执行Layout技能，用其`init --handoff`导入交接包，不重新扫描PNG后猜数量。prep/seed-batch显式传`--delivery-mode <scene-plan delivery_policy.mode>`，保证Layout与Stage 1的运动选择一致；需要改判时属于用户范围变更。
 - 完成地形mask与实际背景核对后，立即运行 Layout 的 `feasibility --project`：它用载具精灵的 hull 对比道路/铁轨/水域走廊，并调用 tmc-vehicle-motion 的路网规划器在空走廊上判定能否成路、能载几辆。报 `fail` 时不进入排布，把 `feasibility/repair-prompt.md` 作为 Stage 2 背景定向修正的 prompt 只重画对应路段（沿用其余素材与计划），重新 mask 与 feasibility 后再继续；报 `warn` 可继续并在报告中说明部分路网无车流。
 - 之后完成语义规则、可行叠放及容量预检，再生成三个seed。各seed共享相同背景、素材、数量、尺度与完成目标。
 - 通过已有Harness完成草稿审查、finalize、post、render以及几何验收；在最终渲染后生成并填写scene-review，检查密度和全部场景目标，再validate。
@@ -81,9 +82,9 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 
 ### 4. 正式游玩交付（默认必做）
 
-读取[游玩交付与完成门槛](references/playable-delivery.md)，使用当前安装的tmc-vehicle-motion工具，不复制临时HTML补丁或重写游戏引擎。默认静态收集模式与用户当前认可的界面一致，所有通过排布验收的seed均执行playable-deliver --mode static --title <主题名>；没有载具也执行。计数计划从Stage1就设置count_multiple=3、gameplay_basis=本流水线用户默认三消，默认总目标216。不删素材、不暗加尾组消除或改胜利规则以适配错误数量。
+读取[游玩交付与完成门槛](references/playable-delivery.md)，使用当前安装的tmc-vehicle-motion工具，不复制临时HTML补丁或重写游戏引擎。所有通过排布验收的seed按run的`deliveryPolicy`执行：static时`playable-deliver --mode static --title <主题名>`（没有载具也执行）；motion时先通过tmc-vehicle-motion运动验收，再`playable-deliver --mode motion --title <主题名>`。计数计划从Stage1就设置count_multiple=3、gameplay_basis=本流水线用户默认三消，默认总目标216。不删素材、不暗加尾组消除或改胜利规则以适配错误数量。
 
-用playable-gallery生成index.html，主入口是“开始游玩”而非仅效果图。必须逐候选运行测试并实际查看生成的游玩截图；报告ok=true且绑定当前HTML和输入文件才允许链接为合格游戏。缺依赖、测试跳过/失败或HTML过期时记录未完成。用户要求运动时改mode motion并先通过运动验收；不能悄悄退回静态或声称运动通过。
+用playable-gallery生成index.html，主入口是“开始游玩”而非仅效果图。必须逐候选运行测试并实际查看生成的游玩截图；报告ok=true且绑定当前HTML和输入文件才允许链接为合格游戏。缺依赖、测试跳过/失败或HTML过期时记录未完成。运动未通过时不能悄悄退回静态或声称运动通过；改为静态需用户同意并以`--delivery-mode static`重新prep。
 
 ### 5. 失败回流
 
@@ -94,7 +95,7 @@ description: 主题关卡完整流程编排。用户输入一个主题名称或�
 | mask与背景不符或规则误判 | 在Layout修正，重新预检 |
 | 尺度或背景尺寸错误 | 回Stage 2校准，不以“缩到能塞下”为目标 |
 | 真实背景缺轨道、水域、通路或地块被装饰挤占 | 回Stage 2定向修正背景 |
-| `feasibility` 报 fail（走廊太窄、桥头断开、死路无法掉头） | 用 `feasibility/repair-prompt.md` 回 Stage 2 只重画对应路段；修好后重新 mask-import、feasibility 再排布 |
+| `feasibility` 报 fail（走廊太窄、桥头断开、开放尽端需掉头） | 用 `feasibility/repair-prompt.md` 回 Stage 2 只重画对应路段；修好后重新 mask-import、feasibility 再排布 |
 | 核心原型未生成、候选主题或构图根本不符 | 回Stage 1定向修正，再更新下游 |
 | 数量不足但尺度、mask与规则都正确 | 检查地块分配及背景容量；明确数量或核心内容的改变需用户决定 |
 | 点击、三消、叠放、胜负、重开或界面测试失败 | 修复游玩导出/运行时或测试选点；重新测试并更新绑定，不能套用布局验收 |
