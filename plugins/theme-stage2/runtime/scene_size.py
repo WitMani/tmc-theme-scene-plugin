@@ -5,8 +5,10 @@ import json
 from pathlib import Path
 from PIL import Image
 
-CONTRACT = {'id': 'scene-4096-h128-v1', 'canvas': [4096, 4096],
+LEGACY_CONTRACT = {'id': 'scene-4096-h128-v1', 'canvas': [4096, 4096],
             'H_px': 128, 'alpha_threshold': 16}
+
+CONTRACT = {**LEGACY_CONTRACT, 'id': 'scene-4096-h130-v2', 'H_px': 130}
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -40,13 +42,13 @@ def check_run(run, manifest):
     errors = []
     run = Path(run)
     try:
-        if manifest['scene_size_contract'] != CONTRACT:
-            raise ValueError('Scene size contract differs from scene-4096-h128-v1')
+        if manifest['scene_size_contract'] not in (CONTRACT, LEGACY_CONTRACT):
+            raise ValueError('Unknown scene size contract')
         plan_path = run / 'scale-plan.json'
         plan = json.loads(plan_path.read_text())
         review = json.loads((run / 'scale-review.json').read_text())
-        if plan.get('H_px') != 128 or plan.get('alpha_threshold') != 16:
-            raise ValueError('Scale plan requires H_px=128 and alpha_threshold=16')
+        if plan.get('H_px') != manifest['scene_size_contract']['H_px'] or plan.get('alpha_threshold') != 16:
+            raise ValueError('Scale plan must match the run H_px and alpha_threshold=16')
         if review.get('plan_sha256') != digest(plan_path):
             raise ValueError('Scale review is not bound to the current scale plan')
         if review.get('status') != 'pass' or not review.get('observation', '').strip():
@@ -82,7 +84,7 @@ def check_run(run, manifest):
                 if axis not in ('width', 'height') or not 0 < float(p['target_H']) < 100:
                     raise ValueError('Invalid scale target: ' + item['id'])
                 size = (box[2] - box[0] if axis == 'width' else box[3] - box[1]) if box else 0
-                if abs(size - round(float(p['target_H']) * 128)) > 1:
+                if abs(size - round(float(p['target_H']) * plan['H_px'])) > 1:
                     errors.append('Visible size differs from plan: ' + item['id'])
     except (OSError, ValueError, KeyError, TypeError) as exc:
         errors.append('Scene size verification: ' + str(exc))

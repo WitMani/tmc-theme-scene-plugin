@@ -17,7 +17,7 @@
   },
   "source": "2026-09-17 user: 默认摆放的数量至少是200以上，可以根据真实case制定",
   "selection_reason": "Smallest observed case above200 is216; chosen default, not an assertion all real cases exceed200.",
-  "fixed_scale_policy": "4096 canvas H128; layout calibrated scale1.0; never shrink to reach count",
+  "fixed_scale_policy": "4096 canvas H130; layout calibrated scale1.0; never shrink to reach count",
   "capacity_policy": "exact authored target; no silent reduction, placeholders, tolerance increase or road widening unsupported by background",
   "category_policy": "Select a thematically/functionally relevant case; map its categories to visible prototypes, then author counts for actual asset footprints and required terrain. Prefix categories below are rough summaries, not semantic ground truth.",
   "cases": [

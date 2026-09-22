@@ -111,7 +111,7 @@ python3 "$PLUGIN_ROOT/scripts/run.py" calibrate --run "$RUN" --all
 python3 "$PLUGIN_ROOT/scripts/run.py" scale-contact --run "$RUN" --out "$RUN/scale-contact.png"
 ```
 
-`calibrate` 读取当前已登记候选（或 `--image` 指定的透明 PNG），按 alpha>16 测主体包围盒，把主轴等比缩放到 `target_H×128`，加 8 px 透明留白（`--margin` 可改），保存到 `calibrated/<id>/<签名>/` 并自动 `register`；同一来源与同一计划重复执行复用同一输出。命令同时把测量值和最终 PNG 哈希写入 `scale-review.json`，但每个被触及的条目和总状态都置为 `unreviewed`；计划变化时所有旧条目一并失效。`scale-contact` 生成同倍率并排对照图（附 1H 标尺条），供执行者目视复核后再把 `status`、`reviewer`、`observation` 填为实际结论。校准后重新生成美术复核表；原生成与透明化记录保留。缺 alpha、缺计划条目或结果偏离目标超过 1 px 时命令直接报错，不产生候选。
+`calibrate` 读取当前已登记候选（或 `--image` 指定的透明 PNG），按 alpha>16 测主体包围盒，把主轴等比缩放到 `target_H×130`，加 8 px 透明留白（`--margin` 可改），保存到 `calibrated/<id>/<签名>/` 并自动 `register`；同一来源与同一计划重复执行复用同一输出。命令同时把测量值和最终 PNG 哈希写入 `scale-review.json`，但每个被触及的条目和总状态都置为 `unreviewed`；计划变化时所有旧条目一并失效。`scale-contact` 生成同倍率并排对照图（附 1H 标尺条），供执行者目视复核后再把 `status`、`reviewer`、`observation` 填为实际结论。校准后重新生成美术复核表；原生成与透明化记录保留。缺 alpha、缺计划条目或结果偏离目标超过 1 px 时命令直接报错，不产生候选。
 
 ## 复核与修正
 
@@ -146,7 +146,7 @@ python3 "$PLUGIN_ROOT/scripts/run.py" handoff --run "$RUN" --review "$REVIEW_FIL
 
 ## 只导出图片
 
-先确认 scale-review.json 对应最终登记文件的哈希且尺度复核通过。新运行CLI会验证固定4096背景、H_px=128、alpha_threshold=16及计划/复核的图片绑定。scale-plan.json的items必须恰好覆盖所有非背景素材，逐项提供id、primary_axis（width或height）、target_H。scale-review.json须包含plan_sha256（scale-plan.json文件字节的SHA-256）、status=pass、实际目视observation，以及items中每件id、最终登记PNG的sha256、status=pass。主轴尺寸允许1 px取整误差；不能把自动测量冒充视觉审核。其他既有校准前后记录照常保留。
+先确认 scale-review.json 对应最终登记文件的哈希且尺度复核通过。新运行CLI会验证固定4096背景、H_px=130、alpha_threshold=16及计划/复核的图片绑定。scale-plan.json的items必须恰好覆盖所有非背景素材，逐项提供id、primary_axis（width或height）、target_H。scale-review.json须包含plan_sha256（scale-plan.json文件字节的SHA-256）、status=pass、实际目视observation，以及items中每件id、最终登记PNG的sha256、status=pass。主轴尺寸允许1 px取整误差；不能把自动测量冒充视觉审核。其他既有校准前后记录照常保留。
 
 ```bash
 python3 "$PLUGIN_ROOT/scripts/run.py" validate --run "$RUN" --review "$REVIEW_FILE"

@@ -41,10 +41,10 @@ class SceneSizeTests(unittest.TestCase):
         bg = self.root/'bg.png'
         normalize_scene(self.source, bg)
         asset = self.root/'person.png'
-        Image.new('RGBA', (50, 128), (255, 0, 0, 255)).save(asset)
+        Image.new('RGBA', (50, 130), (255, 0, 0, 255)).save(asset)
         h.register(run, 'background', bg)
         h.register(run, 'person', asset)
-        plan = {'H_px':128, 'alpha_threshold':16, 'items':[{'id':'person','primary_axis':'height','target_H':1}]}
+        plan = {'H_px':130, 'alpha_threshold':16, 'items':[{'id':'person','primary_axis':'height','target_H':1}]}
         h.write_json(run/'scale-plan.json', plan)
         review = {'plan_sha256':digest(run/'scale-plan.json'), 'status':'pass',
                   'observation':'Synthetic gate test only, not art approval',

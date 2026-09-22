@@ -42,8 +42,9 @@ def load_plan(run):
     if not plan_path.is_file():
         raise ValueError('scale-plan.json missing; author the scale plan before calibrating')
     plan = h.read_json(plan_path)
-    if plan.get('H_px') != CONTRACT['H_px'] or plan.get('alpha_threshold') != CONTRACT['alpha_threshold']:
-        raise ValueError('Scale plan requires H_px=128 and alpha_threshold=16')
+    contract = h.read_json(Path(run) / 'manifest.json').get('scene_size_contract', CONTRACT)
+    if plan.get('H_px') != contract['H_px'] or plan.get('alpha_threshold') != CONTRACT['alpha_threshold']:
+        raise ValueError('Scale plan must match run H_px and alpha_threshold=16')
     items = plan.get('items')
     if not isinstance(items, list) or not items:
         raise ValueError('Scale plan has no items')
@@ -147,9 +148,9 @@ def calibrate_asset(run, item_id, image=None, margin=8):
         source = Path(image).resolve()
     if not source.is_file():
         raise ValueError('Calibration source image is missing: ' + str(source))
-    target_px = round(entry['target_H'] * CONTRACT['H_px'])
+    target_px = round(entry['target_H'] * plan['H_px'])
     signature = {'source_sha256': h.file_hash(source), 'primary_axis': entry['primary_axis'],
-                 'target_H': entry['target_H'], 'H_px': CONTRACT['H_px'],
+                 'target_H': entry['target_H'], 'H_px': plan['H_px'],
                  'alpha_threshold': CONTRACT['alpha_threshold'], 'margin': margin,
                  'algorithm_version': VERSION}
     key = hashlib.sha256(json.dumps(signature, sort_keys=True).encode()).hexdigest()
@@ -172,7 +173,7 @@ def calibrate_asset(run, item_id, image=None, margin=8):
                            actual_px=after[axis + 2] - after[axis], output_size=list(final.size),
                            source_file=str(source), output_file=output.relative_to(run).as_posix(),
                            output_sha256=h.file_hash(output), created_at=h.now(),
-                           method='uniform LANCZOS resample of the alpha>16 body to target_H x 128 px, then transparent margin')
+                           method='uniform LANCZOS resample of the alpha>16 body to target_H x plan H_px, then transparent margin')
         h.write_json(record_file, measurement)
     if abs(measurement['actual_px'] - target_px) > 1:
         raise ValueError('Calibrated size misses the plan by more than 1 px: ' + item_id)
@@ -221,7 +222,7 @@ def contact_sheet(run, out, columns_px=2000, gap=35, label_h=20):
             images.append((item['id'], im.convert('RGBA')))
     if not images:
         raise ValueError('No registered assets to lay out')
-    ruler_h = CONTRACT['H_px']
+    ruler_h = m.get('scene_size_contract', CONTRACT)['H_px']
     x, y, row_h, placements = gap, gap + label_h, 0, []
     width = max(columns_px, max(im.width for _, im in images) + 2 * gap + 40)
     for item_id, im in images:
@@ -236,10 +237,10 @@ def contact_sheet(run, out, columns_px=2000, gap=35, label_h=20):
     for item_id, im, px, py in placements:
         sheet.paste(im, (px, py), im)
         draw.text((px, py - label_h), item_id, fill='#222222')
-    # One 1H reference bar so the reviewer sees the 128 px scale without a separate asset.
+    # One 1H reference bar so the reviewer sees the run-specific scale without a separate asset.
     draw.rectangle((width - 30, height - gap - ruler_h, width - 22, height - gap), fill='#c0392b')
     draw.text((width - 60, height - gap - ruler_h - label_h), '1H', fill='#222222')
     out.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(out, format='PNG')
     return {'contact_sheet': str(out), 'assets': [p[0] for p in placements], 'same_scale': True,
-            'note': 'Every asset is pasted at its registered pixel size; the red bar is 1H = 128 px.'}
+            'note': f'Every asset is pasted at its registered pixel size; the red bar is 1H = {ruler_h} px.'}

@@ -20,7 +20,7 @@ def make_fixture(root):
     definitions = [('house','building','building',2,3,[]),
                    ('person','character','person',3,1,[]),
                    ('train','vehicle','rail_vehicle',1,1,['rail'])]
-    plan = {'schema':'scene-plan.v1','source_sha256':sha(source),'canvas':[4096,4096], 'H_px':128,
+    plan = {'schema':'scene-plan.v1','source_sha256':sha(source),'canvas':[4096,4096], 'H_px':130,
             'density':{'intent':'Separated synthetic objects','basis':'test fixture'},
             'goals':[{'id':'town','description':'Synthetic house and train composition'}],
             'infrastructure':[{'kind':'rail','description':'Continuous southern rail strip'}],
@@ -37,7 +37,7 @@ def make_fixture(root):
     h.register(run, 'background', source)
     scale_items, reviews = [], []
     for iid,cat,cls,count,height,deps in definitions:
-        height_px = round(height*128)
+        height_px = round(height*130)
         image = Image.new('RGBA', (224,height_px+24))
         ImageDraw.Draw(image).rectangle((12,12,211,11+height_px), fill=(150,90,30,255))
         path = root/(iid+'.png')
@@ -45,7 +45,7 @@ def make_fixture(root):
         h.register(run, iid, path)
         scale_items.append({'id':iid,'primary_axis':'height','target_H':height})
         reviews.append({'id':iid,'sha256':sha(path),'status':'pass'})
-    write(run/'scale-plan.json', {'H_px':128,'alpha_threshold':16,'items':scale_items})
+    write(run/'scale-plan.json', {'H_px':130,'alpha_threshold':16,'items':scale_items})
     write(run/'scale-review.json', {'plan_sha256':sha(run/'scale-plan.json'),'status':'pass',
         'observation':'SYNTHETIC TEST ONLY','items':reviews})
     infra = infrastructure_template(run)

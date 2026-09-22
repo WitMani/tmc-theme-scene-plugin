@@ -5,8 +5,8 @@ import json
 from pathlib import Path
 from PIL import Image
 
-CONTRACT = {'id': 'scene-4096-h128-v1', 'canvas': [4096, 4096],
-            'H_px': 128, 'alpha_threshold': 16}
+CONTRACT = {'id': 'scene-4096-h130-v2', 'canvas': [4096, 4096],
+            'H_px': 130, 'alpha_threshold': 16}
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()

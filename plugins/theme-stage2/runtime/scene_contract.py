@@ -83,8 +83,8 @@ def validate_count_policy(plan, require=False):
 def validate_plan(plan, asset_ids=None, source_sha=None):
     if not isinstance(plan, dict) or plan.get('schema') != SCHEMA:
         raise ValueError('scene-plan.v1 is required')
-    if plan.get('canvas') != [4096, 4096] or plan.get('H_px') != 128:
-        raise ValueError('Scene plan must use 4096x4096 and H_px=128')
+    if plan.get('canvas') != [4096, 4096] or plan.get('H_px') not in (128, 130):
+        raise ValueError('Scene plan must use 4096x4096 and H_px=130 (128 for legacy plans)')
     if not re.fullmatch('[a-f0-9]{64}', str(plan.get('source_sha256', ''))):
         raise ValueError('Scene plan must bind the actual Stage 1 image hash')
     if source_sha and plan['source_sha256'] != source_sha:

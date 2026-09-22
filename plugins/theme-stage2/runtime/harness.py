@@ -251,7 +251,7 @@ def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
         item = dict(row)
         item['prompt_file'] = 'prompts/' + item['id'] + '.txt'
         (out / 'prompts').mkdir(exist_ok=True)
-        (out / item['prompt_file']).write_text(compile_prompt(item, profile) + '\nSCENE PLAN REQUIRED: Bind an authored scene-plan.v1 before generation; preserve all dependent rail, road and water infrastructure.\nSCENE SIZE CONTRACT: Square 4096 x 4096 background delivery; ordinary character scale H=128 visible pixels (3.125% of canvas height). Independent asset canvas sizes vary; obey the per-item target_H scale plan. Preserve square scene framing.\n', encoding='utf-8')
+        (out / item['prompt_file']).write_text(compile_prompt(item, profile) + '\nSCENE PLAN REQUIRED: Bind an authored scene-plan.v1 before generation; preserve all dependent rail, road and water infrastructure.\nSCENE SIZE CONTRACT: Square 4096 x 4096 background delivery; ordinary character base body 75 x 130 pixels (H=130); hair, clothing and props may extend beyond. Small objects 150-300 px per axis; medium 301-500; large 501-830, large instance cap x is scene-configured. Road width is 1-2.5 vehicle widths. Independent asset canvas sizes vary; obey the per-item target_H scale plan. Preserve square scene framing.\n', encoding='utf-8')
         item['prompt_status'] = 'planned_not_executed'
         item['prompt_sha256'] = file_hash(out / item['prompt_file'])
         item['generation_inputs'] = [{'file': source_name, 'role': 'sole_scene_source', 'sha256': source_sha}]
