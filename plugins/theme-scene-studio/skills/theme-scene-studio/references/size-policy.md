@@ -15,3 +15,21 @@
 新候选的scene-plan使用H_px=130，附 `size_policy_id: scene-4096-h130-v2`、`large_max_instances`、逐资产尺寸档及目标宽高；道路记录参考车辆ID、参考横向车宽与道路比例。配置文件随运行保存并记录其哈希。Stage 2继承对应候选的尺寸、数量及例外，不自行恢复旧H128。
 
 成品统一到4096后，复核人物基体与附件、各档体量、道路横向净宽和地块容量是否协调，记录具体对象/位置及偏差。生图是比例指导，不承诺所有对象逐像素准确；规划数值、图像观察与精确测量分开记录。明显失比例按既有候选修正预算处理，不无限重抽。Stage 2进行独立素材测量和等比校准。历史产物不自动迁移。
+
+## 2026-09-22 P1：可执行尺寸契约
+
+H=130的新计划必须由`scripts/size_policy.py`（Stage 2为`runtime/size_policy.py`）校验，不能仅填H_px。`size_policy_id`固定为`scene-4096-h130-v2`，`size_policy_sha256`取当前随包size-v2.json的文件SHA-256；两阶段及Layout使用同一配置和校验模块副本。哈希不符或缺字段时，先修计划/创建复核修订，不静默沿用旧审批。H=128历史计划按原契约读取。旧H=130运行若没有新字段，需要显式补齐计划并重新复核，不能直接冒称新版验收通过。
+
+scene-plan顶层必须含`large_max_instances`（未配置明确为null）和`road_sizes`（无道路为[]）。每个asset必须有`size_class`（character/small/medium/large）、`target_wh_px`、`size_basis`；人物另有`base_body_wh_px:[75,130]`。超出物件分档必须给出`size_exception:{reason,basis}`并目视复核；超大例外仍计入大型实例总数，不能靠改小档名逃过x上限。
+
+每条road_sizes为`{id,vehicle_id,vehicle_width_px,clear_width_px,measurement_basis}`。vehicle_id指向class=vehicle的真实原型，宽度是在同一地面投影下的横向车宽/道路净宽。无车主题可用vehicle_id=null并填写reference_vehicle_basis。每段必须满足1≤clear_width_px/vehicle_width_px≤2.5，按不同宽度路段分别记录；配置校验不能替代实际背景检查。
+
+Stage 1制作草图前按目标宽高规划，交接前运行scene_contract.py验证以上字段；保留当前配置副本与哈希。Stage 2在prepare保存policy/size-v2.json并绑定manifest指纹；bind-scene-plan自动从scene资产目标生成初始scale-plan.json，并把逐件目标编译到Prompt。已有scale-plan不会被覆盖，必须与scene中的尺寸字段保持一致。
+
+scale-plan顶层包含同一策略ID/哈希、H_px=130、alpha_threshold=16；items继承上述尺寸字段，另写primary_axis和target_H（主轴目标像素/130）。校准保持等比，除主轴外还必须检查另一轴，1px仅用于栅格取整，不是美术比例容差。比例不符直接报告，不能拉伸。
+
+人物无外扩时完整目标为75×130。发型/服饰/道具外扩时，target_wh_px记录完整主体目标；scale条目另需`source_body:{sha256,bbox:[left,top,right,bottom]}`，标注本次透明化输入中基体的边界（不包含外扩附件）。校准后记录变换后的base_body_bbox，检查基体75×130，完整附件保留。不能把带帽子全包围盒当成人体，也不能给其他图片套旧坐标。
+
+最终图片登记并校准后运行`run.py size-review-template --run <RUN> --out <RUN>/size-review.json`，实际查看图片再填写reviewer、逐件status/observation及人物base_body_bbox。可参考calibration.json中的坐标，但必须核对基体语义。每条道路复核填写实际vehicle_width_px与clear_width_px、status/observation，绑定背景和参考车辆的当前哈希。大型上限null时large_limit_status必须为unconfigured；配置上限且计数合法才填pass。
+
+正式validate/export同时检查规范快照、scene/scale一致性、两轴实测、人物基体标注、道路比值、上限及图像绑定复核。size-review还绑定scene-plan/scale-plan哈希，任一改变即失效。合格交接包携带尺寸配置、size-review、scale-plan和scale-review；Layout导入和项目固定副本保留并校验这些文件。默认PNG交付仍可交付已生成内容并披露缺项，不因正式门槛阻塞图片交付。

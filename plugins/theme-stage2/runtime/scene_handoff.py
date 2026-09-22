@@ -6,13 +6,15 @@ from scene_contract import (read, write, sha, validate_plan, dependency_prompt,
                             check_infrastructure, SCHEMA, default_count_policy)
 
 def pending_plan(manifest):
-    return {'schema': SCHEMA, 'source_sha256': manifest['source']['sha256'],
+    from size_policy import policy_fields
+    return {**policy_fields(), 'large_max_instances': None, 'road_sizes': [], 'schema': SCHEMA, 'source_sha256': manifest['source']['sha256'],
             'canvas': [4096, 4096], 'H_px': manifest.get('scene_size_contract', {}).get('H_px', 130),
             'count_policy': default_count_policy(),
             'density': {'intent': '', 'basis': ''}, 'goals': [], 'infrastructure': [],
             'assets': [{'id': a['id'], 'count': None, 'critical': None, 'class': None,
                         'role': 'distractor', 'zones': [], 'requires': [],
-                        'count_basis': {'mode': 'authored', 'reason': ''}}
+                        'count_basis': {'mode': 'authored', 'reason': ''},
+                        'size_class': None, 'target_wh_px': None, 'size_basis': ''}
                        for a in manifest['items'] if a['category'] != 'background']}
 
 def bind_plan(run, plan):
@@ -21,15 +23,25 @@ def bind_plan(run, plan):
     m = read(run/'manifest.json')
     if any(a.get('artifact') or a.get('generation_records') for a in m['items']):
         raise ValueError('Bind the scene plan before generation; use a new revision run for changes')
+    if m.get('scene_size_contract', {}).get('H_px') == 130:
+        from size_review import validate_snapshot
+        validate_snapshot(run, m)
     validate_plan(plan, [a['id'] for a in m['items'] if a['category'] != 'background'], m['source']['sha256'])
     if plan['H_px'] != m.get('scene_size_contract', {}).get('H_px', plan['H_px']):
         raise ValueError('Scene plan H_px must match run contract; revise inherited Stage 1 scale explicitly')
     write(run/'scene-plan.json', plan)
+    if plan['H_px'] == 130 and not (run/'scale-plan.json').exists():
+        from size_policy import policy_fields
+        write(run/'scale-plan.json', {**policy_fields(), 'H_px': 130, 'alpha_threshold': 16,
+            'items': [{k: a[k] for k in ('id', 'size_class', 'target_wh_px', 'size_basis', 'base_body_wh_px', 'size_exception') if k in a}
+                      | {'primary_axis': 'height', 'target_H': a['target_wh_px'][1]/130} for a in plan['assets']]})
     m['scene_plan_contract'] = {'schema': SCHEMA, 'file': 'scene-plan.json',
                                'sha256': sha(run/'scene-plan.json')}
     profile = read(run/m['profile']['snapshot'])
     for a in m['items']:
-        prompt = h.compile_prompt(a, profile) + '\nFIXED SIZE: 4096 x 4096 square background, character base body 75 x 130 px; accessories may extend beyond. Small objects 150-300 px per axis; medium 301-500; large 501-830. Road width 1-2.5 vehicle widths.\n' + dependency_prompt(plan)
+        size_data = next((x for x in plan['assets'] if x['id'] == a['id']), None)
+        size_prompt = '\nSIZE PLAN: ' + __import__('json').dumps(size_data or {'roads': plan.get('road_sizes', []), 'large_max_instances': plan.get('large_max_instances')}, ensure_ascii=False)
+        prompt = h.compile_prompt(a, profile) + size_prompt + '\nFIXED SIZE: 4096 x 4096 square background, character base body 75 x 130 px; accessories may extend beyond. Small objects 150-300 px per axis; medium 301-500; large 501-830. Road width 1-2.5 vehicle widths.\n' + dependency_prompt(plan)
         (run/a['prompt_file']).write_text(prompt)
         a['prompt_sha256'] = sha(run/a['prompt_file'])
     write(run/'manifest.json', m)
@@ -100,7 +112,13 @@ def export_handoff(run, review, out, profile_path=None):
         write(temporary/'asset-manifest.json', {'schemaVersion':1, 'assets': [
             {'name': a['id'], 'file': a['id']+'.png', 'count':a['count'],
              'class':a['class'], 'role':a['role'], 'zones':a['zones']} for a in plan['assets']]})
-        write(temporary/'handoff.json', {'schema':'scene-handoff.v1',
+        sizing = {}
+        if plan['H_px'] == 130:
+            for key, source in [('size_policy','policy/size-v2.json'), ('size_review','size-review.json'), ('scale_plan','scale-plan.json'), ('scale_review','scale-review.json')]:
+                filename = Path(source).name
+                shutil.copy2(run/source, temporary/filename)
+                sizing[key] = {'file': filename, 'sha256': sha(temporary/filename)}
+        write(temporary/'handoff.json', {**sizing, 'schema':'scene-handoff.v1',
             'status':'art_accepted_layout_pending', 'source_sha256':m['source']['sha256'],
             'stage2_run_id':m['run_id'], 'background':background, 'assets':assets,
             'plan':{'file':'scene-plan.json','sha256':sha(temporary/'scene-plan.json')},

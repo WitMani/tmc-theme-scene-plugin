@@ -44,6 +44,9 @@ def check_run(run, manifest):
     try:
         if manifest['scene_size_contract'] not in (CONTRACT, LEGACY_CONTRACT):
             raise ValueError('Unknown scene size contract')
+        if manifest['scene_size_contract'] == CONTRACT:
+            from size_review import check
+            check(run, manifest)
         plan_path = run / 'scale-plan.json'
         plan = json.loads(plan_path.read_text())
         review = json.loads((run / 'scale-review.json').read_text())

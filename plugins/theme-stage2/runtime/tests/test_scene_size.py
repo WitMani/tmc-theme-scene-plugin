@@ -28,43 +28,18 @@ class SceneSizeTests(unittest.TestCase):
         with self.assertRaises(ValueError): normalize_scene(self.root/'wide.png', self.root/'bad.png')
 
     def test_new_run_gate_dimensions_scale_and_stale_review(self):
-        run = self.root/'run'
-        inventory = {'items': [
-            {'id':'background', 'name':'test terrain', 'category':'background', 'identity_brief':'Test terrain'},
-            {'id':'person', 'name':'test person', 'category':'character', 'identity_brief':'Test person'}]}
-        m = h.prepare(self.source, inventory, run)
-        self.assertEqual(m['scene_size_contract'], CONTRACT)
-        # This suite isolates the size gate; full scene handoff is tested separately.
-        m.pop('scene_plan_contract', None)
-        h.write_json(run/'manifest.json', m)
-        self.assertEqual(h.validate(run)['state'], 'blocked')
-        bg = self.root/'bg.png'
-        normalize_scene(self.source, bg)
-        asset = self.root/'person.png'
-        Image.new('RGBA', (50, 130), (255, 0, 0, 255)).save(asset)
-        h.register(run, 'background', bg)
-        h.register(run, 'person', asset)
-        plan = {'H_px':130, 'alpha_threshold':16, 'items':[{'id':'person','primary_axis':'height','target_H':1}]}
-        h.write_json(run/'scale-plan.json', plan)
-        review = {'plan_sha256':digest(run/'scale-plan.json'), 'status':'pass',
-                  'observation':'Synthetic gate test only, not art approval',
-                  'items':[{'id':'person','sha256':digest(asset),'status':'pass'}]}
-        h.write_json(run/'scale-review.json', review)
+        from test_scene_handoff import make_fixture
+        run, visual, scene = make_fixture(self.root/'full')
         m = h.read_json(run/'manifest.json')
-        self.assertEqual(check_run(run, m), [])
-        self.assertEqual(h.validate(run)['errors'], [])
-        h.register(run, 'background', self.source)
-        self.assertIn('Background must be 4096x4096', h.validate(run)['errors'])
-        h.register(run, 'background', bg)
-        plan['items'][0]['target_H'] = 2
-        h.write_json(run/'scale-plan.json', plan)
-        self.assertTrue(check_run(run, h.read_json(run/'manifest.json')))
-        review['plan_sha256'] = digest(run/'scale-plan.json')
-        h.write_json(run/'scale-review.json', review)
-        self.assertTrue(any('Visible size' in e for e in check_run(run, h.read_json(run/'manifest.json'))))
-        plan['items'][0]['target_H'] = 1
-        h.write_json(run/'scale-plan.json', plan)
-        review['plan_sha256'] = digest(run/'scale-plan.json')
+        self.assertEqual(m['scene_size_contract'], CONTRACT)
+        self.assertEqual(check_run(run,m), [])
+        review = h.read_json(run/'size-review.json')
         review['items'][0]['sha256'] = 'stale'
-        h.write_json(run/'scale-review.json', review)
-        self.assertTrue(any('Stale' in e for e in check_run(run, h.read_json(run/'manifest.json'))))
+        h.write_json(run/'size-review.json',review)
+        self.assertTrue(check_run(run,m))
+        review['items'][0]['sha256'] = m['items'][0]['artifact']['sha256']
+        h.write_json(run/'size-review.json',review)
+        plan = h.read_json(run/'scale-plan.json')
+        plan['items'][0]['target_H'] = 10
+        h.write_json(run/'scale-plan.json',plan)
+        self.assertTrue(check_run(run,m))

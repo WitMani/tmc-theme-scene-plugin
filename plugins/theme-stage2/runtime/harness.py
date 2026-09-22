@@ -265,6 +265,8 @@ def prepare(source, inventory, out, profile_path=DEFAULT_PROFILE):
         item['artifact'] = None
         item['artifact_history'] = []
         manifest['items'].append(item)
+    from size_review import snapshot_policy
+    manifest['size_policy'] = snapshot_policy(out)
     write_json(out / 'manifest.json', manifest)
     from scene_handoff import pending_plan, bind_plan
     write_json(out / 'scene-plan.draft.json', pending_plan(manifest))
@@ -552,6 +554,7 @@ def main(argv=None):
     p = sub.add_parser('import-case'); p.add_argument('--case', required=True); p.add_argument('--out', required=True); p.add_argument('--inventory'); p.add_argument('--profile', default=str(DEFAULT_PROFILE))
     p = sub.add_parser('register'); p.add_argument('--run', required=True); p.add_argument('--id', required=True); p.add_argument('--image', required=True)
     p = sub.add_parser('review-template'); p.add_argument('--run', required=True); p.add_argument('--out', required=True)
+    p = sub.add_parser('size-review-template'); p.add_argument('--run', required=True); p.add_argument('--out', required=True)
     p = sub.add_parser('selection-check'); p.add_argument('--inventory', required=True); p.add_argument('--out')
     p = sub.add_parser('record-call'); p.add_argument('--run', required=True); p.add_argument('--id', required=True); p.add_argument('--image', required=True); p.add_argument('--prompt', required=True); p.add_argument('--input', action='append', required=True); p.add_argument('--tool', default='image_gen.imagegen')
     p = sub.add_parser('cutout'); p.add_argument('--run', required=True); p.add_argument('--id', required=True); p.add_argument('--image', required=True); p.add_argument('--matte', default='auto'); p.add_argument('--shadowed-matte', action='store_true')
@@ -589,6 +592,12 @@ def main(argv=None):
             if Path(args.out).exists():
                 raise ValueError('Review file exists; refusing to overwrite reviewer work')
             write_json(args.out, review_template(args.run)); result = {'template': args.out}
+        elif args.command == 'size-review-template':
+            from size_review import template
+            if Path(args.out).exists():
+                raise ValueError('Review exists; preserve prior evidence')
+            write_json(args.out, template(args.run))
+            result = {'template': args.out}
         elif args.command == 'selection-check':
             result = assess_selection(read_json(args.inventory))
             if args.out:

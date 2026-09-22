@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw
 import harness as h
 from scene_size import CONTRACT, digest
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 ORIGIN = 'scale calibration to plan; not art-style approval'
 
 
@@ -51,6 +51,11 @@ def load_plan(run):
     ids = [x.get('id') for x in items]
     if len(set(ids)) != len(ids):
         raise ValueError('Scale plan lists an asset twice')
+    if contract['H_px'] == 130:
+        from size_policy import validate_scale_plan
+        from size_review import validate_snapshot
+        validate_snapshot(run, h.read_json(Path(run) / 'manifest.json'))
+        validate_scale_plan(plan, h.read_json(Path(run) / 'scene-plan.json'))
     return plan_path, plan
 
 
@@ -124,7 +129,7 @@ def _bind_review(run, plan_path, item_id, artifact, measurement, entry):
                    'primary_axis': entry['primary_axis'], 'target_H': entry['target_H'],
                    'target_px': measurement['target_px'], 'actual_px': measurement['actual_px'],
                    'before_bbox': measurement['before_bbox'], 'after_bbox': measurement['after_bbox'],
-                   'factor': measurement['factor'], 'calibrated_at': h.now()})
+                   'factor': measurement['factor'], 'base_body_bbox': measurement.get('base_body_bbox'), 'calibrated_at': h.now()})
     review['status'] = 'unreviewed'
     h.write_json(path, review)
     return path.relative_to(Path(run)).as_posix()
@@ -148,11 +153,21 @@ def calibrate_asset(run, item_id, image=None, margin=8):
         source = Path(image).resolve()
     if not source.is_file():
         raise ValueError('Calibration source image is missing: ' + str(source))
+    if entry.get('source_body') and entry['source_body']['sha256'] != h.file_hash(source):
+        # A repeat calibration may start from this item's previously calibrated PNG.
+        for rec_file in item.get('processing_records', []):
+            prior = h.read_json(h.inside(run, rec_file))
+            if prior.get('output_sha256') == h.file_hash(source) and prior.get('base_body_bbox'):
+                entry = dict(entry, source_body={'sha256': h.file_hash(source), 'bbox': prior['base_body_bbox']})
+                break
     target_px = round(entry['target_H'] * plan['H_px'])
     signature = {'source_sha256': h.file_hash(source), 'primary_axis': entry['primary_axis'],
                  'target_H': entry['target_H'], 'H_px': plan['H_px'],
                  'alpha_threshold': CONTRACT['alpha_threshold'], 'margin': margin,
                  'algorithm_version': VERSION}
+    if plan['H_px'] == 130:
+        signature['size_policy_sha256'] = plan['size_policy_sha256']
+        signature['entry'] = entry
     key = hashlib.sha256(json.dumps(signature, sort_keys=True).encode()).hexdigest()
     folder = run / 'calibrated' / item_id / key[:20]
     folder.mkdir(parents=True, exist_ok=True)
@@ -166,6 +181,27 @@ def calibrate_asset(run, item_id, image=None, margin=8):
             require_real_alpha(im)
             scaled, measurement = scale_to_target(im.convert('RGBA'), entry['primary_axis'], target_px)
         final = pad(scaled, margin)
+        if plan['H_px'] == 130:
+            from size_policy import check_output_size
+            after_box = _alpha_bbox(final)
+            body = None
+            if entry['size_class'] == 'character':
+                annotation = entry.get('source_body')
+                if annotation:
+                    if annotation.get('sha256') != h.file_hash(source):
+                        raise ValueError('Source body annotation is stale')
+                    b, before = annotation.get('bbox'), measurement['before_bbox']
+                    if not isinstance(b, list) or len(b) != 4 or not (before[0] <= b[0] < b[2] <= before[2] and before[1] <= b[1] < b[3] <= before[3]):
+                        raise ValueError('Source body annotation must be within the visible subject')
+                    sx = (after_box[2]-after_box[0]) / (before[2]-before[0])
+                    sy = (after_box[3]-after_box[1]) / (before[3]-before[1])
+                    body = [after_box[0]+(b[0]-before[0])*sx, after_box[1]+(b[1]-before[1])*sy, after_box[0]+(b[2]-before[0])*sx, after_box[1]+(b[3]-before[1])*sy]
+                elif entry['target_wh_px'] == entry['base_body_wh_px']:
+                    body = list(after_box)
+                else:
+                    raise ValueError('Extended character requires a source_body bbox and source sha256')
+            check_output_size(entry, after_box, body)
+            measurement['base_body_bbox'] = body
         final.save(output, format='PNG')
         after = _alpha_bbox(final)
         axis = _axis_index(entry['primary_axis'])

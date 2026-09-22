@@ -1,5 +1,8 @@
 # 可复用执行流程
 
+本流程按SKILL.md的“适度审查”执行：生成与处理完成后集中看图一次，同时填写已有美术、尺度、基础设施记录；这些文件是同一次检查的不同字段，不代表多轮验收。优先用同倍率素材对照图和背景检查，只有可疑对象才放大查看。未变更图片和仍有效的观察可沿用，不因阶段切换重新审查。
+
+
 `PLUGIN_ROOT` 是插件根目录，即本技能目录向上两级。代码和规范随包携带；运行产物保存到用户工作区，不写入安装缓存。
 
 ## 准备运行
@@ -103,6 +106,9 @@ python3 "$PLUGIN_ROOT/scripts/run.py" cutout \
 
 ## 尺度校准
 
+新H130运行必须执行[可执行尺寸契约](../../../runtime/docs/ASSET-SCALE.md)：绑定策略哈希和逐件宽高；校准后用size-review-template生成并填写尺寸字段（与美术检查同时填写），不再只填单轴target_H和一个总pass。
+
+
 透明化后用打包命令按 scale-plan.json 校准，不再现场写缩放脚本：
 
 ```bash
@@ -111,9 +117,9 @@ python3 "$PLUGIN_ROOT/scripts/run.py" calibrate --run "$RUN" --all
 python3 "$PLUGIN_ROOT/scripts/run.py" scale-contact --run "$RUN" --out "$RUN/scale-contact.png"
 ```
 
-`calibrate` 读取当前已登记候选（或 `--image` 指定的透明 PNG），按 alpha>16 测主体包围盒，把主轴等比缩放到 `target_H×130`，加 8 px 透明留白（`--margin` 可改），保存到 `calibrated/<id>/<签名>/` 并自动 `register`；同一来源与同一计划重复执行复用同一输出。命令同时把测量值和最终 PNG 哈希写入 `scale-review.json`，但每个被触及的条目和总状态都置为 `unreviewed`；计划变化时所有旧条目一并失效。`scale-contact` 生成同倍率并排对照图（附 1H 标尺条），供执行者目视复核后再把 `status`、`reviewer`、`observation` 填为实际结论。校准后重新生成美术复核表；原生成与透明化记录保留。缺 alpha、缺计划条目或结果偏离目标超过 1 px 时命令直接报错，不产生候选。
+`calibrate` 读取当前已登记候选（或 `--image` 指定的透明 PNG），按 alpha>16 测主体包围盒，把主轴等比缩放到 `target_H×130`，加 8 px 透明留白（`--margin` 可改），保存到 `calibrated/<id>/<签名>/` 并自动 `register`；同一来源与同一计划重复执行复用同一输出。命令同时把测量值和最终 PNG 哈希写入 `scale-review.json`，但每个被触及的条目和总状态都置为 `unreviewed`；计划变化时所有旧条目一并失效。`scale-contact` 生成同倍率并排对照图（附 1H 标尺条），供执行者目视复核后再把 `status`、`reviewer`、`observation` 填为实际结论。校准后针对最终图片生成复核表，并入本次集中检查；未变化且依据有效的记录可沿用；原生成与透明化记录保留。缺 alpha、缺计划条目或结果偏离目标超过 1 px 时命令直接报错，不产生候选。
 
-## 复核与修正
+## 一次集中检查与必要修正
 
 ```bash
 python3 "$PLUGIN_ROOT/scripts/run.py" review-template \
@@ -122,11 +128,11 @@ python3 "$PLUGIN_ROOT/scripts/run.py" review-template \
 
 根据实际图片填写 `reviewer`、`pass / fail / unreviewed` 和 `observation`。观察对应具体对象及规则，不用空白或套话自动批量批准。2头身是视觉目标；测量边界未定义时不捏造精确数值或容差。
 
-优先检查素材V2：逐部件描边是否取邻近色；是否有适量可读体积而非纯平面；是否有可见夸张但没有破坏结构。继续检查嘈杂肌理、过多装饰、强高光与角色长躯干。正式版背景分别检查 `BG_DETAIL_BALANCED`、`BG_VOLUME_BALANCED` 与 `BG_FORM_GRANULARITY`，按背景 B 档规则观察大形：叶簇、草纹、颗粒和重复砖木缝有可见概括；同时用较少低对比宽色面保留岸壁、桥体和植被厚度。三项独立验收，不能只减弱体积而保留密集叶团、草叶或石块分面，也不能只简化细节而维持强体积。再按 `BG_PLACEMENT_SPACE` 独立检查内部连续放置空间、装饰与投影清场、外围疏密和道路桥头净空；检查主题特征、水纹泡沫是否保留，以及多余围栏包边和边缘建筑碎片。去包边时保留必要地形侧面、桥体及连通关系。
+优先检查素材V2：逐部件描边是否取邻近色；是否有适量可读体积而非纯平面；是否有可见夸张但没有破坏结构。继续检查嘈杂肌理、过多装饰、强高光与角色长躯干。正式版背景分别检查 `BG_DETAIL_BALANCED`、`BG_VOLUME_BALANCED` 与 `BG_FORM_GRANULARITY`，按背景 B 档规则观察大形：叶簇、草纹、颗粒和重复砖木缝有可见概括；同时用较少低对比宽色面保留岸壁、桥体和植被厚度。三项在同一次查看中分别记录，不能只减弱体积而保留密集叶团、草叶或石块分面，也不能只简化细节而维持强体积。同时按 `BG_PLACEMENT_SPACE` 检查内部连续放置空间、装饰与投影清场、外围疏密和道路桥头净空；检查主题特征、水纹泡沫是否保留，以及多余围栏包边和边缘建筑碎片。去包边时保留必要地形侧面、桥体及连通关系。
 
 只对失败对象做定向修正，登记新候选并更新对应复核；旧图的通过不能套给新图。默认只生成一次；仅用户明确要求修正时才进入定向重试。不要无限重抽或用“更接近”代替“通过”。
 
-## 基础设施复核与交接
+## 同次检查中的基础设施记录与交接
 
 最终背景登记后：
 
@@ -134,7 +140,7 @@ python3 "$PLUGIN_ROOT/scripts/run.py" review-template \
 python3 "$PLUGIN_ROOT/scripts/run.py" infrastructure-template --run "$RUN" --out "$RUN/infrastructure-review.json"
 ```
 
-查看背景、原图及计划，逐项填写reviewer和checks中的pass/fail/unreviewed与具体observation。所有计划中的rail/water/road/bridge/platform都要审核。模板绑定背景和计划SHA-256；背景变更后生成新模板并重新核对，保留旧记录。没有此类基础设施时checks为空，但仍需执行者核对并署名。不因Prompt提到了铁轨就填pass。
+沿用本次集中查看背景、原图及计划的实际观察，填写reviewer和checks中的pass/fail/unreviewed与具体observation。所有计划中的rail/water/road/bridge/platform都要审核。模板绑定背景和计划SHA-256；背景变更后生成新模板并重新核对，保留旧记录。没有此类基础设施时checks为空，但仍需执行者核对并署名。不因Prompt提到了铁轨就填pass。
 
 正式export成功时返回内部`layout_handoff`路径，下游使用该路径；不让Layout重新从文件夹猜数量。也可独立创建交接包：
 
@@ -146,10 +152,9 @@ python3 "$PLUGIN_ROOT/scripts/run.py" handoff --run "$RUN" --review "$REVIEW_FIL
 
 ## 只导出图片
 
-先确认 scale-review.json 对应最终登记文件的哈希且尺度复核通过。新运行CLI会验证固定4096背景、H_px=130、alpha_threshold=16及计划/复核的图片绑定。scale-plan.json的items必须恰好覆盖所有非背景素材，逐项提供id、primary_axis（width或height）、target_H。scale-review.json须包含plan_sha256（scale-plan.json文件字节的SHA-256）、status=pass、实际目视observation，以及items中每件id、最终登记PNG的sha256、status=pass。主轴尺寸允许1 px取整误差；不能把自动测量冒充视觉审核。其他既有校准前后记录照常保留。
+正式交接时沿用本次检查记录；普通PNG交付不另加审核前置步骤。新运行CLI会验证固定4096背景、H_px=130、alpha_threshold=16及计划/复核的图片绑定。scale-plan.json的items必须恰好覆盖所有非背景素材，逐项提供id、primary_axis（width或height）、target_H。scale-review.json须包含plan_sha256（scale-plan.json文件字节的SHA-256）、status=pass、实际目视observation，以及items中每件id、最终登记PNG的sha256、status=pass。主轴尺寸允许1 px取整误差；不能把自动测量冒充视觉审核。其他既有校准前后记录照常保留。
 
 ```bash
-python3 "$PLUGIN_ROOT/scripts/run.py" validate --run "$RUN" --review "$REVIEW_FILE"
 python3 "$PLUGIN_ROOT/scripts/deliver.py" \
   --run "$RUN" --review "$REVIEW_FILE" --out "$DELIVERY_DIRECTORY"
 ```

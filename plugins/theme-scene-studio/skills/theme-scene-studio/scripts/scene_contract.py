@@ -136,6 +136,8 @@ def validate_plan(plan, asset_ids=None, source_sha=None):
     if needed - kinds:
         raise ValueError('Infrastructure plan missing: ' + ', '.join(sorted(needed - kinds)))
     validate_count_policy(plan)
+    from size_policy import validate_scene_sizes
+    validate_scene_sizes(plan)
     return plan
 
 def dependency_prompt(plan):
@@ -177,6 +179,13 @@ def validate_bundle(path):
         raise ValueError('Handoff asset filename must match its stable ID')
     plan = validate_plan(read(contained(root, bundle['plan']['file'])),
                          [a['id'] for a in bundle['assets']], bundle['source_sha256'])
+    if plan['H_px'] == 130:
+        for key in ('size_policy', 'size_review', 'scale_plan', 'scale_review'):
+            record = bundle.get(key, {})
+            if not record.get('file') or sha(contained(root, record['file'])) != record.get('sha256'):
+                raise ValueError('Missing or changed handoff sizing evidence: ' + key)
+        if bundle['size_policy']['sha256'] != plan['size_policy_sha256']:
+            raise ValueError('Handoff size policy differs from scene plan')
     acceptance = read(contained(root, bundle['acceptance']['file']))
     if acceptance.get('state') != 'accepted':
         raise ValueError('Stage 2 acceptance did not pass')

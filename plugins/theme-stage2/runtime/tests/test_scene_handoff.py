@@ -7,7 +7,9 @@ import unittest
 from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import harness as h
-from scene_contract import validate_plan, validate_bundle, sha, write, read
+from scene_contract import default_count_policy, validate_plan, validate_bundle, sha, write, read
+from size_policy import policy_fields
+from size_review import template as size_template
 from scene_handoff import bind_plan, infrastructure_template, export_handoff
 
 def make_fixture(root):
@@ -19,7 +21,7 @@ def make_fixture(root):
     im.save(source)
     definitions = [('house','building','building',2,3,[]),
                    ('person','character','person',3,1,[]),
-                   ('train','vehicle','rail_vehicle',1,1,['rail'])]
+                   ('train','vehicle','rail_vehicle',1,200/130,['rail'])]
     plan = {'schema':'scene-plan.v1','source_sha256':sha(source),'canvas':[4096,4096], 'H_px':130,
             'density':{'intent':'Separated synthetic objects','basis':'test fixture'},
             'goals':[{'id':'town','description':'Synthetic house and train composition'}],
@@ -28,7 +30,14 @@ def make_fixture(root):
                        'role':'distractor','zones':['rail'] if cls=='rail_vehicle' else ['grass'],
                        'requires':deps,'count_basis':{'mode':'authored','reason':'Synthetic fixture count'}}
                       for iid,cat,cls,count,height,deps in definitions]}
-    inventory = {'scene_plan':plan, 'items':[
+    plan.update(**policy_fields(), large_max_instances=None, road_sizes=[],
+                count_policy={**default_count_policy(), 'mode':'user_override', 'target_total':6,
+                              'user_instruction':'SYNTHETIC TEST ONLY: use six instances'})
+    for a in plan['assets']:
+        a.update(size_class={'house':'medium','person':'character','train':'small'}[a['id']],
+                 target_wh_px={'house':[400,390],'person':[75,130],'train':[200,200]}[a['id']], size_basis='Synthetic sizing fixture')
+        if a['id'] == 'person': a['base_body_wh_px'] = [75,130]
+    inventory = {'scene_plan':plan, 'selection_override':{'asset_count':3, 'user_instruction':'SYNTHETIC TEST ONLY: three prototypes'}, 'items':[
         {'id':iid,'name':iid,'category':cat,'identity_brief':'Synthetic '+iid}
         for iid,cat,cls,count,height,deps in definitions] +
         [{'id':'background','name':'test background','category':'background','identity_brief':'Synthetic terrain'}]}
@@ -38,20 +47,27 @@ def make_fixture(root):
     scale_items, reviews = [], []
     for iid,cat,cls,count,height,deps in definitions:
         height_px = round(height*130)
-        image = Image.new('RGBA', (224,height_px+24))
-        ImageDraw.Draw(image).rectangle((12,12,211,11+height_px), fill=(150,90,30,255))
+        width_px = {'house':400,'person':75,'train':200}[iid]
+        image = Image.new('RGBA', (width_px+24,height_px+24))
+        ImageDraw.Draw(image).rectangle((12,12,width_px+11,11+height_px), fill=(150,90,30,255))
         path = root/(iid+'.png')
         image.save(path)
         h.register(run, iid, path)
-        scale_items.append({'id':iid,'primary_axis':'height','target_H':height})
+        scale_items.append({**next(a for a in plan['assets'] if a['id']==iid), 'primary_axis':'height','target_H':height})
         reviews.append({'id':iid,'sha256':sha(path),'status':'pass'})
-    write(run/'scale-plan.json', {'H_px':130,'alpha_threshold':16,'items':scale_items})
+    write(run/'scale-plan.json', {**policy_fields(),'H_px':130,'alpha_threshold':16,'items':scale_items})
     write(run/'scale-review.json', {'plan_sha256':sha(run/'scale-plan.json'),'status':'pass',
         'observation':'SYNTHETIC TEST ONLY','items':reviews})
     infra = infrastructure_template(run)
     infra['reviewer'] = 'SYNTHETIC TEST ONLY'
     for row in infra['checks']: row.update(result='pass', observation='Synthetic southern strip')
     write(run/'infrastructure-review.json', infra)
+    sizes = size_template(run)
+    sizes['reviewer'] = 'SYNTHETIC TEST ONLY'
+    for row in sizes['items']:
+        row.update(status='pass', observation='Synthetic width/height and body review')
+        if row['id'] == 'person': row['base_body_bbox'] = [12,12,87,142]
+    write(run/'size-review.json', sizes)
     review = h.review_template(run)
     for item in review['items']:
         item['reviewer'] = 'SYNTHETIC TEST ONLY'
